@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Photo
+from .models import Photo, Comment
 
 
 class PhotoAdmin(admin.ModelAdmin):
@@ -12,3 +12,4 @@ class PhotoAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Photo, PhotoAdmin)
+admin.site.register(Comment)

@@ -11,6 +11,12 @@
         <button type="button" class="btn btn-xs btn-info">
             {{ post.author.username }}</button>
         <p>{{ post.text|linebreaksbr }}</p>
+
+        {% for comment in post.photo_comments.all %}
+        <p>{{ comment.author.username }}</p>
+        <p>{{ comment.text }}</p>
+        {% endfor %}
+
         <p class="text-right">
             <a href="{% url 'photo:photo_detail' pk=post.id %}" class="btn btn-xs btn-success">댓글달기</a>
         </p>

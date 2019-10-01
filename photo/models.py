@@ -20,3 +20,17 @@ class Photo(models.Model):
 
     class Meta:
         ordering = ['-updated']
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_commets')
+    photo = models.ForeignKey(Photo, on_delete=models.CASCADE, related_name='photo_comments')
+
+    text = models.TextField(max_length=100)
+
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.photo.text + self.author.username + self.text
+
+    class Meta:
+        ordering = ['-updated']
