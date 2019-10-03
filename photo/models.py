@@ -1,16 +1,37 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
+
+class Hashtag(models.Model):
+    title = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title
+
 
 class Photo(models.Model):
+    title = models.CharField(max_length=100, default="untitled")
+
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_photos')
 
-    photo = models.ImageField(upload_to='photos/%Y/%m/%d', default='photos/no_image.png')
+    photo = models.ImageField(upload_to='photos/%Y/%m/%d')
+    photo_thumbnail = ImageSpecField(
+        source = 'photo',
+        processors = [ResizeToFill(500, 500)],
+        format = 'JPEG',
+        options = {'quality': 80}
+    )
 
-    text = models.TextField()
+    text = models.CharField(max_length=255, default="nothing entered")
+
+    
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    hashtags = models.ManyToManyField(Hashtag)
 
     def __str__(self):
         return self.author.username + " " + self.created.strftime("%Y-%m-%d %H:%M:%S")
@@ -25,7 +46,7 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_commets')
     photo = models.ForeignKey(Photo, on_delete=models.CASCADE, related_name='photo_comments')
 
-    text = models.TextField(max_length=100)
+    text = models.TextField(max_length=255)
 
     updated = models.DateTimeField(auto_now=True)
 
@@ -34,3 +55,6 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['-updated']
+
+
+

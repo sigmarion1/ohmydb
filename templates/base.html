@@ -1,65 +1,120 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<!--
+	Multiverse by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Oh My DB {% block title %}{% endblock %}</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scal=1, shrink-to-fit=no">
-    
-    <title>Oh My (Girl) DB {% block title %}{% endblock %}</title>
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		{% load static %}
+		<link rel="stylesheet" href="{% static 'css/main.css' %}" />
+		<noscript><link rel="stylesheet" href="{% static 'css/noscript.css' %}" /></noscript>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+	</head>
+	<body class="is-preload">
 
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-</head>
+		<!-- Wrapper -->
+			<div id="wrapper">
 
-<body>
-    <div class="container">
-        <header class="header clearfix">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Dstargram</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+				<!-- Header -->
+					<header id="header">
+						<h1 class="logo">
+							<a href="/">
+								<img src="{% static 'img/logo.png' %}" alt="OhMyGirl">
+							</a>
+						</h1>
+						
+						<h1><a href="/"><strong>Oh My</strong>Girl<strong>DB</strong></a></h1>
+						<nav>
+							<ul>
+								{% if user.is_authenticated %}
+								<li><a href="{% url 'photo:photo_upload' %}">Upload</a></li>
+								<li><a href="{% url 'logout' %}">Sign out</a></li>
+								{% else %}
+								<li><a href="{% url 'login' %}">Sign in</a></li>
+								<li><a href="{% url 'register' %}">Sign up</a></li>
+								{% endif %}
+								<li><a href="#footer">Search</a></li>
+							</ul>
+						</nav>
+					</header>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                                <a class="nav-item"><a href="/" class="active nav-link">Home</a></li>
-                                </ul></div>
-                
-                
-                <ul class="nav">
-                    <li class="nav-item"><a href="/" class="active nav-link">Home</a></li>
-                    {% if user.is_authenticated %}
-                    <li class="nav-item"><a href="#" class="nav-link">Welcome, {{ user.get_username }}</a></li>
-                    <li class="nav-item"><a href="{% url 'photo:photo_upload' %}" class="nav-link">Upload</a></li>
-                    <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
-                    {% else %}
-                    <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Login</a></li>
-                    <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">Signup</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </header>
-        {% block content %}
-        {% endblock %}
+				<!-- Main -->
+				{% block content %}
+				{% endblock %}
+					
 
-        <footer class="footer">
-            <p>&copy; 2018 Baepeu. Powered By django 2</p>
-        </footer>
-    </div>
-</body>
 
+
+				<!-- Footer -->
+					<footer id="footer" class="panel">
+						<div class="inner split">
+							<div>
+								<section>
+									<h2>Search by member</h2>
+									<img src="{% static 'img/gallery_all.png' %}" class="profile">
+									<img src="{% static 'img/gallery_arin.png' %}" class="profile">
+									<img src="{% static 'img/gallery_binnie.png' %}" class="profile">
+									<img src="{% static 'img/gallery_hyojung.png' %}" class="profile">
+									<img src="{% static 'img/gallery_jiho.png' %}" class="profile">
+									<img src="{% static 'img/gallery_mimi.png' %}" class="profile">
+									<img src="{% static 'img/gallery_seunghee.png' %}" class="profile">
+									<img src="{% static 'img/gallery_yooa.png' %}" class="profile">
+									<p>Nulla consequat, ex ut suscipit rutrum, mi dolor tincidunt erat, et scelerisque turpis ipsum eget quis orci mattis aliquet. Maecenas fringilla et ante at lorem et ipsum. Dolor nulla eu bibendum sapien. Donec non pharetra dui. Nulla consequat, ex ut suscipit rutrum, mi dolor tincidunt erat, et scelerisque turpis ipsum.</p>
+								</section>
+								<section>
+									<h2>Follow me on ...</h2>
+									<ul class="icons">
+										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+										<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+										<li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+									</ul>
+								</section>
+								<p class="copyright">
+									&copy; Unttled. Design: <a href="http://html5up.net">HTML5 UP</a>.
+								</p>
+							</div>
+							<div>
+								<section>
+									<h2>Get in touch</h2>
+									<form method="post" action="#">
+										<div class="fields">
+											<div class="field half">
+												<input type="text" name="name" id="name" placeholder="Name" />
+											</div>
+											<div class="field half">
+												<input type="text" name="email" id="email" placeholder="Email" />
+											</div>
+											<div class="field">
+												<textarea name="message" id="message" rows="4" placeholder="Message"></textarea>
+											</div>
+										</div>
+										<ul class="actions">
+											<li><input type="submit" value="Send" class="primary" /></li>
+											<li><input type="reset" value="Reset" /></li>
+										</ul>
+									</form>
+								</section>
+							</div>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+
+			<script src="{% static 'js/jquery.min.js' %}"></script>
+			<script src="{% static 'js/browser.min.js' %}"></script>
+			<script src="{% static 'js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'js/util.js' %}"></script>
+			<script src="{% static 'js/main.js' %}"></script>
+
+	</body>
 </html>

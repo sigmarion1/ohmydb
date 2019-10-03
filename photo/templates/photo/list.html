@@ -3,25 +3,17 @@
 {% block title %}- List{% endblock %}
 
 {% block content %}
-{% for post in photos %}
-<div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8 panel panel-default">
-        <p><img src="{{ post.photo.url }}" style="width:100%;"></p>
-        <button type="button" class="btn btn-xs btn-info">
-            {{ post.author.username }}</button>
-        <p>{{ post.text|linebreaksbr }}</p>
+<div id="main">
 
-        {% for comment in post.photo_comments.all %}
-        <p>{{ comment.author.username }}</p>
-        <p>{{ comment.text }}</p>
-        {% endfor %}
+{% for post in object_list %}
+    <article class="thumb">
+        <a href="{% url 'photo:photo_detail' pk=post.id %}" class="image"><img src="{{ post.photo_thumbnail.url }}" alt="" /></a>
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.author.username }}</p>
+    </article>
 
-        <p class="text-right">
-            <a href="{% url 'photo:photo_detail' pk=post.id %}" class="btn btn-xs btn-success">댓글달기</a>
-        </p>
-    </div>
-    <div class="col-md-2"></div>
+    {% endfor %}
+    <p>1 page</p>
 </div>
-{% endfor %}
+
 {% endblock %}

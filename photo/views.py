@@ -1,18 +1,20 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.list import ListView
 from django.shortcuts import redirect
 
 from .models import Photo
 
 
-def photo_list(request):
-    photos = Photo.objects.all()
-    return render(request, 'photo/list.html', {'photos': photos})
+class PhotoListView(ListView):
+    model = Photo
+    paginate_by = 16
+    template_name = 'photo/list.html'
 
 
 class PhotoUploadView(CreateView):
     model = Photo
-    fields = ['photo', 'text']
+    fields = ['title', 'photo', 'text']
     template_name = 'photo/upload.html'
 
     def form_valid(self, form):
@@ -31,5 +33,5 @@ class PhotoDeleteView(DeleteView):
 
 class PhotoUpdateView(UpdateView):
     model = Photo
-    fields = ['photo', 'text']
+    fields = ['title', 'photo', 'text']
     template_name = 'photo/update.html'

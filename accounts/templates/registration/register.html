@@ -2,16 +2,10 @@
 {% block title %}- Registration{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8 panel panel-default">
-        <div class="alert alert-info">Please enter your account informations.</div>
-        <form action="" method="POST">
-            {{ form.as_p }}
-            {% csrf_token %}
-            <input class="btn btn-primary" type="submit" value="Register">
-        </form>
-    </div>
-    <div class="col-md-2"></div>
-</div>
+<div class="alert alert-info">Please enter your account informations.</div>
+<form action="" method="POST">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input class="btn btn-primary" type="submit" value="Register">
+</form>
 {% endblock %}
