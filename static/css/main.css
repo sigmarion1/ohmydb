@@ -655,7 +655,7 @@ input, select, textarea {
 	textarea {
 		padding: 0.75em 1em;
 	}
-
+/*
 	input[type="checkbox"],
 	input[type="radio"] {
 		-moz-appearance: none;
@@ -724,7 +724,7 @@ input, select, textarea {
 		input[type="radio"]:focus + label:before {
 			box-shadow: 0 0 0 2px #34a58e;
 		}
-
+*/
 	input[type="radio"] + label:before {
 		border-radius: 100%;
 	}
@@ -799,7 +799,7 @@ input, select, textarea {
 		}
 
 	ul {
-		list-style: disc;
+		list-style: none;
 		margin: 0 0 2em 0;
 		padding-left: 1em;
 	}
@@ -2039,6 +2039,118 @@ input, select, textarea {
 
 		}
 
+	#main-sub {
+		display: block;
+		box-sizing: border-box;
+		position: relative;
+		margin-top: 10px;
+		margin-right: auto;
+		margin-bottom: 0px;
+		margin-left: auto;
+		max-width: 1000px;
+	}
+		#main-sub .comment{
+			display:block;
+
+		}
+			#main-sub .comment .author{
+				display: inline
+
+			}
+
+
+
+			#main-sub .comment .date{
+				margin: 10px;
+			}
+
+			#main-sub .comment .text{
+				display: block;
+				margin-bottom: 30px;
+			}
+		
+		#main-sub .comment-input .button{
+
+			float: right;
+			margin-bottom: 50px;
+		}
+
+
+
+	
+	@media screen and (max-width: 1680px) {
+	
+				#main-sub {
+					max-width: 840px;
+				}
+	
+				
+			}
+	
+			@media screen and (max-width: 1280px) {
+	
+				#main-sub {
+					max-width: 640px;
+				}
+	
+			}
+	
+			@media screen and (max-width: 980px) {
+	
+				#main-sub {
+					max-width: 440px;
+				}
+	
+	
+			}
+	
+			@media screen and (max-width: 480px) {
+	
+				#main-sub {
+
+					width: 100%;
+				}
+	
+	
+			}
+		
+	
+/* pagination */
+	.pagination{
+		display: block;
+		width: 100%;
+		text-align: center;
+	}
+
+/* detail-menu */
+	.detailmenu{
+		float: right;
+	}
+
+/* Hr */
+	hr{
+		border-width: 2	px;
+		border-color: #a0a0a1;
+		border-bottom: 0 #a0a0a1
+	}
+
+/* Checkbox */
+
+	input[type="checkbox"],
+	input[type="radio"] {
+		-moz-appearance: checkbox;
+		-webkit-appearance: checkbox;
+		-ms-appearance: checkbox;
+		appearance: checkbox;
+		display: block;
+		float: left;
+		width: 1em;
+		z-index: -1;
+		color: #242629
+	}
+
+
+
 /* Footer */
 
 
@@ -2055,6 +2167,8 @@ input, select, textarea {
 	@media screen and (max-width: 980px) {
 
 		#footer .profile {
+			padding: 10px;
 			width: 80px;
 			height: auto;
 		}
+	}

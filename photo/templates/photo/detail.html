@@ -1,22 +1,48 @@
 {% extends 'base.html' %}
 {% block title %}
-    {{ object.title|truncatechars:10 }}
+{{ object.title|truncatechars:10 }}
 {% endblock %}
 
 {% block content %}
+<div id="main-sub">
+
+    <p><img src="{{ object.photo.url }}" style="width:100%;"></p>
+
+    {% if user == object.author %}
+    <div class="detailmenu">
+        <a href="{% url 'photo:photo_delete' pk=object.id %}" class="button">Delete</a>
+        <a href="{% url 'photo:photo_update' pk=object.id %}" class="button">Update</a>
+    </div>
+    {% endif %}
 
 
-<p><img src="{{ object.photo.url }}" style="width:100%;"></p>
-<h2>{{ object.title }}</h2>
+    <h2>{{ object.title }}</h2>
 
-<h3>{{ object.author.username }}</h3>
+    <h3>{{ object.author.username }}</h3>
 
-            <p>{{ object.text|linebreaksbr }}</p>
-
-            <button type="button" class="btn btn-outline-primary btn-sm">{{ object.author.username }}</button>
-            <a href="{% url 'photo:photo_delete' pk=object.id %}" class="btn btn-outline-danger btn-sm float-right">Delete</a>
-            <a href="{% url 'photo:photo_update' pk=object.id %}" class="btn btn-outline-success btn-sm float-right">Update</a>
+    <p>{{ object.text|linebreaksbr }}</p>
 
 
+
+    <div class="comment">
+        {% for comment in comments %}
+        <div class="author"><h3>{{ comment.author.username }}</h3></div>
+        <div class="text">{{ comment.text|linebreaksbr }}</div>
+        {% endfor %}
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="comment-input">
+        <form method ="POST" class="post-form">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="button">Submit</button>
+        </form>        
+    </div>
+    {% endif %}
+
+
+
+</div>
 
 {% endblock %}

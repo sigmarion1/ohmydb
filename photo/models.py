@@ -26,12 +26,12 @@ class Photo(models.Model):
 
     text = models.CharField(max_length=255, default="nothing entered")
 
-    
-
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     hashtags = models.ManyToManyField(Hashtag)
+
+    
 
     def __str__(self):
         return self.author.username + " " + self.created.strftime("%Y-%m-%d %H:%M:%S")
@@ -54,7 +54,7 @@ class Comment(models.Model):
         return self.photo.text + self.author.username + self.text
 
     class Meta:
-        ordering = ['-updated']
+        ordering = ['updated']
 
 
 
