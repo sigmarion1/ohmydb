@@ -10,9 +10,9 @@ from .forms import CommentForm, PhotoUploadForm
 
 class PhotoListView(ListView):
     #model = Photo
-    paginate_by = 8
+    paginate_by = 12
     template_name = 'photo/list.html'
-    block_size = 10 # 하단의 페이지 목록 수
+    block_size = 7 # 하단의 페이지 목록 수
 
     def get_context_data(self, **kwargs):
         context = super(PhotoListView, self).get_context_data(**kwargs)
@@ -44,12 +44,7 @@ class PhotoUploadView(CreateView):
 
     def form_valid(self, form):
         form.instance.author_id = self.request.user.id
-        if form.is_valid():
-            form.instance.save()
-            return redirect('/')
-        else:
-            return self.render_to_response({'form': form})
-
+        return super(PhotoUploadView, self).form_valid(form)
 
 class PhotoDeleteView(DeleteView):
     model = Photo

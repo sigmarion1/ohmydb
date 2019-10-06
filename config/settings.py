@@ -149,3 +149,15 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = '/'
+
+
+# Email Setting
+
+EMAIL_BACKEND = get_secret("EMAIL_BACKEND")
+EMAIL_USE_TLS = get_secret("EMAIL_USE_TLS")
+EMAIL_HOST = get_secret("EMAIL_HOST")
+EMAIL_PORT = get_secret("EMAIL_PORT")
+EMAIL_HOST_USER = get_secret("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = get_secret("EMAIL_HOST_PASSWORD")
+SERVER_EMAIL = get_secret("SERVER_EMAIL")
+DEFAULT_FROM_MAIL = get_secret("DEFAULT_FROM_MAIL")
