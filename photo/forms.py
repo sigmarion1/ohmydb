@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import ModelForm
+from django.forms.widgets import CheckboxSelectMultiple
 
-from .models import Comment, Photo
+from .models import Comment, Photo, Member
 
 OMG_MEMBER_CHOICES = [
     ('단체', '단체(all)'),
@@ -15,7 +16,6 @@ OMG_MEMBER_CHOICES = [
 ]
 
 class CommentForm(ModelForm):
-    
     
     class Meta:
         model = Comment
@@ -32,12 +32,13 @@ class CommentForm(ModelForm):
 
 
 class PhotoUploadForm(ModelForm):
-    member = forms.MultipleChoiceField(
-                required=False,
-                widget=forms.CheckboxSelectMultiple,
-                choices=OMG_MEMBER_CHOICES,
-            )
 
     class Meta:
         model = Photo
-        fields = ['title', 'photo', 'text']
+        fields = ['title', 'photo', 'text', 'members']
+
+    def __init__(self, *args, **kwargs):
+        super(PhotoUploadForm, self).__init__(*args, **kwargs)
+
+        self.fields["members"].widget = CheckboxSelectMultiple()
+        self.fields["members"].queryset = Member.objects.all()

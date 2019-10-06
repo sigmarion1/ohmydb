@@ -13,4 +13,4 @@ class PhotoAdmin(admin.ModelAdmin):
 
 admin.site.register(Photo, PhotoAdmin)
 admin.site.register(Comment)
-admin.site.register(Hashtag)
+admin.site.register(Member)

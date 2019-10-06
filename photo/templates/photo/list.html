@@ -18,17 +18,17 @@
     {% if is_paginated %}
     <div class="pagination">
         {% if page_obj.has_previous %}
-                <a class="button" href="{% url 'photo:photo_list' %}?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+                <a class="button" href="{% url 'photo:photo_list' %}?page={{ page_obj.previous_page_number }}{% if request.GET.members %}&members={{ request.GET.members }}{% endif %}" tabindex="-1">Previous</a>
         {% else %}
             <a class="button disabled" href="#" tabindex="-1">Previous</a>
         {% endif %}
 
         {% for object in page_obj.paginator.page_range %}
-                <a class="button {% if page_obj.number == forloop.counter %}disabled{% endif %}" href="{{ request.path }}?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+                <a class="button {% if page_obj.number == forloop.counter %}disabled{% endif %}" href="{{ request.path }}?page={{ forloop.counter }}{% if request.GET.members %}&members={{ request.GET.members }}{% endif %}">{{ forloop.counter }}</a>
         {% endfor %}
 
         {% if page_obj.has_next %}
-                <a class="button" href="{% url 'photo:photo_list' %}?page={{ page_obj.next_page_number }}">Next</a>
+                <a class="button" href="{% url 'photo:photo_list' %}?page={{ page_obj.next_page_number }}{% if request.GET.members %}&members={{ request.GET.members }}{% endif %}">Next</a>
         {% else %}
                 <a class="button disabled" href="#">Next</a>
         {% endif %}

@@ -5,16 +5,14 @@ from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
 
-from .models import Photo, Comment
+from .models import Photo, Comment, Member
 from .forms import CommentForm, PhotoUploadForm
 
-OMG_ALL_MEMBER = ['단체', '효정', '미미', '유아', '승희', '지호', '비니', '아린']
-
 class PhotoListView(ListView):
-    model = Photo
-    paginate_by = 16
+    #model = Photo
+    paginate_by = 8
     template_name = 'photo/list.html'
-    block_size = 5 # 하단의 페이지 목록 수
+    block_size = 10 # 하단의 페이지 목록 수
 
     def get_context_data(self, **kwargs):
         context = super(PhotoListView, self).get_context_data(**kwargs)
@@ -26,6 +24,18 @@ class PhotoListView(ListView):
 
         return context
 
+    def get_queryset(self):
+        queryset = Photo.objects.all()
+        if self.request.GET.get('members'):
+            selection = self.request.GET.get("members")
+            mb = get_object_or_404(Member, name_eng=selection)
+            queryset = mb.photo_set.all()
+    
+        return queryset
+
+
+
+
 
 class PhotoUploadView(CreateView):
     model = Photo
@@ -35,10 +45,6 @@ class PhotoUploadView(CreateView):
     def form_valid(self, form):
         form.instance.author_id = self.request.user.id
         if form.is_valid():
-            if '단체' in form.cleaned_data['member']:
-                form.cleaned_data['member'] = OMG_ALL_MEMBER
-            
-            print(form.cleaned_data['member'])
             form.instance.save()
             return redirect('/')
         else:
@@ -59,13 +65,14 @@ class PhotoDeleteView(DeleteView):
 
 class PhotoUpdateView(UpdateView):
     model = Photo
-    fields = ['title', 'photo', 'text']
+    form_class = PhotoUploadForm
     template_name = 'photo/update.html'
 
 
 def PhotoDetailView(request, pk):
     photo = get_object_or_404(Photo, pk=pk)
     comments = photo.photo_comments.all()
+    members = photo.members.all()
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -85,6 +92,7 @@ def PhotoDetailView(request, pk):
         'object': photo,
         'comments' : comments,
         'form' : form,
+        'members' : members,
     })
 
 '''

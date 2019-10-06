@@ -15,8 +15,7 @@
     </div>
     {% endif %}
 
-
-    <h2>{{ object.title }}</h2>
+    <h2>{{ object.title }} - {% for member in members %}{{ member }} {% endfor %}</h2>
 
     <h3>{{ object.author.username }}</h3>
 

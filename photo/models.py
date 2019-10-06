@@ -4,15 +4,17 @@ from django.contrib.auth.models import User
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
-class Hashtag(models.Model):
-    title = models.CharField(max_length=100)
+
+class Member(models.Model):
+    name = models.CharField(max_length=100)
+    name_eng = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.title
+        return self.name
 
 
 class Photo(models.Model):
-    title = models.CharField(max_length=100, default="untitled")
+    title = models.CharField(max_length=100)
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_photos')
 
@@ -24,14 +26,12 @@ class Photo(models.Model):
         options = {'quality': 80}
     )
 
-    text = models.CharField(max_length=255, default="nothing entered")
-
+    text = models.CharField(max_length=255, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    hashtags = models.ManyToManyField(Hashtag)
+    members = models.ManyToManyField(Member)
 
-    
 
     def __str__(self):
         return self.author.username + " " + self.created.strftime("%Y-%m-%d %H:%M:%S")
@@ -41,6 +41,7 @@ class Photo(models.Model):
 
     class Meta:
         ordering = ['-updated']
+
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_commets')

@@ -47,42 +47,40 @@
 				{% block content %}
 				{% endblock %}
 					
-
-
-
 				<!-- Footer -->
 					<footer id="footer" class="panel">
 						<div class="inner split">
 							<div>
 								<section>
 									<h2>Search by member</h2>
-									<img src="{% static 'img/gallery_all.png' %}" class="profile">
-									<img src="{% static 'img/gallery_arin.png' %}" class="profile">
-									<img src="{% static 'img/gallery_binnie.png' %}" class="profile">
-									<img src="{% static 'img/gallery_hyojung.png' %}" class="profile">
-									<img src="{% static 'img/gallery_jiho.png' %}" class="profile">
-									<img src="{% static 'img/gallery_mimi.png' %}" class="profile">
-									<img src="{% static 'img/gallery_seunghee.png' %}" class="profile">
-									<img src="{% static 'img/gallery_yooa.png' %}" class="profile">
+									<a href="{% url 'photo:photo_list' %}?members=hyojung"><img src="{% static 'img/gallery_hyojung.png' %}" class="profile"></a>
+									<a href="{% url 'photo:photo_list' %}?members=mimi"><img src="{% static 'img/gallery_mimi.png' %}" class="profile"></a>
+									<a href="{% url 'photo:photo_list' %}?members=yooa"><img src="{% static 'img/gallery_yooa.png' %}" class="profile"></a>
+									<a href="{% url 'photo:photo_list' %}?members=seunghee"><img src="{% static 'img/gallery_seunghee.png' %}" class="profile"></a>
+									<a href="{% url 'photo:photo_list' %}?members=jiho"><img src="{% static 'img/gallery_jiho.png' %}" class="profile"></a>
+									<a href="{% url 'photo:photo_list' %}?members=binnie"><img src="{% static 'img/gallery_binnie.png' %}" class="profile"></a>
+									<a href="{% url 'photo:photo_list' %}?members=arin"><img src="{% static 'img/gallery_arin.png' %}" class="profile"></a>
 								</section>
-								<section>
-									<h2>About Oh My Girl</h2>
-									<p>Oh My Girl (Korean: 오마이걸, also stylized as OH MY GIRL and OMG) is a South Korean girl group formed by WM Entertainment. The group is composed of seven members: Hyojung, Mimi, YooA, Seunghee, Jiho, Binnie and Arin. Oh My Girl debuted on April 20, 2015, with an eponymous extended play.</p>
 
-									<ul class="icons">
-										<li><a href="http://ohmy-girl.com/omg_official" class="icon brands fa-internet-explorer"><span class="label">Official Site</span></a></li>
-										<li><a href="http://cafe.daum.net/-ohmygirl" class="icon solid fa-users"><span class="label">Fan Site</span></a></li>
-										<li><a href="https://www.youtube.com/channel/UC-qYkzKFdekoEniRu_FS3zg" class="icon brands fa-youtube"><span class="label">Youtube</span></a></li>
-										<li><a href="https://www.instagram.com/wm_ohmygirl/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="https://twitter.com/WM_OHMYGIRL" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="https://www.facebook.com/official.ohmygirl" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-									</ul>
-								</section>
 								<p class="copyright">
 									&copy; Unttled. Design: <a href="http://html5up.net">HTML5 UP</a>.
 								</p>
 							</div>
 							<div>
+									<section>
+											<h2>About Oh My Girl</h2>
+											<p>Oh My Girl (Korean: 오마이걸, also stylized as OH MY GIRL and OMG) is a South Korean girl group formed by WM Entertainment. The group is composed of seven members: Hyojung, Mimi, YooA, Seunghee, Jiho, Binnie and Arin. Oh My Girl debuted on April 20, 2015, with an eponymous extended play.</p>
+		
+											<ul class="icons">
+												<li><a href="http://ohmy-girl.com/omg_official" class="icon brands fa-internet-explorer"><span class="label">Official Site</span></a></li>
+												<li><a href="http://cafe.daum.net/-ohmygirl" class="icon solid fa-users"><span class="label">Fan Site</span></a></li>
+												<li><a href="https://www.youtube.com/channel/UC-qYkzKFdekoEniRu_FS3zg" class="icon brands fa-youtube"><span class="label">Youtube</span></a></li>
+												<li><a href="https://www.instagram.com/wm_ohmygirl/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+												<li><a href="https://twitter.com/WM_OHMYGIRL" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+												<li><a href="https://www.facebook.com/official.ohmygirl" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+											</ul>
+										</section>
+
 								<section>
 									<h2>Get in touch</h2>
 									<form method="post" action="#">
