@@ -6,13 +6,32 @@
 -->
 <html>
 	<head>
-		<title>Oh My DB {% block title %}{% endblock %}</title>
+		<title>Oh My Girl Database {% block title %}{% endblock %}</title>
+		{% load static %}
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-		{% load static %}
+		<!-- Primary Meta Tags -->
+
+		<meta name="title" content="Oh My Girl Database">
+		<meta name="description" content="The collection of 'OH MY GIRL'">
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://ohmydb.com/">
+		<meta property="og:title" content="Oh My Girl Database">
+		<meta property="og:description" content="The collection of 'OH MY GIRL'">
+		<meta property="og:image" content="{% static 'img/meta.jpg' %}">
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image">
+		<meta property="twitter:url" content="https://ohmydb.com/">
+		<meta property="twitter:title" content="Oh My Girl Database">
+		<meta property="twitter:description" content="The collection of 'OH MY GIRL'">
+		<meta property="twitter:image" content="{% static 'img/meta.jpg' %}">
+
+
 		<link rel="stylesheet" href="{% static 'css/main.css' %}" />
-		<noscript><link rel="stylesheet" href="{% static 'css/noscript.css' %}" /></noscript>
 
 	</head>
 	<body class="is-preload">
@@ -81,26 +100,6 @@
 											</ul>
 										</section>
 
-								<section>
-									<h2>Get in touch</h2>
-									<form method="post" action="#">
-										<div class="fields">
-											<div class="field half">
-												<input type="text" name="name" id="name" placeholder="Name" />
-											</div>
-											<div class="field half">
-												<input type="text" name="email" id="email" placeholder="Email" />
-											</div>
-											<div class="field">
-												<textarea name="message" id="message" rows="4" placeholder="Message"></textarea>
-											</div>
-										</div>
-										<ul class="actions">
-											<li><input type="submit" value="Send" class="primary" /></li>
-											<li><input type="reset" value="Reset" /></li>
-										</ul>
-									</form>
-								</section>
 							</div>
 						</div>
 					</footer>

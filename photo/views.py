@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView, FormMixin
 from django.views.generic.list import ListView
 from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
+from django.core.mail import send_mail
 
 from .models import Photo, Comment, Member
 from .forms import CommentForm, PhotoUploadForm
@@ -32,9 +33,6 @@ class PhotoListView(ListView):
             queryset = mb.photo_set.all()
     
         return queryset
-
-
-
 
 
 class PhotoUploadView(CreateView):

@@ -42,3 +42,4 @@ class PhotoUploadForm(ModelForm):
 
         self.fields["members"].widget = CheckboxSelectMultiple()
         self.fields["members"].queryset = Member.objects.all()
+
