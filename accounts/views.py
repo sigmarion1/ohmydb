@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login
 from .forms import RegisterForm
 
 def register(request):
@@ -8,6 +9,11 @@ def register(request):
             new_user = user_form.save(commit=False)
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
+            new_user_login = authenticate(
+                username=user_form.cleaned_data['username'],
+                password=user_form.cleaned_data['password'],
+                )
+            login(request, new_user_login)
             return render(request, 'registration/register_done.html', {'new_user':new_user})
     else:
         user_form = RegisterForm()
