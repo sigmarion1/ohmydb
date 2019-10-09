@@ -57,6 +57,18 @@
 	// Scroll back to top.
 		$window.scrollTop(0);
 
+		$window.scroll(function(){
+			var scrollT = $(this).scrollTop();
+			var scrollH = $(this).height();
+			var contentH = $('#main').height();
+			if(scrollH + scrollT > contentH + 1){
+				location.reload();
+				$window.scrollTop(0);
+			}
+		})
+
+
+
 	// Panels.
 		var $panels = $('.panel');
 

@@ -7,7 +7,7 @@ from .models import Photo
 app_name = 'photo'
 
 urlpatterns = [
-    path('', PhotoListView.as_view(), name='photo_list'),
+    path('', PhotoRandomListView.as_view(), name='photo_list'),
     path('detail/<int:pk>/', PhotoDetailView, name='photo_detail'),
     path('upload/', PhotoUploadView.as_view(), name='photo_upload'),
     path('delete/<int:pk>/', PhotoDeleteView.as_view(), name='photo_delete'),

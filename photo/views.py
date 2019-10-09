@@ -11,6 +11,30 @@ from django.core.mail import send_mail
 from .models import Photo, Comment, Member
 from .forms import CommentForm, PhotoUploadForm
 
+MAX_PHOTO = 24
+
+class PhotoRandomListView(ListView):
+    #paginate_by = 12
+    template_name = 'photo/randomlist.html'
+
+    def get_queryset(self):
+
+        if self.request.GET.get('members'):
+            selection = self.request.GET.get("members")
+            mb = get_object_or_404(Member, name_eng=selection)
+            all_photo = mb.photo_set.all()
+
+        else:
+            all_photo = Photo.objects.all()
+
+        queryset = list(all_photo)
+        shuffle(queryset)
+        queryset = queryset[:MAX_PHOTO]
+        
+        return queryset
+
+
+
 class PhotoListView(ListView):
     #model = Photo
     paginate_by = 12
@@ -33,7 +57,7 @@ class PhotoListView(ListView):
             selection = self.request.GET.get("members")
             mb = get_object_or_404(Member, name_eng=selection)
             queryset = mb.photo_set.all()
-            
+
         return queryset
 
 

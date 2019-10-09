@@ -2121,6 +2121,11 @@ input, select, textarea {
 		width: 100%;
 		text-align: center;
 	}
+		.pagination .button{
+			display: block;
+			width: 100%;
+			height: 500%;
+		}
 
 /* detail-menu */
 	.detailmenu{
