@@ -35,7 +35,7 @@ class PhotoUploadForm(ModelForm):
 
     class Meta:
         model = Photo
-        fields = ['title', 'photo', 'text', 'members']
+        fields = ['title', 'photo', 'members']
 
     def __init__(self, *args, **kwargs):
         super(PhotoUploadForm, self).__init__(*args, **kwargs)
