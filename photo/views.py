@@ -1,3 +1,5 @@
+from random import shuffle
+
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, DeleteView, UpdateView, FormMixin
 from django.views.generic.list import ListView
@@ -31,7 +33,7 @@ class PhotoListView(ListView):
             selection = self.request.GET.get("members")
             mb = get_object_or_404(Member, name_eng=selection)
             queryset = mb.photo_set.all()
-    
+            
         return queryset
 
 
