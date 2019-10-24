@@ -9,6 +9,10 @@ secret.json
 venv/
 accounts/migrations/
 photo/migrations/
+crawling/migrations/
+staticfiles/
+facedetect/
+temp_photo/
 
 
 

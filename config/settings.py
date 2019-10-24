@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'photo',
     'accounts',
     'imagekit',
+    'crawling',
 ]
 
 MIDDLEWARE = [

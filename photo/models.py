@@ -18,7 +18,7 @@ class Photo(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_photos')
 
-    photo = models.ImageField(upload_to='photos/%Y/%m/%d')
+    photo = models.ImageField(upload_to='photos/%Y/%m')
     photo_thumbnail = ImageSpecField(
         source = 'photo',
         processors = [ResizeToFill(500, 500)],
