@@ -10,7 +10,7 @@
         <article class="thumb">
             <a href="{{ post.photo.url }}" class="image"><img src="{{ post.photo_thumbnail.url }}"
                     alt="" /></a>
-            <h2>{{ post.title }}</h2>
+            <h2><a href="{% url 'photo:photo_detail' pk=post.id %}">{{ post.title }}</a></h2>
         </article>
         {% endfor %}
 
