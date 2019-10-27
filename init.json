@@ -1,0 +1,86 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$120000$4ldRShQtLd80$lwmxxX1B9eGiJhBiPQ93lSgxuTHMzd/BfWHHQMnJKdM=",
+            "last_login": "2019-10-26T02:31:03.760",
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "email": "admin@admin.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2019-10-26T02:30:17.545",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+
+    {
+        "model": "photo.member",
+        "pk": 1,
+        "fields": {
+            "name": "\ud6a8\uc815",
+            "name_eng": "hyojung"
+        }
+    },
+    {
+        "model": "photo.member",
+        "pk": 2,
+        "fields": {
+            "name": "\ubbf8\ubbf8",
+            "name_eng": "mimi"
+        }
+    },
+    {
+        "model": "photo.member",
+        "pk": 3,
+        "fields": {
+            "name": "\uc720\uc544",
+            "name_eng": "yooa"
+        }
+    },
+    {
+        "model": "photo.member",
+        "pk": 4,
+        "fields": {
+            "name": "\uc2b9\ud76c",
+            "name_eng": "seunghee"
+        }
+    },
+    {
+        "model": "photo.member",
+        "pk": 5,
+        "fields": {
+            "name": "\uc9c0\ud638",
+            "name_eng": "jiho"
+        }
+    },
+    {
+        "model": "photo.member",
+        "pk": 6,
+        "fields": {
+            "name": "\ube44\ub2c8",
+            "name_eng": "binnie"
+        }
+    },
+    {
+        "model": "photo.member",
+        "pk": 7,
+        "fields": {
+            "name": "\uc544\ub9b0",
+            "name_eng": "arin"
+        }
+    },
+
+    {
+        "model": "photo.member",
+        "pk": 8,
+        "fields": {
+            "name": "\ub2e8\uccb4",
+            "name_eng": "group"
+        }
+    }
+]

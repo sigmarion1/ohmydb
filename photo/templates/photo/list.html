@@ -6,15 +6,13 @@
 
 <div id="main">
 
-    {% for post in object_list %}
-    <article class="thumb">
-        <a href="{% url 'photo:photo_detail' pk=post.id %}" class="image"><img src="{{ post.photo_thumbnail.url }}"
-                alt="" /></a>
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.author.username }}</p>
-    </article>
-
-    {% endfor %}
+        {% for post in object_list %}
+        <article class="thumb">
+            <a href="{{ post.photo.url }}" class="image"><img src="{{ post.photo_thumbnail.url }}"
+                    alt="" /></a>
+            <h2>{{ post.title }}</h2>
+        </article>
+        {% endfor %}
 
     {% if is_paginated %}
     <div class="pagination">
@@ -24,8 +22,8 @@
             <a class="button disabled" href="#" tabindex="-1">Previous</a>
         {% endif %}
 
-        {% for object in page_obj.paginator.page_range %}
-                <a class="button {% if page_obj.number == forloop.counter %}disabled{% endif %}" href="{{ request.path }}?page={{ forloop.counter }}{% if request.GET.members %}&members={{ request.GET.members }}{% endif %}">{{ forloop.counter }}</a>
+        {% for page in page_range %}
+                <a class="button {% if page_obj.number == page %}disabled{% endif %}" href="{{ request.path }}?page={{ page }}{% if request.GET.members %}&members={{ request.GET.members }}{% endif %}">{{ page }}</a>
         {% endfor %}
 
         {% if page_obj.has_next %}

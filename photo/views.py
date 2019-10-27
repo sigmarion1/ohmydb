@@ -14,8 +14,8 @@ from .forms import CommentForm, PhotoUploadForm
 MAX_PHOTO = 24
 
 class PhotoRandomListView(ListView):
-    #paginate_by = 12
-    template_name = 'photo/randomlist.html'
+    paginate_by = MAX_PHOTO
+    template_name = 'photo/list.html'
 
     def get_queryset(self):
 
@@ -26,29 +26,36 @@ class PhotoRandomListView(ListView):
 
         else:
             all_photo = Photo.objects.all()
-
-        queryset = list(all_photo)
-        shuffle(queryset)
-        queryset = queryset[:MAX_PHOTO]
         
-        return queryset
+        return all_photo
 
 
 
 class PhotoListView(ListView):
-    #model = Photo
-    paginate_by = 12
+    model = Photo
+    paginate_by = 24
     template_name = 'photo/list.html'
-    block_size = 7 # 하단의 페이지 목록 수
+    block_size = 10 # 하단의 페이지 목록 수
 
     def get_context_data(self, **kwargs):
         context = super(PhotoListView, self).get_context_data(**kwargs)
+        paginator = context['paginator']
+        print(paginator)
+        page_numbers_range = 5  # Display only 5 page numbers
+        max_index = len(paginator.page_range)
+        print(max_index)
 
-        start_index = int((context['page_obj'].number - 1) / self.block_size) * self.block_size
-        end_index = min(start_index + self.block_size, len(context['paginator'].page_range))
+        page = self.request.GET.get('page')
+        current_page = int(page) if page else 1
 
-        context['page_range'] = context['paginator'].page_range[start_index:end_index]
+        start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+        end_index = start_index + page_numbers_range
+        if end_index >= max_index:
+            end_index = max_index
 
+        page_range = paginator.page_range[start_index:end_index]
+        print(page_range)
+        context['page_range'] = page_range
         return context
 
     def get_queryset(self):
@@ -59,6 +66,7 @@ class PhotoListView(ListView):
             queryset = mb.photo_set.all()
 
         return queryset
+        
 
 
 class PhotoUploadView(CreateView):

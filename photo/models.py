@@ -40,7 +40,7 @@ class Photo(models.Model):
         return reverse('photo:photo_detail', args=[str(self.id)])
 
     class Meta:
-        ordering = ['-updated']
+        ordering = ['-created']
 
 
 class Comment(models.Model):

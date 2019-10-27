@@ -15,6 +15,11 @@ def CPostView(request, page):
     boardID = "ohmygirl"
     result = c.get_recommend_post(boardID, page)
     
-    return HttpResponse(c.save_post_list(boardID, result))
+    return HttpResponse(c.save_post_list(result))
+
+def crawl_from_list(request):
+    c = Crawler()
+
+    return HttpResponse(c.save_a_photo_from_list())
 
         
