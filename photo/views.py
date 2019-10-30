@@ -11,25 +11,6 @@ from django.core.mail import send_mail
 from .models import Photo, Comment, Member
 from .forms import CommentForm, PhotoUploadForm
 
-MAX_PHOTO = 24
-
-class PhotoRandomListView(ListView):
-    paginate_by = MAX_PHOTO
-    template_name = 'photo/list.html'
-
-    def get_queryset(self):
-
-        if self.request.GET.get('members'):
-            selection = self.request.GET.get("members")
-            mb = get_object_or_404(Member, name_eng=selection)
-            all_photo = mb.photo_set.all()
-
-        else:
-            all_photo = Photo.objects.all()
-        
-        return all_photo
-
-
 
 class PhotoListView(ListView):
     model = Photo
@@ -41,7 +22,7 @@ class PhotoListView(ListView):
         context = super(PhotoListView, self).get_context_data(**kwargs)
         paginator = context['paginator']
         print(paginator)
-        page_numbers_range = 5  # Display only 5 page numbers
+        page_numbers_range = self.block_size
         max_index = len(paginator.page_range)
         print(max_index)
 
