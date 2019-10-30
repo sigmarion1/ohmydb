@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .crawling import Crawler
+from .tasks import print_log, crawl_task
 
 def CrawlingView(request, post):
 
@@ -22,4 +23,8 @@ def crawl_from_list(request):
 
     return HttpResponse(c.save_a_photo_from_list())
 
+def celery_test(request):
+    crawl_task.delay(1)
+    return HttpResponse('ok')
+    
         

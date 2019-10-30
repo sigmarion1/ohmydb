@@ -163,3 +163,6 @@ EMAIL_HOST_USER = get_secret("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = get_secret("EMAIL_HOST_PASSWORD")
 SERVER_EMAIL = get_secret("SERVER_EMAIL")
 DEFAULT_FROM_MAIL = get_secret("DEFAULT_FROM_MAIL")
+
+# Celery Setting
+CELERY_BROKER_URL = 'amqp://localhost'
