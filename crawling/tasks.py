@@ -28,4 +28,6 @@ def list_omg_task(asc):
     c = Crawler()
     board = "ohmygirl"
     page = random.randrange(1,10)
-    return(c.get_recommend_post(board,page))
+    post_list = c.get_recommend_post(board, page)
+    result = c.save_post_list(post_list)
+    return(result)

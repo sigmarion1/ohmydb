@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
-from celery.schedule import crontab
+from celery.schedules import crontab
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
@@ -35,13 +35,13 @@ app.conf.beat_schedule = {
 app.conf.beat_schedule = {
     'crawling': {
         'task': 'crawling.tasks.crawl_task',
-        'schedule': crontab(minute='*/43', hour='*/3,8-17')
-        'args': None,
+        'schedule': crontab(minute='*/43', hour='*/3,8-17'),
+        'args': (),
     },
 
     'listing': {
         'task': 'crawling.tasks.list_omg_task',
-        'schedule': crontab(minute-'*/55', hour='10-15')
-        'args': None,
+        'schedule': crontab(minute='*/55,*/24', hour='10-20'),
+        'args': (),
     },
 }
