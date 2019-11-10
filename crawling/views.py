@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .crawling import Crawler
-from .tasks import print_log, crawl_task
+from .tasks import print_log, crawl_task, list_omg_task
 
 def CrawlingView(request, post):
 
@@ -25,6 +25,10 @@ def crawl_from_list(request):
 
 def celery_test(request):
     crawl_task.delay(1)
+    return HttpResponse('ok')
+
+def list_omg_test(request):
+    list_omg_task.delay(1)
     return HttpResponse('ok')
     
         

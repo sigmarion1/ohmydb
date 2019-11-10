@@ -19,12 +19,12 @@ def print_log(log=None):
         return "logging"
 
 @shared_task
-def crawl_task(asc):
+def crawl_task():
     c = Crawler()
     return(c.save_a_photo_from_list())
 
 @shared_task
-def list_omg_task(asc):
+def list_omg_task():
     c = Crawler()
     board = "ohmygirl"
     page = random.randrange(1,10)
