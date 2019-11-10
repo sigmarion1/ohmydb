@@ -24,11 +24,11 @@ def crawl_from_list(request):
     return HttpResponse(c.save_a_photo_from_list())
 
 def celery_test(request):
-    crawl_task.delay(1)
+    crawl_task.delay()
     return HttpResponse('ok')
 
 def list_omg_test(request):
-    list_omg_task.delay(1)
+    list_omg_task.delay()
     return HttpResponse('ok')
     
         
