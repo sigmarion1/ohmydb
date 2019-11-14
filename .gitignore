@@ -13,7 +13,7 @@ crawling/migrations/
 staticfiles/
 facedetect/
 temp_photo/
-
+test.py
 
 
 
