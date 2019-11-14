@@ -66,7 +66,8 @@ class Crawler():
                 'Content-Disposition').split(".")[-1]
             img_name = str(boardID) + '_' + str(postNum) + \
                 '_' + str(img_num) + '.' + str(img_ext)
-
+            image_get_face = 1 + img_name
+            
             with open(img_name, 'wb') as f:
                 f.write(img_req.content)
 
