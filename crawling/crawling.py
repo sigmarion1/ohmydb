@@ -86,7 +86,12 @@ class Crawler():
                 else:
                     continue
 
-                name_list = get_face_name(image_get_face)
+                try:
+                    name_list = get_face_name(image_get_face)
+
+                except Exception as e:
+                    print("에러", e)
+                    
                 if 'unknown' in name_list:
                     name_list.remove('unknown')
                 print(name_list)
@@ -200,10 +205,15 @@ class Crawler():
 
     def save_a_photo_from_list(self):
         p = Post.objects.filter(isChecked=False).first()
-        result = self.get_Image_DC(p.board, p.number, p.originalCreated)
-        p.isChecked = True
-        p.checkResult = result
-        p.save()
+        result = "not finished"
+
+        try:
+            result = self.get_Image_DC(p.board, p.number, p.originalCreated)
+        
+        finally:                
+            p.isChecked = True
+            p.checkResult = result
+            p.save()
 
         return result
 
