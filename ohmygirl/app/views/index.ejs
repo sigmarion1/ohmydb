@@ -1,0 +1,48 @@
+<div id="main">
+
+        <% pics.forEach((pic) => { %>
+                <article class="thumb">
+                        <a href="<%= pic.path_original %>" class="image">
+                                <img src = "<%= pic.path_thumbnail %>" alt="">
+                        </a>
+                        <h2><a href="photo"><%= pic.who %></a></h2>
+                </article>
+        <% }) %>
+
+    <!-- <article class="thumb">
+        <a href="images/1.jpg" class="image"><img src="images/1.jpg"
+                alt="" /></a>
+        <h2><a href="images/1.jpg"><%= pics %></a></h2>
+    </article> -->
+
+       <!--
+    {% for post in object_list %}
+    <article class="thumb">
+        <a href="{{ post.photo.url }}" class="image"><img src="{{ post.photo_thumbnail.url }}"
+                alt="" /></a>
+        <h2><a href="{% url 'photo:photo_detail' pk=post.id %}">{{ post.title }}</a></h2>
+    </article>
+    {% endfor %}
+
+ 
+{% if is_paginated %}
+<div class="pagination">
+    {% if page_obj.has_previous %}
+            <a class="button" href="{% url 'photo:photo_list' %}?page={{ page_obj.previous_page_number }}{% if request.GET.members %}&members={{ request.GET.members }}{% endif %}" tabindex="-1">Previous</a>
+    {% else %}
+        <a class="button disabled" href="#" tabindex="-1">Previous</a>
+    {% endif %} 
+
+    {% for page in page_range %}
+            <a class="button {% if page_obj.number == page %}disabled{% endif %}" href="{{ request.path }}?page={{ page }}{% if request.GET.members %}&members={{ request.GET.members }}{% endif %}">{{ page }}</a>
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+            <a class="button" href="{% url 'photo:photo_list' %}?page={{ page_obj.next_page_number }}{% if request.GET.members %}&members={{ request.GET.members }}{% endif %}">Next</a>
+    {% else %}
+            <a class="button disabled" href="#">Next</a>
+    {% endif %}
+</div>
+{% endif %}
+-->
+</div>
