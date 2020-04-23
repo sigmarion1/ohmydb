@@ -19,7 +19,7 @@ image_*/
 images-temp/
 *.exe
 mongodb.txt
-
+data/
 
 ### Node ###
 # Logs
