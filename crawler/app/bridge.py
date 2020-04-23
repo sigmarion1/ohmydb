@@ -4,4 +4,5 @@ if __name__ == '__main__':
    
     omgdc = Dc('ohmygirl')
 
-    omgdc.getImages()
+    #omgdc.getImages()
+    print('crawl engine out')

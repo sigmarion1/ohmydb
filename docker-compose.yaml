@@ -9,6 +9,8 @@ services:
 
     ohmygirl:
         build: ./ohmygirl
+        depends_on:
+            - mongodb
         ports:
             - "3000"
 
@@ -21,11 +23,15 @@ services:
         
     crawler:
         build: ./crawler
+        depends_on:
+            - mongodb
         volumes: 
             - ./image_crawl:/usr/src/app/image_crawl
 
     face:
         build: ./face
+        depends_on:
+            - mongodb
         volumes: 
             - ./image_crawl:/usr/src/app/image_crawl
             - ./image_db:/usr/src/app/image_db

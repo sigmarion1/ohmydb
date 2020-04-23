@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 client = MongoClient()
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongodb', 27017)
 db = client["history"]
 print('history db connected')
 

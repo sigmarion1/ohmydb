@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 client = MongoClient()
-client = MongoClient('localhost', 27017)
+client = MongoClient('pymongo', 27017)
 
 print('image db connected')
 

@@ -1,4 +1,4 @@
 FROM nginx:1.17.10
 
-COPY .config/nginx.conf /etc/nginx
+COPY ./config/nginx.conf /etc/nginx/nginx.conf
 
