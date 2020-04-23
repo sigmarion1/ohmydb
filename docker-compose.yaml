@@ -24,13 +24,13 @@ services:
     crawler:
         build: ./crawler
         volumes: 
-            -./image_crawl:/usr/src/app/image_crawl
+            -"./image_crawl:/usr/src/app/image_crawl"
 
     face:
         build: ./face
         volumes: 
-            -./image_crawl:/usr/src/app/image_crawl
-            -./image_db:/usr/src/app/image_db
+            -"./image_crawl:/usr/src/app/image_crawl"
+            -""./image_db:/usr/src/app/image_db"
 
 
             
