@@ -30,7 +30,7 @@ services:
         build: ./face
         volumes: 
             -"./image_crawl:/usr/src/app/image_crawl"
-            -""./image_db:/usr/src/app/image_db"
+            -"./image_db:/usr/src/app/image_db"
 
 
             
