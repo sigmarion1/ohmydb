@@ -6,23 +6,46 @@ db = client["history"]
 print('history db connected')
 
 
-def isCrawled(engine, id, num):
+def isCrawled(engine, id, no):
     collection = db[engine]
     
-    if collection.count_documents({'id':id, 'num':num}) >= 1:
+    if collection.count_documents({'id':id, 'no':no}) >= 1:
         return True
     
     return False
 
-def insert(engine, id, num):
+def insert(engine, id, no, created, postName, page):
     collection = db[engine]
     new_history = {
         'id':id,
-        'num':num
+        'no':no,
+        'created': created,
+        'postName': postName,
+        'isCrawled': False,
+        'page': page
     }
+
     new_history_id = collection.insert_one(new_history)
 
     return new_history_id
+
+def getNotCralwedOne(engine, id):
+    collection = db[engine]
+
+    return collection.find_one({'id':id, 'isCrawled':False})
+
+def checkCrawled(engine, id, no):
+    collection = db[engine]
+    
+    post = collection.find_one({'id':id, 'isCrawled':False, 'no': no})
+    
+    if post is not None:
+        post['isCrawled'] = True
+        
+    collection.save(post)
+    
+    return post
+
 
 
 if __name__ == '__main__':

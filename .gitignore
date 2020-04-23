@@ -15,7 +15,7 @@ facedetect/
 temp_photo/
 test.py
 test_photo/
-images/
+image_*/
 images-temp/
 *.exe
 
