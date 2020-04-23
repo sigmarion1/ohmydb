@@ -13,24 +13,23 @@ services:
         ports:
             - "3000"
 
-
     mongodb:
         image: mongo:4.2.6
         volumes: 
-            - "./mongodb/data/db:/data/db"
+            - ./mongodb/data/db:/data/db
         ports:
             - "27017:27017"
         
     crawler:
         build: ./crawler
         volumes: 
-            -"./image_crawl:/usr/src/app/image_crawl"
+            -./image_crawl:/usr/src/app/image_crawl
 
     face:
         build: ./face
         volumes: 
-            -"./image_crawl:/usr/src/app/image_crawl"
-            -"./image_db:/usr/src/app/image_db"
+            -./image_crawl:/usr/src/app/image_crawl
+            -./image_db:/usr/src/app/image_db
 
 
             
