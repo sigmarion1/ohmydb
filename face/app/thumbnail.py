@@ -3,6 +3,7 @@ from datetime import date
 from PIL import Image
 from shutil import copyfile
 
+
 SIZE = (500, 500)
 PATH_ORI = os.path.join('image_crawl', 'ori')
 PATH_THM = os.path.join('image_crawl', 'thm')
@@ -16,6 +17,11 @@ def make_thumbnail():
 
     if not os.path.exists(PATH_THM):
         os.makedirs(PATH_THM)
+
+    if not os.path.exists(PATH_ORI):
+        os.makedirs(PATH_ORI)
+
+
 
     results = []
 
@@ -64,6 +70,11 @@ def save_image(image, group):
 
     return (db_image_ori, db_image_thm)
     
+
+def clean(images):
+    for image in images:
+        os.remove(image[0])
+        os.remove(image[1])
 
     
 

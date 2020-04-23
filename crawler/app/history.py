@@ -31,7 +31,7 @@ def getNotCralwedOne(engine, group):
     return collection.find_one({'engine': engine, 'group':group, 'isCrawled':False})
 
 def checkCrawled(engine, group, no, crawledTime, crawledNum):
-    post = collection.find_one({'engine', 'group':group, 'no': no})
+    post = collection.find_one({'engine':engine, 'group':group, 'no': no})
     
     if post is None:
         print(engine + group + str(no) + ' is not available')

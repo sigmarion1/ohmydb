@@ -1,5 +1,4 @@
-#from recog import get_face_name
-from thumbnail import make_thumbnail, save_image
+from thumbnail import make_thumbnail, save_image, clean
 from recog import get_face_name
 from db import insert
 import time
@@ -31,15 +30,16 @@ def work():
         
         group = image_thm.split('_')[-3]
 
-        save_image(image, group)
+        db_image = save_image(image, group)
 
-        insert(group, no, who, 'default', image_ori, image_thm)
+        insert(group, int(no), who, 'default', db_image[0], db_image[1])
 
         print(who)
         print(group + str(no) + ' image saved')
 
+    clean(images)
 
-
+    
     
     
 
@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
     while(True):
         work()
-        time.sleep(60)
+        time.sleep(30)
 
 
 
@@ -55,9 +55,3 @@ if __name__ == '__main__':
 
 
 
-
-
-
-
-if __name__ == "__main__":
-    work()

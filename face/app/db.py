@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 client = MongoClient()
-client = MongoClient('pymongo', 27017)
+client = MongoClient('mongodb', 27017)
 db = client["ohmydb"]
 collection_history = db["history"]
 
