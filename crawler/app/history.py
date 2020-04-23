@@ -2,22 +2,22 @@ from pymongo import MongoClient
 
 client = MongoClient()
 client = MongoClient('mongodb', 27017)
-db = client["history"]
+db = client["ohmydb"]
+collection = db["history"]
 print('history db connected')
 
 
-def isCrawled(engine, id, no):
-    collection = db[engine]
-    
-    if collection.count_documents({'id':id, 'no':no}) >= 1:
+def isCrawled(engine, group, no):
+
+    if collection.count_documents({'engine': engine, 'group':group, 'no':no}) >= 1:
         return True
     
     return False
 
-def insert(engine, id, no, created, postName, page):
-    collection = db[engine]
+def insert(engine, group, no, created, postName, page):
     new_history = {
-        'id':id,
+        'engine': engine,
+        'group': group,
         'no':no,
         'created': created,
         'postName': postName,
@@ -25,22 +25,25 @@ def insert(engine, id, no, created, postName, page):
         'page': page
     }
 
-    new_history_id = collection.insert_one(new_history)
+    return collection.insert_one(new_history)
 
-    return new_history_id
+def getNotCralwedOne(engine, group):
+    return collection.find_one({'engine': engine, 'group':group, 'isCrawled':False})
 
-def getNotCralwedOne(engine, id):
-    collection = db[engine]
-
-    return collection.find_one({'id':id, 'isCrawled':False})
-
-def checkCrawled(engine, id, no):
-    collection = db[engine]
+def checkCrawled(engine, group, no, crawledTime, crawledNum):
+    post = collection.find_one({'engine', 'group':group, 'no': no})
     
-    post = collection.find_one({'id':id, 'isCrawled':False, 'no': no})
-    
-    if post is not None:
-        post['isCrawled'] = True
+    if post is None:
+        print(engine + group + str(no) + ' is not available')
+        return None
+
+    if post['isCrawled'] == True:
+        print(engine + group + str(no) + ' is already crawled')
+        return None
+
+    post['isCrawled'] = True
+    post['crawledTime'] = crawledTime
+    post['crawledNum'] = crawledNum
         
     collection.save(post)
     

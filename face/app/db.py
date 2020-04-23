@@ -3,15 +3,22 @@ from bson.objectid import ObjectId
 
 client = MongoClient()
 client = MongoClient('pymongo', 27017)
+db = client["ohmydb"]
+collection_history = db["history"]
 
-print('image db connected')
+print('face db connected')
 
 
-def insert(engine, id, no, who, title, path_original, path_thumbnail):
-    history = client["history"][engine].find_one({'id':id, 'no':no})
+
+def insert(group, no, who, title, path_original, path_thumbnail):
+    history = collection_history.find_one({'group':group, 'no':no})
 
     if history is None:
-        history = {}
+        history = {
+            'engine': 'no engine',
+            'group': group,
+            'no': no
+        }
 
     history['_id'] = ObjectId()
     history['who'] = who
@@ -19,37 +26,12 @@ def insert(engine, id, no, who, title, path_original, path_thumbnail):
     history['path_original'] = path_original
     history['path_thumbnail'] = path_thumbnail
     
-    client["image_db"][id].insert_one(history)
-
+    if len(who) >= 2:
+        history['isGroup'] = True
+    else:
+        history['isGroup'] = False
     
-
-
-    # db = 
-    
-    # client["image_db"][engine].
-
-    # collection.find_one({'id':id, 'isCrawled':False})
-
-
-    # collection = db[engine]
-    # new_history = {
-    #     'id':id,
-    #     'no':no,
-    #     'created': created,
-    #     'postName': postName,
-    #     'isCrawled': False,
-    #     'page': page
-    # }
-
-    # new_history_id = collection.insert_one(new_history)
-
-    # #who
-    # #title
-    # #path_original
-    # #path_thumbnail
-
-    # return new_history_id
-
+    db[group].insert_one(history)
 
 
 if __name__ == '__main__':
