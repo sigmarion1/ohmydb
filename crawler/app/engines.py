@@ -1,6 +1,6 @@
 
 from urllib.parse import urlencode
-from history import isCrawled, insert, getNotCheckImage, checkCrawled
+from history import isCrawled, insert, getNotCheckImage
 from bs4 import BeautifulSoup
 
 import time, datetime
@@ -127,7 +127,7 @@ class Dc:
             num += 1
 
         datetimeobj = datetime.datetime.now()       
-        checkCrawled(self.engine, self.group, post['no'], datetimeobj, num)
+        isCrawled(self.engine, self.group, post['no'], datetimeobj, num)
 
         return num
 
