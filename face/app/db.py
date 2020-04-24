@@ -16,7 +16,7 @@ def insert(group, no, who, title, path_original, path_thumbnail):
     if history is None:
         return False
 
-    if not 'checkImage' in dict.keys():
+    if not 'checkImage' in history.keys():
         return False 
 
     if history['checkImage'] == False:
