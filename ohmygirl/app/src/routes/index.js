@@ -1,5 +1,6 @@
 const express = require('express');
 const Pic = require('../models/pic')
+const ohmygirl = require('../models/ohmygirl')
 const router = express.Router()
 
 
@@ -8,10 +9,11 @@ const router = express.Router()
 router.get('/', async (req, res) => {
 
   try {
-    const pics = await Pic.find({})
+    const ohmygirls = await ohmygirl.find({})
+    console.log(ohmygirls)
     res.render('index', {
       title : "main",
-      pics
+      ohmygirls
     })
   } catch (e) {
     res.status(500).send(e)
