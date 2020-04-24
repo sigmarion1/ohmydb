@@ -16,6 +16,9 @@ def insert(group, no, who, title, path_original, path_thumbnail):
     if history is None:
         return False
 
+    if not 'checkImage' in dict.keys():
+        return False 
+
     if history['checkImage'] == False:
         return False
 
@@ -31,6 +34,8 @@ def insert(group, no, who, title, path_original, path_thumbnail):
         history['isGroup'] = False
     
     db[group].insert_one(history)
+
+    return True
 
 
 if __name__ == '__main__':
