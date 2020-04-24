@@ -20,7 +20,7 @@ app.set('view engine', 'ejs')
 app.use(logger('dev'))
 app.use(expressLayouts)
 app.use(express.static(publicDirectoryPath))
-app.use('/images', express.static(path.join(__dirname, '../../../images')))
+app.use('/image_db', express.static(path.join(__dirname, '../image_db')))
 
 
 app.use(express.json())
