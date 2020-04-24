@@ -1,6 +1,6 @@
 
 from urllib.parse import urlencode
-from history import isCrawled, insert, getNotCralwedOne, checkCrawled
+from history import isCrawled, insert, getNotCheckImage, checkCrawled
 from bs4 import BeautifulSoup
 
 import time, datetime
@@ -68,7 +68,7 @@ class Dc:
 
 
     def getImage(self):
-        post = getNotCralwedOne(self.engine, self.group)
+        post = getNotCheckImage(self.engine, self.group)
 
         if post is None:
             print('getImage : There are not available uncrawled posts')

@@ -33,7 +33,7 @@ def work():
 
         db_image = save_image(image, group)
 
-        insert(group, int(no), who, 'default', db_image[0], db_image[1]):
+        insert(group, int(no), who, 'default', db_image[0], db_image[1])
 
 
         print(who)
