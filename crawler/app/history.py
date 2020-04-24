@@ -21,27 +21,27 @@ def insert(engine, group, no, created, postName, page):
         'no':no,
         'created': created,
         'postName': postName,
-        'isCrawled': False,
+        'checkImage': False,
         'page': page
     }
 
     return collection.insert_one(new_history)
 
-def getNotCralwedOne(engine, group):
-    return collection.find_one({'engine': engine, 'group':group, 'isCrawled':False})
+def getNotCheckImage(engine, group):
+    return collection.find_one({'engine': engine, 'group':group, 'checkImage':False})
 
-def checkCrawled(engine, group, no, crawledTime, crawledNum):
+def checkImage(engine, group, no, crawledTime, crawledNum):
     post = collection.find_one({'engine':engine, 'group':group, 'no': no})
     
     if post is None:
         print(engine + group + str(no) + ' is not available')
         return None
 
-    if post['isCrawled'] == True:
+    if post['checkImage'] == True:
         print(engine + group + str(no) + ' is already crawled')
         return None
 
-    post['isCrawled'] = True
+    post['checkImage'] = True
     post['crawledTime'] = crawledTime
     post['crawledNum'] = crawledNum
         

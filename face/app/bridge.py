@@ -3,8 +3,7 @@ from recog import get_face_name
 from db import insert
 import time
 
-
-OMG_MEMBER = {'group': '단체', 'hyojung': '효정', 'mimi': '미미', 'yooa': '유아', 'seunghee': '승희', 'jiho': '지호', 'binnie': '비니', 'arin': '아린'}
+#OMG_MEMBER = {'group': '단체', 'hyojung': '효정', 'mimi': '미미', 'yooa': '유아', 'seunghee': '승희', 'jiho': '지호', 'binnie': '비니', 'arin': '아린'}
 
 def work():
     images = make_thumbnail()
@@ -25,14 +24,17 @@ def work():
 
         else:
             for member in who_eng:
-                who.append(OMG_MEMBER[member])
+                if member == 'unknown':
+                    continue
+                who.append(member)
 
         
         group = image_thm.split('_')[-3]
 
         db_image = save_image(image, group)
 
-        insert(group, int(no), who, 'default', db_image[0], db_image[1])
+        insert(group, int(no), who, 'default', db_image[0], db_image[1]):
+
 
         print(who)
         print(group + str(no) + ' image saved')

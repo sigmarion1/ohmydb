@@ -14,11 +14,10 @@ def insert(group, no, who, title, path_original, path_thumbnail):
     history = collection_history.find_one({'group':group, 'no':no})
 
     if history is None:
-        history = {
-            'engine': 'no engine',
-            'group': group,
-            'no': no
-        }
+        return False
+
+    if history['checkImage'] == False:
+        return False
 
     history['_id'] = ObjectId()
     history['who'] = who

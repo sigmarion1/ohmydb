@@ -16,7 +16,7 @@ const ohmygirl = mongoose.model('ohmygirl', {
     postName : {
         type: String,
     },
-    isCrawled : {
+    checkImage : {
         type: Boolean,
     },
     page :{

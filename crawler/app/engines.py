@@ -132,15 +132,16 @@ class Dc:
         return num
 
            
-    def getImages(self, maximum=10):
+    def getImages(self):
 
-        rand_page = (random.randrange(1,30))
+        rand_page = random.randrange(1,50)
+        rand_post = random.randrange(5,15)
 
         self.getPosts(rand_page)
         
         total_images = 0
 
-        for _ in range(maximum):
+        for _ in range(rand_post):
             self.randDelay()
             total_images += self.getImage()
 
