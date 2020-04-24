@@ -9,7 +9,7 @@ const router = express.Router()
 router.get('/', async (req, res) => {
 
   try {
-    const ohmygirls = await ohmygirl.find({})
+    const ohmygirls = await ohmygirl.find({}).sort('crawledTime')
     console.log(ohmygirls)
     res.render('index', {
       title : "main",

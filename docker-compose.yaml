@@ -13,6 +13,8 @@ services:
             - mongodb
         ports:
             - "3000"
+        volumes: 
+            - ./image_db:/usr/src/app/image_db
 
     mongodb:
         image: mongo:4.2.6
