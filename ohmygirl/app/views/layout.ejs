@@ -11,8 +11,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-		<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
-		<link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
+		<link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
 
 		<!-- Primary Meta Tags -->
 
@@ -24,17 +24,17 @@
 		<meta property="og:url" content="https://ohmydb.com/">
 		<meta property="og:title" content="Oh My Girl Database">
 		<meta property="og:description" content="The collection of 'OH MY GIRL'">
-		<meta property="og:image" content="img/meta.jpg">
+		<meta property="og:image" content="/img/meta.jpg">
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image">
 		<meta property="twitter:url" content="https://ohmydb.com/">
 		<meta property="twitter:title" content="Oh My Girl Database">
 		<meta property="twitter:description" content="The collection of 'OH MY GIRL'">
-		<meta property="twitter:image" content="img/meta.jpg">
+		<meta property="twitter:image" content="/img/meta.jpg">
 
 
-		<link rel="stylesheet" href="css/main.css" />
+		<link rel="stylesheet" href="/css/main.css" />
 
 	</head>
 	<body class="is-preload">
@@ -46,7 +46,7 @@
 					<header id="header">
 						<h1 class="logo">
 							<a href="/">
-								<img src="img/logo.png" alt="OhMyGirl">
+								<img src="/img/logo.png" alt="OhMyGirl">
 							</a>
 						</h1>
 						
@@ -57,8 +57,8 @@
 								<li><a href="{% url 'photo:photo_upload' %}">Upload</a></li>
 								<li><a href="{% url 'logout' %}">Sign out</a></li>
 								<% } else { %>
-								<li><a href="{% url 'login' %}">Sign in</a></li>
-								<li><a href="{% url 'register' %}">Sign up</a></li>
+								<li><a href="/">Sign in</a></li>
+								<li><a href="/">Sign up</a></li>
 								<% } %>
 								<li><a href="#footer">Search</a></li>
 							</ul>
@@ -74,14 +74,14 @@
 							<div>
 								<section>
 									<h2>Search by member</h2>
-									<a href="/"><img src="img/gallery_all.png" class="profile"></a>
-									<a href="/find/hyojung"><img src="img/gallery_hyojung.png" class="profile"></a>
-									<a href="/find/mimi"><img src="img/gallery_mimi.png" class="profile"></a>
-									<a href="/find/yooa"><img src="img/gallery_yooa.png" class="profile"></a>
-									<a href="/find/seunghee"><img src="img/gallery_seunghee.png" class="profile"></a>
-									<a href="/find/jiho"><img src="img/gallery_jiho.png" class="profile"></a>
-									<a href="/find/binnie"><img src="img/gallery_binnie.png" class="profile"></a>
-									<a href="/find/arin"><img src="img/gallery_arin.png" class="profile"></a>
+									<a href="/?member=group"><img src="/img/gallery_all.png" class="profile"></a>
+									<a href="/?member=hyojung"><img src="/img/gallery_hyojung.png" class="profile"></a>
+									<a href="/?member=mimi"><img src="/img/gallery_mimi.png" class="profile"></a>
+									<a href="/?member=yooa"><img src="/img/gallery_yooa.png" class="profile"></a>
+									<a href="/?member=seunghee"><img src="/img/gallery_seunghee.png" class="profile"></a>
+									<a href="/?member=jiho"><img src="/img/gallery_jiho.png" class="profile"></a>
+									<a href="/?member=binnie"><img src="/img/gallery_binnie.png" class="profile"></a>
+									<a href="/?member=arin"><img src="/img/gallery_arin.png" class="profile"></a>
 								</section>
 
 								<p class="copyright">
@@ -114,13 +114,13 @@
 
 		<!-- Scripts -->
 
-			<script src="js/jquery.min.js"></script>
-			<script src="js/jquery.poptrox.min.js"></script>
-			<script src="js/popper.min.js"></script>
-			<script src="js/browser.min.js"></script>
-			<script src="js/breakpoints.min.js"></script>
-			<script src="js/util.js"></script>
-			<script src="js/main.js"></script>
+			<script src="/js/jquery.min.js"></script>
+			<script src="/js/jquery.poptrox.min.js"></script>
+			<script src="/js/popper.min.js"></script>
+			<script src="/js/browser.min.js"></script>
+			<script src="/js/breakpoints.min.js"></script>
+			<script src="/js/util.js"></script>
+			<script src="/js/main.js"></script>
 
 	</body>
 </html>

@@ -2,12 +2,52 @@
 
         <% ohmygirls.forEach((omg) => { %>
                 <article class="thumb">
-                        <a href="<%= omg.path_original %>" class="image">
-                                <img src = "<%= omg.path_thumbnail %>" alt="">
+                        <a href="/<%= omg.path_original %>" class="image">
+                                <img src = "/<%= omg.path_thumbnail %>" alt="">
                         </a>
                         <h2><a href="photo"><%= omg.who %></a></h2>
                 </article>
         <% }) %>
+        <div class="pagination">
+                <% if (pg['has_previous']) { %>
+                        <% if (pg['member']) { %>
+                                <a class="button" href="/?page=<%=pg['previous']%>&member=<%=pg['member']%>" tabindex="-1">Prev</a>
+                        <% } else { %>
+                                <a class="button" href="/?page=<%=pg['previous']%>" tabindex="-1">Prev</a>  
+                        <% } %>
+                <% } else { %>
+                        <a class="button disabled" href="#" tabindex="-1">Prev</a>
+                <% } %> 
+
+
+                <% for (let i = 1; i < pg['last'] + 1; i++) { %>
+                        <% if (i === pg['current']) { %>
+                                <a class="button disabled" href="#" tabindex="-1"><%=i%></a>
+                        <% } else { %>
+                                <% if (pg['member']) { %>
+                                        <a class="button" href="/?page=<%=i%>&member=<%=pg['member']%>" tabindex="-1"><%=i%></a> 
+                                <% } else { %>
+                                        <a class="button" href="/?page=<%=i%>" tabindex="-1"><%=i%></a> 
+                                <% } %>         
+                                
+                        <% } %>
+                <% } %>
+
+
+                <% if (pg['has_next']) { %>
+                        <% if (pg['member']) { %>
+                                <a class="button" href="/?page=<%=pg['next']%>&member=<%=pg['member']%>" tabindex="-1">Next</a>
+                        <% } else { %>
+                                <a class="button" href="/?page=<%=pg['next']%>" tabindex="-1">Next</a>  
+                        <% } %>
+                <% } else { %>
+                        <a class="button disabled" href="#" tabindex="-1">Next</a>
+                <% } %>         
+
+
+
+
+        </div>
 
     <!-- <article class="thumb">
         <a href="images/1.jpg" class="image"><img src="images/1.jpg"
