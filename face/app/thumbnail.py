@@ -33,7 +33,7 @@ def make_thumbnail():
 
         img = Image.open(img_path)
         img.thumbnail(SIZE)
-        img.save(thm_path)
+        img.convert('RGB').save(thm_path)
         
         if not os.path.exists(PATH_THM):
             os.makedirs(PATH_THM)
