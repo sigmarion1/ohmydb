@@ -14,7 +14,9 @@ services:
         ports:
             - "3000"
         volumes: 
-            - ./image_db:/usr/src/app/image_db
+            - ./image_db:/usr/src/app/image_dbo
+        env_file: 
+            - .env
 
     mongodb:
         image: mongo:4.2.6

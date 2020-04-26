@@ -29,7 +29,7 @@ def make_thumbnail():
 
     for file in files:
         img_path = os.path.join(PATH_ORI, file)
-        thm_path = os.path.join(PATH_THM, 'th_' + file)
+        thm_path = os.path.join(PATH_THM, 'th_' + file.split('.')[-2] + '.jpg')
 
         img = Image.open(img_path)
         img.thumbnail(SIZE)
