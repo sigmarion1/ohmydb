@@ -1705,7 +1705,7 @@ input, select, textarea {
 			-webkit-transition-delay: 2.525s;
 			-ms-transition-delay: 2.525s;
 			transition-delay: 2.525s;
-			height: 30vh;
+			/*height: calc(40vh - 2em);*/
 			min-height: 20em;
 			width: 25%;
 		}
@@ -1801,7 +1801,7 @@ input, select, textarea {
 				-webkit-transition-delay: 2.075s;
 				-ms-transition-delay: 2.075s;
 				transition-delay: 2.075s;
-				height: 30vh;
+				/*height: calc(40vh - 2em);*/
 				min-height: 20em;
 				width: 33.33333%;
 			}
@@ -1878,7 +1878,7 @@ input, select, textarea {
 				-webkit-transition-delay: 1.625s;
 				-ms-transition-delay: 1.625s;
 				transition-delay: 1.625s;
-				height: 30vh;
+				/*height: calc(40vh - 2em);*/
 				min-height: 20em;
 				width: 50%;
 			}
@@ -1934,7 +1934,7 @@ input, select, textarea {
 				-webkit-transition-delay: 2.075s;
 				-ms-transition-delay: 2.075s;
 				transition-delay: 2.075s;
-				height: 30vh;
+				/*height: calc(28.57143vh - 1.33333em);*/
 				min-height: 18em;
 				width: 50%;
 			}
@@ -2011,9 +2011,9 @@ input, select, textarea {
 				-webkit-transition-delay: 1.175s;
 				-ms-transition-delay: 1.175s;
 				transition-delay: 1.175s;
-				height: 20vh;
+				height: calc(40vh - 2em);
 				min-height: 18em;
-				width: 50%;
+				width: 100%;
 			}
 
 				#main .thumb:nth-child(1) {
