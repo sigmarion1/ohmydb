@@ -30,7 +30,7 @@ import face_recognition
 from face_recognition.face_recognition_cli import image_files_in_folder
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-MODEL_PATH = "model/trained_knn_model_191021.clf"
+MODEL_PATH = "model/trained_knn_model_200430.clf"
 
 def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree', verbose=False):
     """

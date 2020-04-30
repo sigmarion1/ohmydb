@@ -21,6 +21,7 @@ images-temp/
 mongodb.txt
 data/
 .env
+train/
 
 ### Node ###
 # Logs
