@@ -40,7 +40,7 @@ services:
         ports:                                                                                                                                                                                                                                                                                                                                                                                                  
             - "4000"
         volumes:
-            - -./image_db:/usr/src/app/image_db
+            - ./image_db:/usr/src/app/image_db
         env_file: 
             - .env
 
