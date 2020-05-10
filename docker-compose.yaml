@@ -4,7 +4,7 @@ services:
         build: ./ohmygirl
         depends_on:
             - mongodb
-        ports:
+        expose:
             - "3000"
         volumes: 
             - ./image_db:/usr/src/app/image_db
@@ -43,8 +43,4 @@ services:
             - ./image_db:/usr/src/app/image_db
         env_file: 
             - .env
-
-networks:
-    reverse-proxy_default:
-        external: true
-            
+           
