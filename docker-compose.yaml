@@ -1,12 +1,5 @@
 version: "3"
 services:
-    nginx:
-        build: ./nginx
-        depends_on: 
-            - ohmygirl
-        ports:
-            - "80:80"
-
     ohmygirl:
         build: ./ohmygirl
         depends_on:
@@ -40,5 +33,18 @@ services:
             - ./image_crawl:/usr/src/app/image_crawl
             - ./image_db:/usr/src/app/image_db
 
+    omg-back:
+        build: ./omg-back
+        depends_on: 
+            - mongodb
+        ports:                                                                                                                                                                                                                                                                                                                                                                                                  
+            - "4000"
+        volumes:
+            - -./image_db:/usr/src/app/image_db
+        env_file: 
+            - .env
 
+networks:
+    reverse-proxy_default:
+        external: true
             

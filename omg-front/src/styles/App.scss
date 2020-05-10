@@ -1,0 +1,63 @@
+@font-face{
+    font-family:'Calluna';
+    src:url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/callunasansregular-webfont.woff') format('woff');
+}
+
+body {
+    font-family: Calluna, Arial, sans-serif;
+    min-height: 1000px;
+}
+
+.bg-img1 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+// .bg-img1::before {
+//     content: "";
+//     display: block;
+//     position: absolute;
+//     z-index: -1;
+//     width: 100%;
+//     height: 100%;
+//     top: 0;
+//     left: 0;
+//     background: #61045f;
+//     // background: -webkit-linear-gradient(bottom, #aa076b, #61045f);
+//     // background: -o-linear-gradient(bottom, #aa076b, #61045f);
+//     // background: -moz-linear-gradient(bottom, #aa076b, #61045f);
+//     // background: linear-gradient(bottom, #aa076b, #61045f);
+//     opacity: 0.5;
+// }
+
+  
+// .bg-img1::after {
+//     content: "";
+//     display: block;
+//     position: absolute;
+//     z-index: -1;
+//     width: 100%;
+//     height: 100%;
+//     top: 0;
+//     left: 0;
+//     background: rgba(0,0,0,0.2);
+// }
+
+
+small { 
+    font-size: 1rem;
+    float: right; 
+    text-transform: uppercase;
+    color: #aaa;
+  
+    a { 
+    color: #666; 
+    text-decoration: none; 
+    transition: .4s color;
+    }
+}
