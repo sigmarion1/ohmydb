@@ -1,8 +1,16 @@
+import os
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
-client = MongoClient()
-client = MongoClient('mongodb', 27017)
+
+db_id = os.getenv('MONGO_INITDB_ROOT_USERNAME') or 'admin'
+db_pw = os.getenv('MONGO_INITDB_ROOT_PASSWORD') or 'admin1'
+db_host = os.getenv('DB_HOST') or 'localhost'
+db_port = os.getenv('DB_PORT') or '27017'
+
+url  = 'mongodb://{db_id}:{db_pw}@${db_host}:{db_port}'
+
+client = MongoClient(url)
 db = client["ohmydb"]
 collection_history = db["history"]
 

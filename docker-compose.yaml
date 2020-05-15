@@ -16,7 +16,10 @@ services:
         volumes: 
             - ./mongodb/data/db:/data/db
         ports:
-            - "27017:27017"
+            - "27019:27019"
+        env_file:
+            - .env
+        command: mongod --port 27019
         
     crawler:
         build: ./crawler
