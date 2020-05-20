@@ -1,8 +1,6 @@
 from pymongo import MongoClient
 import os
 
-
-
 db_id = os.getenv('MONGO_INITDB_ROOT_USERNAME') or 'admin'
 db_pw = os.getenv('MONGO_INITDB_ROOT_PASSWORD') or 'admin1'
 db_host = os.getenv('DB_HOST') or 'localhost'
@@ -58,8 +56,6 @@ def checkImage(engine, group, no, crawledTime, crawledNum):
     collection.save(post)
     
     return post
-
-
 
 if __name__ == '__main__':
     isCrawled('dc','ohmygirl','1111')
