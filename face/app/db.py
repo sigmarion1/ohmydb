@@ -8,6 +8,8 @@ db_pw = os.getenv('MONGO_INITDB_ROOT_PASSWORD') or 'admin1'
 db_host = os.getenv('DB_HOST') or 'localhost'
 db_port = os.getenv('DB_PORT') or '27017'
 
+print(db_port)
+
 url  = 'mongodb://{db_id}:{db_pw}@${db_host}:{db_port}'
 
 client = MongoClient(url)
