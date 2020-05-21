@@ -4,7 +4,7 @@ import os
 db_id = os.getenv('MONGO_INITDB_ROOT_USERNAME') or 'admin'
 db_pw = os.getenv('MONGO_INITDB_ROOT_PASSWORD') or 'admin1'
 db_host = os.getenv('DB_HOST') or 'localhost'
-db_port = os.getenv('DB_PORT') or '27017'
+db_port = int(os.getenv('DB_PORT') or '27017')
 db_auth = os.getenv('DB_AUTH') or 'auth'
 
 client = MongoClient(
