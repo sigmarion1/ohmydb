@@ -25,6 +25,8 @@ services:
         build: ./crawler
         depends_on:
             - mongodb
+        env_file:
+            - .env
         volumes: 
             - ./image_crawl:/usr/src/app/image_crawl
 
@@ -32,6 +34,8 @@ services:
         build: ./face
         depends_on:
             - mongodb
+        env_file:
+            - .env
         volumes: 
             - ./image_crawl:/usr/src/app/image_crawl
             - ./image_db:/usr/src/app/image_db
@@ -39,7 +43,7 @@ services:
     omg-back:
         build: ./omg-back
         depends_on: 
-            - mongodb
+            - mongodb 
         ports:                                                                                                                                                                                                                                                                                                                                                                                                  
             - "3000"
         volumes:
