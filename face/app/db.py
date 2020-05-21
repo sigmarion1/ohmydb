@@ -7,13 +7,16 @@ db_id = os.getenv('MONGO_INITDB_ROOT_USERNAME') or 'admin'
 db_pw = os.getenv('MONGO_INITDB_ROOT_PASSWORD') or 'admin1'
 db_host = os.getenv('DB_HOST') or 'localhost'
 db_port = os.getenv('DB_PORT') or '27017'
+db_auth = os.getenv('DB_AUTH') or 'auth'
 
-print(db_port)
-print(os.getenv('DB_PORT'))
+client = MongoClient(
+    host=db_host,
+    port=db_port,
+    username=db_id,
+    password=db_pw,
+    authSource=db_auth,
+)
 
-url  = 'mongodb://{db_id}:{db_pw}@${db_host}:{db_port}'
-
-client = MongoClient(url)
 db = client["ohmydb"]
 collection_history = db["history"]
 
