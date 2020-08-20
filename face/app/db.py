@@ -1,59 +1,63 @@
 import os
+from dotenv import load_dotenv
+
+env_path = os.path.join(os.pardir, os.pardir, '.env')
+load_dotenv(dotenv_path=env_path)
+
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 
-db_id = os.getenv('MONGO_INITDB_ROOT_USERNAME') or 'admin'
-db_pw = os.getenv('MONGO_INITDB_ROOT_PASSWORD') or 'admin1'
+
 db_host = os.getenv('DB_HOST') or 'localhost'
-db_port = int(os.getenv('DB_PORT') or '27017')
-db_auth = os.getenv('DB_AUTH') or 'auth'
+db_user = os.getenv('DB_USER') or 'admin'
+db_pw = os.getenv('DB_PW') or 'admin'
+db_name = os.getenv('DB_NAME') or 'page'
 
 client = MongoClient(
-    host=db_host,
-    port=db_port,
-    username=db_id,
-    password=db_pw,
-    authSource=db_auth,
+    f"mongodb+srv://{db_user}:{db_pw}@{db_host}/{db_name}?retryWrites=true&w=majority"
 )
 
+
 db = client["ohmydb"]
-collection_history = db["history"]
+collection_pic = db["pic"]
 
 print('face db connected')
 
 
+def insert(group, no, who, path_original, path_thumbnail):
+    # history = collection_history.find_one({'group':group, 'no':no})
 
-def insert(group, no, who, title, path_original, path_thumbnail):
-    history = collection_history.find_one({'group':group, 'no':no})
+    # if history is None:
+    #     return False
 
-    if history is None:
-        return False
+    # if not 'checkImage' in history.keys():
+    #     return False 
 
-    if not 'checkImage' in history.keys():
-        return False 
+    # if history['checkImage'] == False:
+    #     return False
 
-    if history['checkImage'] == False:
-        return False
+    pic = {}
 
-    history['_id'] = ObjectId()
-    history['who'] = who
-    history['title'] = title
-    history['path_original'] = path_original
-    history['path_thumbnail'] = path_thumbnail
+    pic['_id'] = ObjectId()
+    pic['group'] = group
+    pic['no'] = no
+    pic['who'] = who
+    pic['path_original'] = path_original
+    pic['path_thumbnail'] = path_thumbnail
     
     if len(who) >= 2:
-        history['isGroup'] = True
+        pic['isGroup'] = True
     else:
-        history['isGroup'] = False
+        pic['isGroup'] = False
     
-    db[group].insert_one(history)
+    collection_pic.insert_one(pic)
 
     return True
 
 
 if __name__ == '__main__':
 
-    insert('dc', 'ohmygirl', 10, ['효정', '유아'], '제목', '/1/2.jpg', '1/2/3.jpg')
+    insert('ohmygirl', 342, ['효정', '유아'], '/1/2.jpg', '1/2/3.jpg')
 
 

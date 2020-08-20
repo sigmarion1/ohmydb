@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
-const Pic = mongoose.model('Pic', {
-    name :{
-        type: String,
-    },
+const pic = mongoose.model('pic', {
     group :{
         type: String,
+    },
+    no :{
+        type: Number,
     },
     who : {
         type: Array,
@@ -16,7 +16,10 @@ const Pic = mongoose.model('Pic', {
     path_thumbnail : {
         type: String,
     },
+    isGroup : {
+        type: Boolean,
+    }
 
-})
+}, 'pic')
 
-module.exports = Pic
+module.exports = pic

@@ -1,5 +1,5 @@
 const express = require('express');
-const Pic = require('../models/pic')
+const pic = require('../models/pic')
 const ohmygirl = require('../models/ohmygirl')
 const router = express.Router()
 
@@ -28,8 +28,8 @@ router.get('/', async (req, res) => {
   }
 
   try {
-    const ohmygirls = await ohmygirl.find(condition).sort({'crawledTime':-1}).skip((page-1)*20).limit(20)
-    const last_page = Math.ceil(await ohmygirl.countDocuments(condition) / 20)
+    const pics = await pic.find(condition).sort({'_id':-1}).skip((page-1)*20).limit(20)
+    const last_page = Math.ceil(await pic.countDocuments(condition) / 20)
     const pg = {
       'previous' : page - 1,
       'current' : page,
@@ -43,7 +43,7 @@ router.get('/', async (req, res) => {
     
     res.render('index', {
       title : "main",
-      ohmygirls,
+      pics,
       pg
     })
   } catch (e) {
@@ -59,16 +59,16 @@ router.get('/find/:member', async (req,res) => {
 
   try {
     if (member === 'group') {
-      const ohmygirls = await ohmygirl.find({ 'isGroup' : true}).sort({'crawledTime':-1}).skip((page-1)*20).limit(20)
+      const pics = await pic.find({ 'isGroup' : true}).sort({'_id':-1}).skip((page-1)*20).limit(20)
       res.render('index', {
         title : "find",
-        ohmygirls
+        pics
       })
     } else {
-      const ohmygirls = await ohmygirl.find({ 'who' : [member]}).sort({'crawledTime':-1}).skip((page-1)*20).limit(20)
+      const pics = await pic.find({ 'who' : [member]}).sort({'_id':-1}).skip((page-1)*20).limit(20)
       res.render('index', {
         title : "find",
-        ohmygirls
+        pics
       })
     }
   } catch (e) {
