@@ -13,6 +13,7 @@ DB_PATH_THM = os.path.join('image_db', 'thm')
  
 
 
+
 def make_thumbnail():
 
     if not os.path.exists(PATH_THM):

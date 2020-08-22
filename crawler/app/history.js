@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Page = require('./models/page')
+const Pic = require('./models/pic')
 
 const db_host = process.env.DB_HOST || 'localhost'
 const db_user = process.env.DB_USER || 'admin'
@@ -52,10 +53,29 @@ const checkPage = async (group, no, images) => {
     }
 }
 
+const insertImage = async (group, no, who, path_ori) => {
+    const newPic = new Pic({ group, no, who, path_ori})
+
+    if (who.length > 1) {
+        newPic["isGroup"] = true
+    } else {
+        newPic["isGroup"] = false
+    }
+
+    try {
+        const savedPic = await newPic.save()
+        // console.log(savedUser)
+    } catch(err) {
+        console.log(err)
+    }
+}
+
+
 
 // checkPage('ohmygirl', 235238, 4)
 
 module.exports = {
     isCrawled,
-    checkPage
+    checkPage,
+    insertImage
 }

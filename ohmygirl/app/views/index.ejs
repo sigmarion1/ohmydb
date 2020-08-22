@@ -2,8 +2,8 @@
 
         <% pics.forEach((pic) => { %>
                 <article class="thumb">
-                        <a href="/<%= pic.path_original %>" class="image">
-                                <img src = "/<%= pic.path_thumbnail %>" alt="">
+                        <a href="<%= pic.path_ori %>" class="image">
+                                <img src = "<%= pic.path_ori %>" alt="">
                         </a>
                         <h2><a href="photo"><%= pic.who %></a></h2>
                 </article>

@@ -10,10 +10,10 @@ const pic = mongoose.model('pic', {
     who : {
         type: Array,
     },
-    path_original : {
+    path_ori : {
         type: String,
     },
-    path_thumbnail : {
+    path_thm : {
         type: String,
     },
     isGroup : {

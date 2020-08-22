@@ -22,7 +22,7 @@ app.use(express.json())
 app.use(indexRouter)
 
 
-const port = (process.env.BACK_PORT || 4000)
+const port = (process.env.BACK_PORT || 8080)
 
 app.listen(port, () => {
     console.log('Ohmygirl Back-end Server is up on port : ' + port)
