@@ -2,7 +2,7 @@
 const INCREASE = 'counter/INCREASE'
 const DECREASE = 'counter/DECREASE'
 
-export const increase = () => ({ type: INCREASE })
+export const increase = (nr) => ({ type: INCREASE, payload: nr })
 export const decrease = () => ({ type: DECREASE })
 
 const initialState = {
@@ -13,7 +13,7 @@ const counter = (state=initialState, action) => {
     switch (action.type) {
         case INCREASE:
             return {
-                number: state.number + 1
+                number: state.number + action.payload
             }
         case DECREASE:
             return {
