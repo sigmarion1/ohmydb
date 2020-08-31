@@ -12,23 +12,24 @@
 //   post
 // });
 
-import counterReducer from './counter'
-import loggedReducer from './isLogged'
-import {combineReducers} from 'redux'
-import { all } from 'redux-saga/effects'
-import sample, { sampleSaga } from './sample'
-import loading from './loading'
-
+import counterReducer from "./counter";
+import loggedReducer from "./isLogged";
+import { combineReducers } from "redux";
+import { all } from "redux-saga/effects";
+import sample, { sampleSaga } from "./sample";
+import loading from "./loading";
+import isOpened from "./isOpened";
 
 const rootReducer = combineReducers({
   counter: counterReducer,
   isLogged: loggedReducer,
   sample,
-  loading
-})
+  loading,
+  isOpened,
+});
 
 export function* rootSaga() {
-  yield all([sampleSaga()])
+  yield all([sampleSaga()]);
 }
 
-export default rootReducer
+export default rootReducer;

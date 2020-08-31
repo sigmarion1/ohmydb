@@ -1,0 +1,40 @@
+version: "3"
+services:
+  mongodb:
+    image: mongo:4.2.6
+    volumes:
+      - ./mongodb/data/db:/data/db
+    ports:
+      - "27019:27019"
+    env_file:
+      - .env
+    command: mongod --port 27019
+
+  crawler:
+    build: ./crawler
+    depends_on:
+      - mongodb
+    env_file:
+      - .env
+    volumes:
+      - ./image_db:/usr/src/app/image_db
+
+  face:
+    build: ./face
+    depends_on:
+      - mongodb
+    env_file:
+      - .env
+    ports:
+      - "3001:3001"
+
+  omg-back:
+    build: ./omg-back
+    depends_on:
+      - mongodb
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./image_db:/usr/src/app/image_db
+    env_file:
+      - .env

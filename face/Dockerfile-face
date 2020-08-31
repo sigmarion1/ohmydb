@@ -31,5 +31,5 @@ RUN cd ~ && \
     python3 setup.py install --yes USE_AVX_INSTRUCTIONS
     
 WORKDIR /usr/src/app
-COPY ./config/requirements-img.txt ./requirements.txt
+COPY ./config/requirements-face.txt ./requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt

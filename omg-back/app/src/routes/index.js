@@ -1,8 +1,6 @@
 const express = require('express');
-const ohmygirl = require('../models/ohmygirl')
+const Pic = require('../models/pic')
 const router = express.Router()
-
-
 
 /* GET home page. */
 router.get('/', async (req, res) => {
@@ -22,15 +20,17 @@ router.get('/', async (req, res) => {
   }
 
   try {
-    const ohmygirls = await ohmygirl.find(condition).sort({'crawledTime':-1}).skip((page-1)*20).limit(20)
-    res.send(ohmygirls)
+    const pics = await Pic.find(condition).sort({'crawledTime':-1}).skip((page-1)*20).limit(20)
+    res.json(pics)
   } catch (e) {
     res.status(500).send(e)
   }
 
 })
 
-
+router.get('/test', async (req,res) => {
+  res.send('hi')
+})
 
 
 module.exports = router;
