@@ -15,27 +15,44 @@ import Avatar from "@material-ui/core/Avatar";
 
 import { menuToggle } from "../modules/isOpened";
 
-import pic_all from "../img/gallery_all.png";
-import pic_arin from "../img/gallery_arin.png";
-import pic_binnie from "../img/gallery_binnie.png";
+import DraftsIcon from "@material-ui/icons/Drafts";
+
+import picMember from "../lib/picMember";
+import memberInfo from "../lib/memberInfo";
+
 import {
   ListItemAvatar,
   ListItemSecondaryAction,
   Checkbox,
+  CardMedia,
+  Card,
 } from "@material-ui/core";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   list: {
-    width: "200%",
+    width: "100%",
+    maxWidth: 36000,
   },
-  fullList: {
-    width: "auto",
+  large: {
+    width: theme.spacing(5),
+    height: theme.spacing(5),
   },
-});
+  card: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+  },
+}));
+
+const ListItemLink = (props) => {
+  return <ListItem button component="a" {...props} />;
+};
 
 const Menu = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  console.log(picMember);
 
   return (
     // <div
@@ -51,7 +68,55 @@ const Menu = () => {
       onClick={() => dispatch(menuToggle(false))}
       onKeyDown={() => dispatch(menuToggle(false))}
     >
-      <List dense>
+      <List component="nav" aria-label="main mailbox folders">
+        {memberInfo.map((member, index) => {
+          return (
+            <ListItem
+              key={index}
+              target="_blank"
+              button
+              href="http://www.google.com"
+            >
+              <ListItemIcon>
+                <Avatar
+                  alt={member.name}
+                  src={member.image}
+                  className={classes.large}
+                />
+              </ListItemIcon>
+              <ListItemText primary={member.name} />
+            </ListItem>
+          );
+        })}
+        <ListItem button>
+          <ListItemIcon>
+            <Avatar
+              alt="all"
+              src={picMember.img_all}
+              className={classes.large}
+            />
+          </ListItemIcon>
+          <ListItemText primary="group" />
+        </ListItem>
+
+        <ListItem button>
+          <ListItemIcon>
+            <DraftsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Drafts" />
+        </ListItem>
+      </List>
+      <Divider />
+      <List component="nav" aria-label="secondary mailbox folders">
+        <ListItem button>
+          <ListItemText primary="Trash" />
+        </ListItem>
+        <ListItemLink href="#simple-list">
+          <ListItemText primary="Spam" />
+        </ListItemLink>
+      </List>
+
+      {/* <List dense>
         <ListItem key={1} button>
           <ListItemAvatar>
             <Avatar alt="all" src={pic_all} />
@@ -104,7 +169,7 @@ const Menu = () => {
             <ListItemText primary={text} />
           </ListItem>
         ))}
-      </List>
+      </List> */}
     </div>
   );
 };

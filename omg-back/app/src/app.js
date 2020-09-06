@@ -17,11 +17,13 @@ app.use(logger(process.env.LOGGER || "common"));
 app.use(express.json());
 app.use(indexRouter);
 
+app.use("/image_db", express.static("image_db"));
+
 const port = process.env.BACK_PORT || 3000;
 const host = process.env.BACK_HOST || "0.0.0.0";
 
-app.listen(port, host, () => {
-  console.log(`Ohmygirl Back-end Server is up on : ${host}:${port}`);
+app.listen(port, () => {
+  console.log(`Ohmygirl Back-end Server is up on : ${port}`);
 });
 
 // const publicDirectoryPath = path.join(__dirname, '../public')

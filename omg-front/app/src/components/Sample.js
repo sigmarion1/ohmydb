@@ -52,8 +52,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
   },
   cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+    // height: "10000px",
   },
   card: {
     height: "100%",
@@ -74,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Sample = ({ pics, loadingPics }) => {
+const Sample = ({ pics_data, loadingPics }) => {
   const classes = useStyles();
 
   return (
@@ -82,16 +83,15 @@ const Sample = ({ pics, loadingPics }) => {
       <CssBaseline />
       <main>
         <Container className={classes.cardGrid} maxWidth="lg">
-          {loadingPics && "loading..."}
-          <Grid container spacing={4}>
-            {!loadingPics &&
-              pics &&
-              pics.map((pic) => (
+          {/* {loadingPics && "loading..."} */}
+          <Grid container spacing={1}>
+            {pics_data.pics &&
+              pics_data.pics.map((pic) => (
                 <Grid item key={pic._id} xs={12} sm={6} md={3}>
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.CardMedia}
-                      image={pic.path_ori}
+                      image={"http://localhost:3001/" + pic.path_thm}
                       title={pic.who}
                     >
                       <CardContent className={classes.cardContent}>

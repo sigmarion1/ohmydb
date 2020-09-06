@@ -42,11 +42,14 @@ RUN apt-get update && apt-get install -y \
   libnss3 \
   lsb-release \
   xdg-utils \
-  wget
+  wget \
+  imagemagick
 
 WORKDIR /usr/src/app
-COPY ./app ./
-    
+
+COPY ./app/package.json ./package.json
 RUN npm install
+
+COPY ./app ./
 
 CMD ["node", "./index.js"]

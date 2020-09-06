@@ -4,7 +4,7 @@ from PIL import Image
 from shutil import copyfile
 
 
-SIZE = (500, 500)
+SIZE = (600, 600)
 PATH_ORI = os.path.join('image_crawl', 'ori')
 PATH_THM = os.path.join('image_crawl', 'thm')
 

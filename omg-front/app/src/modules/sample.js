@@ -1,24 +1,24 @@
-import { createAction, handleActions } from 'redux-actions';
-import { takeLatest } from 'redux-saga/effects';
-import * as api from '../lib/api';
-import createRequestSaga from '../lib/createRequestSaga';
-import { startLoading, finishLoading } from '../modules/loading';
-import { call, put } from 'redux-saga/effects';
+import { createAction, handleActions } from "redux-actions";
+import { takeLatest } from "redux-saga/effects";
+import * as api from "../lib/api";
+import createRequestSaga from "../lib/createRequestSaga";
+import { startLoading, finishLoading } from "../modules/loading";
+import { call, put } from "redux-saga/effects";
 
 // 액션 타입들을 선언합니다.
-const GET_POST = 'sample/GET_POST';
-const GET_POST_SUCCESS = 'sample/GET_POST_SUCCESS';
-const GET_POST_FAILURE = 'sample/GET_POST_FAILURE';
+const GET_POST = "sample/GET_POST";
+const GET_POST_SUCCESS = "sample/GET_POST_SUCCESS";
+const GET_POST_FAILURE = "sample/GET_POST_FAILURE";
 
-const GET_USERS = 'sample/GET_USERS';
-const GET_USERS_SUCCESS = 'sample/GET_USERS_SUCCESS';
-const GET_USERS_FAILURE = 'sample/GET_USERS_FAILURE';
+const GET_USERS = "sample/GET_USERS";
+const GET_USERS_SUCCESS = "sample/GET_USERS_SUCCESS";
+const GET_USERS_FAILURE = "sample/GET_USERS_FAILURE";
 
-const GET_PICS = 'sample/GET_PICS';
-const GET_PICS_SUCCESS = 'sample/GET_PICS_SUCCESS';
-const GET_PICS_FAILURE = 'sample/GET_PICS_FAILURE';
+const GET_PICS = "sample/GET_PICS";
+const GET_PICS_SUCCESS = "sample/GET_PICS_SUCCESS";
+const GET_PICS_FAILURE = "sample/GET_PICS_FAILURE";
 
-export const getPost = createAction(GET_POST, id => id);
+export const getPost = createAction(GET_POST, (id) => id);
 export const getUsers = createAction(GET_USERS);
 export const getPics = createAction(GET_PICS);
 
@@ -34,14 +34,14 @@ function* getPostSaga(action) {
     const post = yield call(api.getPost, action.payload); // api.getPost(action.payload) 를 의미
     yield put({
       type: GET_POST_SUCCESS,
-      payload: post.data
+      payload: post.data,
     });
   } catch (e) {
     // try/catch 문을 사용하여 에러도 잡을 수 있습니다.
     yield put({
       type: GET_POST_FAILURE,
       payload: e,
-      error: true
+      error: true,
     });
   }
   yield put(finishLoading(GET_POST)); // 로딩 완료
@@ -53,40 +53,40 @@ function* getUsersSaga() {
     const users = yield call(api.getUsers);
     yield put({
       type: GET_USERS_SUCCESS,
-      payload: users.data
+      payload: users.data,
     });
   } catch (e) {
     yield put({
       type: GET_USERS_FAILURE,
       payload: e,
-      error: true
+      error: true,
     });
   }
   yield put(finishLoading(GET_USERS));
 }
 
-function* getPicsSaga() {
-    yield put(startLoading(GET_PICS));
-    try {
-      const pics = yield call(api.getPics);
-      yield put({
-        type: GET_PICS_SUCCESS,
-        payload: pics.data
-      });
-    } catch (e) {
-      yield put({
-        type: GET_PICS_FAILURE,
-        payload: e,
-        error: true
-      });
-    }
-    yield put(finishLoading(GET_PICS));
+function* getPicsSaga(action) {
+  yield put(startLoading(GET_PICS));
+  try {
+    const pics = yield call(api.getPics, action.payload);
+    yield put({
+      type: GET_PICS_SUCCESS,
+      payload: pics.data,
+    });
+  } catch (e) {
+    yield put({
+      type: GET_PICS_FAILURE,
+      payload: e,
+      error: true,
+    });
   }
+  yield put(finishLoading(GET_PICS));
+}
 
 export function* sampleSaga() {
   yield takeLatest(GET_POST, getPostSaga);
   yield takeLatest(GET_USERS, getUsersSaga);
-  yield takeLatest(GET_PICS, getPicsSaga)
+  yield takeLatest(GET_PICS, getPicsSaga);
 }
 
 // 초기 상태를 선언합니다.
@@ -95,23 +95,31 @@ export function* sampleSaga() {
 const initialState = {
   post: null,
   users: null,
-  pics: null
+  pics_data: {
+    page: 1,
+    last_page: 1,
+    pics: [],
+  },
 };
 
 const sample = handleActions(
   {
     [GET_POST_SUCCESS]: (state, action) => ({
       ...state,
-      post: action.payload
+      post: action.payload,
     }),
     [GET_USERS_SUCCESS]: (state, action) => ({
       ...state,
-      users: action.payload
+      users: action.payload,
     }),
     [GET_PICS_SUCCESS]: (state, action) => ({
       ...state,
-      pics: action.payload
-    })
+      pics_data: {
+        page: action.payload.page,
+        last_page: action.payload.last_page,
+        pics: [...state.pics_data.pics, ...action.payload.pics],
+      },
+    }),
   },
   initialState
 );
