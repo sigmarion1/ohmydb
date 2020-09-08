@@ -9,7 +9,7 @@ import img_yooa from "../img/gallery_yooa.png";
 
 export default [
   {
-    name: "group",
+    name: "all",
     image: img_all,
     link: "#",
   },

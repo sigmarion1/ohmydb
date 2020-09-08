@@ -1,12 +1,12 @@
 import { handleActions, createAction } from "redux-actions";
 
-const MENU_TOGGLE = "menu/TOGGLE";
+const SIDE_DRAWER_CHANGE = "sideDrawer/CHANGE";
 
-export const menuToggle = createAction(MENU_TOGGLE);
+export const sideDrawerChange = createAction(SIDE_DRAWER_CHANGE);
 
 export default handleActions(
   {
-    [MENU_TOGGLE]: (state, action) => ({
+    [SIDE_DRAWER_CHANGE]: (state, action) => ({
       open: action.payload,
       //   open: !state.open,
     }),

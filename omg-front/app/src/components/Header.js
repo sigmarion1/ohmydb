@@ -7,12 +7,16 @@ import IconButton from "@material-ui/core/IconButton";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import MenuIcon from "@material-ui/icons/Menu";
 import Drawer from "@material-ui/core/Drawer";
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
 import { useDispatch, useSelector } from "react-redux";
-import { menuToggle } from "../modules/isOpened";
+import { sideDrawerChange } from "../modules/isSideDrawerOpened";
 
-import Menu from "./Menu";
+import SideDrawer from "./SideDrawer";
 import logo from "../img/logo.png";
+import HideOnScroll from "./HideOnScroll";
+import { getPics } from "../modules/sample";
+
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -49,15 +53,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MenuBar = () => {
+
+const Header = () => {
   const classes = useStyles();
-  const isOpened = useSelector((state) => state.isOpened);
+  const isOpened = useSelector((state) => state.isSideDrawerOpened);
   const dispatch = useDispatch();
 
   return (
     <React.Fragment>
-      <CssBaseline />
-      <AppBar position="static">
+
+    <HideOnScroll>
+      <AppBar position="fixed">
         <Toolbar>
           {/* <CameraIcon className={classes.icon} /> */}
           <IconButton
@@ -65,9 +71,11 @@ const MenuBar = () => {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            onClick={() => dispatch(getPics({member:'all'}))}
           >
             <img className={classes.icon} src={logo}></img>
-          </IconButton>
+            </ IconButton>
+          
           <Typography
             className={classes.title}
             variant="h6"
@@ -81,21 +89,22 @@ const MenuBar = () => {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
-            onClick={() => dispatch(menuToggle(true))}
+            onClick={() => dispatch(sideDrawerChange(true))}
           >
             <MenuIcon />
           </IconButton>
           <Drawer
             anchor="right"
             open={isOpened.open}
-            onClose={() => dispatch(menuToggle(false))}
+            onClose={() => dispatch(sideDrawerChange(false))}
           >
-            <Menu />
+            <SideDrawer />
           </Drawer>
         </Toolbar>
       </AppBar>
+</HideOnScroll>
     </React.Fragment>
   );
 };
 
-export default MenuBar;
+export default Header;

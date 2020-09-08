@@ -1,6 +1,5 @@
 import React from 'react'
 import qs from 'qs'
-import Counter from './components/Counter'
 import Todos from './components/Todos'
 
 const Home = ({ location }) => {
@@ -11,7 +10,6 @@ const Home = ({ location }) => {
     return (
         <div>
             <h1>홈{query.detail}</h1>
-            <Counter number={0} />
             <hr />
             <Todos />
         </div>

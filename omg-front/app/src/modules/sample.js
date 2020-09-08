@@ -1,5 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import { takeLatest } from "redux-saga/effects";
+import { takeLatest, select } from "redux-saga/effects";
 import * as api from "../lib/api";
 import createRequestSaga from "../lib/createRequestSaga";
 import { startLoading, finishLoading } from "../modules/loading";
@@ -18,12 +18,19 @@ const GET_PICS = "sample/GET_PICS";
 const GET_PICS_SUCCESS = "sample/GET_PICS_SUCCESS";
 const GET_PICS_FAILURE = "sample/GET_PICS_FAILURE";
 
+const GET_NEW_PICS = "sample/GET_NEW_PICS";
+const GET_NEW_PICS_SUCCESS = "sample/GET_NEW_PICS_SUCCESS";
+const GET_NEW_PICS_FAILURE = "sample/GET_NEW_PICS_FAILURE";
+
+
 export const getPost = createAction(GET_POST, (id) => id);
 export const getUsers = createAction(GET_USERS);
 export const getPics = createAction(GET_PICS);
+export const getNewPics = createAction(GET_NEW_PICS)
 
 // const getPostSaga = createRequestSaga(GET_POST, api.getPost);
 // const getUsersSaga = createRequestSaga(GET_USERS, api.getUsers);
+
 
 function* getPostSaga(action) {
   yield put(startLoading(GET_POST)); // 로딩 시작
@@ -67,11 +74,37 @@ function* getUsersSaga() {
 
 function* getPicsSaga(action) {
   yield put(startLoading(GET_PICS));
+  const state = yield select()
+
+  let memberChanged = false
+  let pageInitial = null
+
+  if(action.payload) {
+    if(action.payload.member) {
+      memberChanged = action.payload.member
+      pageInitial = 1
+    }        
+  }
+
   try {
-    const pics = yield call(api.getPics, action.payload);
+    const payload = {
+      page: pageInitial || state.sample.pics_data.page + 1,
+      member: memberChanged?action.payload.member:state.sample.pics_data.member,
+    }
+
+    if(memberChanged == 'all')
+    {
+      delete payload.member
+    }
+    
+    console.log(payload)
+    const pics = yield call(api.getPics, payload);
     yield put({
       type: GET_PICS_SUCCESS,
-      payload: pics.data,
+      payload: {
+        ...pics.data,
+        memberChanged,
+      }
     });
   } catch (e) {
     yield put({
@@ -83,10 +116,29 @@ function* getPicsSaga(action) {
   yield put(finishLoading(GET_PICS));
 }
 
+function* getNewPicsSaga(action) {
+  yield put(startLoading(GET_PICS));
+  try {
+    const pics = yield call(api.getPics, action.payload);
+    yield put({
+      type: GET_NEW_PICS_SUCCESS,
+      payload: pics.data,
+    });
+  } catch (e) {
+    yield put({
+      type: GET_NEW_PICS_FAILURE,
+      payload: e,
+      error: true,
+    });
+  }
+  yield put(finishLoading(GET_PICS));
+}
+
 export function* sampleSaga() {
   yield takeLatest(GET_POST, getPostSaga);
   yield takeLatest(GET_USERS, getUsersSaga);
   yield takeLatest(GET_PICS, getPicsSaga);
+  yield takeLatest(GET_NEW_PICS, getNewPicsSaga);
 }
 
 // 초기 상태를 선언합니다.
@@ -96,7 +148,9 @@ const initialState = {
   post: null,
   users: null,
   pics_data: {
-    page: 1,
+    isFinished: false,
+    member: null,
+    page: 0,
     last_page: 1,
     pics: [],
   },
@@ -112,14 +166,42 @@ const sample = handleActions(
       ...state,
       users: action.payload,
     }),
-    [GET_PICS_SUCCESS]: (state, action) => ({
+    [GET_PICS_SUCCESS]: (state, action) => {
+
+      let isFinished = false
+      if(action.payload.page >= action.payload.last_page) {
+        isFinished = true
+      }
+
+      return {
       ...state,
       pics_data: {
-        page: action.payload.page,
-        last_page: action.payload.last_page,
-        pics: [...state.pics_data.pics, ...action.payload.pics],
-      },
-    }),
+        isFinished,
+        member: action.payload.member,
+        page: parseInt(action.payload.page),
+        last_page: parseInt(action.payload.last_page),
+        pics: action.payload.memberChanged? action.payload.pics:[...state.pics_data.pics, ...action.payload.pics],
+      }
+    }},
+    [GET_NEW_PICS_SUCCESS]: (state, action) => {
+      
+      let isFinished = false
+      if(action.payload.page >= action.payload.last_page) {
+        isFinished = true
+      }
+      
+      
+      return {
+      ...state,
+      pics_data: {
+        member: action.payload.member,
+        page: parseInt(action.payload.page),
+        last_page: parseInt(action.payload.last_page),
+        pics: action.payload.pics,
+        
+      }
+
+    }}
   },
   initialState
 );

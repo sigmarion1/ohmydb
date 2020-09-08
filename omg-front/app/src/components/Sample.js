@@ -1,44 +1,12 @@
-// import React from 'react';
 
-// // const Sample = ({ post, users, loadingPost, loadingUsers }) => {
-//   return (
-//     <div>
-//       <section>
-//         <h1>포스트</h1>
-//         {loadingPost && '로딩중...'}
-//         {!loadingPost && post && (
-//           <div>
-//             <h3>{post.title}</h3>
-//             <h3>{post.body}</h3>
-//           </div>
-//         )}
-//       </section>
-//       <hr />
-//       <section>
-//         <h1>사용자 목록</h1>
-//         {loadingUsers && '로딩중...'}
-//         {!loadingUsers && users && (
-//           <ul>
-//             {users.map(user => (
-//               <li key={user.id}>
-//                 {user.username} ({user.email})
-//               </li>
-//             ))}
-//           </ul>
-//         )}
-//       </section>
-//     </div>
-//   );
-// };
-
-// export default Sample;
-
-import React from "react";
+import React, { useState } from "react";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { Card, CardMedia, CardContent, Typography } from "@material-ui/core";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { Card, CardMedia, CardContent, Typography, CardHeader } from "@material-ui/core";
+
+import Lightbox from 'react-image-lightbox'
+import 'react-image-lightbox/style.css'
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -54,20 +22,32 @@ const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
+    marginTop: theme.spacing(6),
     // height: "10000px",
   },
   card: {
-    height: "100%",
-    display: "flex",
+      // height: "100%",
+    maxWidth: 345,
+      display: "flex",
     flexDirection: "column",
   },
   cardMedia: {
-    paddingTop: "56.25%", // 16:9
+    height: 400,
+    // paddingTop: "56.25%", // 16:9
+    flexGrow: 1,
   },
   cardContent: {
-    flexGrow: 1,
-    height: "400px",
+    // position: "absolute",
+    right: "0px",
+    bottom: "0px",
+    // flexGrow: 1,
+    // height: "400px",
     // height: "100%",
+  },
+  memberFont: {
+    fontStyle: "italic",
+    textShadow: "1px 1px 4px blue",
+    color: "white",
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
@@ -75,42 +55,57 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Sample = ({ pics_data, loadingPics }) => {
+const Sample = ({ pics_data }) => {
   const classes = useStyles();
+  const [imageIndex, setImageIndex] = useState(0)
+  const [lightBoxOpen, setLightBoxOpen] = useState(false)
+
+  const imageOpen = (index) => {
+    setImageIndex(index)
+    setLightBoxOpen(true)
+  }
 
   return (
     <React.Fragment>
-      <CssBaseline />
-      <main>
+            {lightBoxOpen && (
+        <Lightbox
+          mainSrc={`http://${process.env.REACT_APP_BACK_HOST}:${process.env.REACT_APP_BACK_PORT}/` + pics_data.pics[imageIndex].path_ori}
+          // nextSrc={"http://localhost:3001/" + pics_data.pics[(lightBoxState.index + 1) % pics_data.pics.length].path_ori}
+          // prevSrc={"http://localhost:3001/" + pics_data.pics[(lightBoxState.index - 1) % pics_data.pics.length].path_ori}
+          onCloseRequest={() => setLightBoxOpen(false)}
+          // onMoveNextRequest={() => dispatch(lightBoxChange({index:(lightBoxState.index + 1) % pics_data.pics.length}))}
+          // onMovePrevRequest={() => dispatch(lightBoxChange({index:(lightBoxState.index - 1) % pics_data.pics.length}))}
+          />)}
         <Container className={classes.cardGrid} maxWidth="lg">
-          {/* {loadingPics && "loading..."} */}
           <Grid container spacing={1}>
             {pics_data.pics &&
-              pics_data.pics.map((pic) => (
+              pics_data.pics.map((pic, index) => (
                 <Grid item key={pic._id} xs={12} sm={6} md={3}>
-                  <Card className={classes.card}>
+                  <Card className={classes.card} onClick={() => imageOpen(index)}>
                     <CardMedia
-                      className={classes.CardMedia}
-                      image={"http://localhost:3001/" + pic.path_thm}
-                      title={pic.who}
-                    >
-                      <CardContent className={classes.cardContent}>
+                      className={classes.cardMedia}
+                      image={`http://${process.env.REACT_APP_BACK_HOST}:${process.env.REACT_APP_BACK_PORT}/` + pic.path_thm}
+                      title={pic.who.join(', ')}
+                      >
+
                         <Typography
                           gutterBottom
-                          variant="h5"
-                          component="h2"
+                          variant="h6"
+                          component="h1"
                           align="center"
+                          className={classes.memberFont}
                         >
-                          {pic.who}
+                          {pic.who.join(', ')}
                         </Typography>
-                      </CardContent>
-                    </CardMedia>
+
+                    </ CardMedia>
+
+                    
                   </Card>
                 </Grid>
               ))}
           </Grid>
         </Container>
-      </main>
     </React.Fragment>
   );
 };

@@ -10,6 +10,9 @@ RUN npm install
 COPY ./app/public ./public
 COPY ./app/src ./src
 
+ENV REACT_APP_BACK_HOST localhost
+ENV REACT_APP_BACK_PORT 3001
+
 RUN npm run build
 
 FROM nginx:1.17.10

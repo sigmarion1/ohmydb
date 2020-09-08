@@ -1,43 +1,49 @@
 version: "3"
 services:
-    ohmygirl:
-        build: ./ohmygirl
-        depends_on:
-            - mongodb
-        expose:
-            - "3000"
-        volumes: 
-            - ./image_db:/usr/src/app/image_db
-        env_file: 
-            - .env
-        
-    crawler:
-        build: ./crawler
-        depends_on:
-            - mongodb
-        env_file:
-            - .env
-        volumes: 
-            - ./image_crawl:/usr/src/app/image_crawl
+  mongodb:
+    image: mongo:4.2.6
+    volumes:
+      - ./mongodb/data/db:/data/db
+    ports:
+      - "${MONGO_PORT}:${MONGO_PORT}"
+    env_file:
+      - .env
+    command: mongod --port ${MONGO_PORT}
 
-    face:
-        build: ./face
-        depends_on:
-            - mongodb
-        env_file:
-            - .env
-        volumes: 
-            - ./image_crawl:/usr/src/app/image_crawl
-            - ./image_db:/usr/src/app/image_db
+  crawler:
+    build: ./crawler
+    depends_on:
+      - mongodb
+    env_file:
+      - .env
+    volumes:
+      - ./image_db:/usr/src/app/image_db
 
-    omg-back:
-        build: ./omg-back
-        depends_on: 
-            - mongodb 
-        ports:                                                                                                                                                                                                                                                                                                                                                                                                  
-            - "3000"
-        volumes:
-            - ./image_db:/usr/src/app/image_db
-        env_file: 
-            - .env
-           
+  face:
+    build: ./face
+    depends_on:
+      - mongodb
+    env_file:
+      - .env
+    ports:
+      - "${FACE_PORT}:${FACE_PORT}"
+
+  omg-back:
+    build: ./omg-back
+    depends_on:
+      - mongodb
+    ports:
+      - "${BACK_PORT}:${BACK_PORT}"
+    volumes:
+      - ./image_db:/usr/src/app/image_db
+    env_file:
+      - .env
+
+  omg-front:
+    build: ./omg-front
+    depends_on:
+        - omg-back
+    ports:
+        - "${FRONT_PORT}:${FRONT_PORT}"
+    env_file:
+        - .env

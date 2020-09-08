@@ -6,21 +6,18 @@ import Home from './Home';
 import About from './About'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { increase } from './modules/counter'
 import { sign_in } from './modules/isLogged'
 
-import Samplecontainer from './containers/SampleContainer'
-import MenuBar from './components/MenuBar'
+import Header from './components/Header'
+import SampleContainer from './containers/SampleContainer'
+import { CssBaseline } from '@material-ui/core';
 
 const App = () => {
-  const counter = useSelector(state => state.counter)
-  const isLogged = useSelector(state => state.isLogged)
-  const dispatch = useDispatch()
-
   return(
-    <div>
-      <MenuBar />
-      <Samplecontainer />
+    <>
+      <CssBaseline />
+      <Header />
+      <SampleContainer />
 
       {/* <h1>Counter {counter.number}</h1>
       <button onClick={() => dispatch(increase(5))}>+</button>
@@ -33,7 +30,7 @@ const App = () => {
       <Route path="/about" component={About} />
       <Link to ="/?detail=true">홈으로가기</Link> */}
 
-    </div>
+    </>
   )
 }
 

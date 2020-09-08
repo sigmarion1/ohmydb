@@ -27,6 +27,7 @@ router.get("/", async (req, res) => {
     const last_page = Math.ceil((await Pic.countDocuments(condition)) / 36);
 
     const data = {
+      member,
       pics,
       page,
       last_page,
