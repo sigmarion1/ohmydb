@@ -1,7 +1,13 @@
+import os
+from dotenv import load_dotenv
+
+env_path = os.path.join(os.pardir, os.pardir, '.env')
+load_dotenv(dotenv_path=env_path)
+
+import time
 from thumbnail import make_thumbnail, save_image, clean
 from recog import get_face_name
 from db import insert
-import time
 
 #OMG_MEMBER = {'group': '단체', 'hyojung': '효정', 'mimi': '미미', 'yooa': '유아', 'seunghee': '승희', 'jiho': '지호', 'binnie': '비니', 'arin': '아린'}
 
@@ -26,15 +32,15 @@ def work():
             for member in who_eng:
                 if member == 'unknown':
                     continue
+                if member in who:
+                    continue
                 who.append(member)
 
-        
         group = image_thm.split('_')[-3]
 
         db_image = save_image(image, group)
 
-        insert(group, int(no), who, 'default', db_image[0], db_image[1])
-
+        insert(group, int(no), who, db_image[0], db_image[1])
 
         print(who)
         print(group + str(no) + ' image saved')

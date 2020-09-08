@@ -1,13 +1,14 @@
 <div id="main">
 
-        <% ohmygirls.forEach((omg) => { %>
+        <% pics.forEach((pic) => { %>
                 <article class="thumb">
-                        <a href="/<%= omg.path_original %>" class="image">
-                                <img src = "/<%= omg.path_thumbnail %>" alt="">
+                        <a href="<%= pic.path_ori %>" class="image">
+                                <img src = "<%= pic.path_ori %>" alt="">
                         </a>
-                        <h2><a href="photo"><%= omg.who %></a></h2>
+                        <h2><a href="photo"><%= pic.who %></a></h2>
                 </article>
         <% }) %>
+        
         <div class="pagination">
                 <% if (pg['has_previous']) { %>
                         <% if (pg['member']) { %>
