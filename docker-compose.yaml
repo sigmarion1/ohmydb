@@ -45,5 +45,6 @@ services:
         - omg-back
     ports:
         - "${FRONT_PORT}:${FRONT_PORT}"
+        - "8080:8080"
     env_file:
         - .env
