@@ -69,7 +69,7 @@ const Sample = ({ pics_data }) => {
     <React.Fragment>
             {lightBoxOpen && (
         <Lightbox
-          mainSrc={`http://${process.env.REACT_APP_BACK_HOST}:${process.env.REACT_APP_BACK_PORT}/` + pics_data.pics[imageIndex].path_ori}
+          mainSrc={`https://${process.env.REACT_APP_BACK_HOST}/` + pics_data.pics[imageIndex].path_ori}
           // nextSrc={"http://localhost:3001/" + pics_data.pics[(lightBoxState.index + 1) % pics_data.pics.length].path_ori}
           // prevSrc={"http://localhost:3001/" + pics_data.pics[(lightBoxState.index - 1) % pics_data.pics.length].path_ori}
           onCloseRequest={() => setLightBoxOpen(false)}
@@ -84,7 +84,7 @@ const Sample = ({ pics_data }) => {
                   <Card className={classes.card} onClick={() => imageOpen(index)}>
                     <CardMedia
                       className={classes.cardMedia}
-                      image={`http://${process.env.REACT_APP_BACK_HOST}:${process.env.REACT_APP_BACK_PORT}/` + pic.path_thm}
+                      image={`https://${process.env.REACT_APP_BACK_HOST}/` + pic.path_thm}
                       title={pic.who.join(', ')}
                       >
 

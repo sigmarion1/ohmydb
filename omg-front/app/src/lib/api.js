@@ -8,7 +8,7 @@ export const getUsers = (id) =>
 
 export const getPics = (payload) => {
   return new Promise(async (resolve, reject) => {
-    let url = `http://${process.env.REACT_APP_BACK_HOST}:${process.env.REACT_APP_BACK_PORT}/?page=${payload.page}`
+    let url = `https://${process.env.REACT_APP_BACK_HOST}/?page=${payload.page}`
     if(payload.member) {
       url += `&member=${payload.member}`
     }
