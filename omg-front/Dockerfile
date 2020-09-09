@@ -10,8 +10,8 @@ RUN npm install
 COPY ./app/public ./public
 COPY ./app/src ./src
 
-ENV REACT_APP_BACK_HOST localhost
-ENV REACT_APP_BACK_PORT 8080
+ENV REACT_APP_BACK_HOST back.ohmydb.com
+ENV REACT_APP_BACK_PORT 80
 
 RUN npm run build
 
