@@ -9,7 +9,7 @@ applications:
           commands:
             - npm run build
       artifacts:
-        baseDirectory: front/build
+        baseDirectory: build
         files:
           - "**/*"
       cache:
