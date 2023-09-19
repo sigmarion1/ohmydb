@@ -79,8 +79,8 @@ export default function UserReports() {
               }
             />
           }
-          name='Earnings'
-          value='$350.4'
+          name='Image Crawling'
+          value='1184'
         />
         <MiniStatistics
           startContent={

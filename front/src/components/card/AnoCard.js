@@ -1,26 +1,21 @@
 // Chakra imports
 import {
-  AvatarGroup,
-  Avatar,
   Box,
   Button,
   Flex,
   Icon,
   Image,
-  Link,
-  Text,
-  useColorModeValue,
-  RadioGroup,
   Radio,
-  HStack,
+  RadioGroup,
+  useColorModeValue,
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/card/Card.js";
 // Assets
-import React, { useState } from "react";
-import { IoHeart, IoHeartOutline, IoCheckmark } from "react-icons/io5";
+import { useState } from "react";
+import { IoCheckmark } from "react-icons/io5";
 
-export default function NFT(props) {
+export default function AnoCard(props) {
   const { image, name, author, bidders, download, currentbid } = props;
   const [like, setLike] = useState(false);
   const textColor = useColorModeValue("navy.700", "white");
@@ -61,46 +56,6 @@ export default function NFT(props) {
           </Button>
         </Box>
         <Flex flexDirection="column" justify="space-between" h="100%">
-          {/* <Flex
-            justify="space-between"
-            direction={{
-              base: "row",
-              md: "column",
-              lg: "row",
-              xl: "column",
-              "2xl": "row",
-            }}
-            mb="auto"
-          >
-            <Flex direction="column">
-              <Text
-                color={textColor}
-                fontSize={{
-                  base: "xl",
-                  md: "lg",
-                  lg: "lg",
-                  xl: "lg",
-                  "2xl": "md",
-                  "3xl": "lg",
-                }}
-                mb="5px"
-                fontWeight="bold"
-                me="14px"
-              >
-                {name}
-              </Text>
-              <Text
-                color="secondaryGray.600"
-                fontSize={{
-                  base: "sm",
-                }}
-                fontWeight="400"
-                me="14px"
-              >
-                {author}
-              </Text>
-            </Flex>
-          </Flex> */}
           <Flex
             align="start"
             justify="space-between"
@@ -111,11 +66,7 @@ export default function NFT(props) {
               xl: "column",
               "2xl": "row",
             }}
-            // mt="25px"
           >
-            {/* <Text fontWeight="700" fontSize="sm" color={textColorBid}>
-              Current Bid: {currentbid}
-            </Text> */}
             <RadioGroup defaultValue="unknown">
               <Radio value="arin" m="5px">
                 Arin
