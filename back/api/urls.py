@@ -1,7 +1,11 @@
 from django.urls import path
 
-from . import views
+from rest_framework.routers import DefaultRouter
 
-urlpatterns = [
-    path("", views.index, name="index"),
-]
+from .views import ImageModelViewset, SimpleApiView
+
+router = DefaultRouter(trailing_slash=True)
+
+router.register(r"images", ImageModelViewset)
+
+urlpatterns = router.urls
