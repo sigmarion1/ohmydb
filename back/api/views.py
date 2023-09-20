@@ -16,9 +16,9 @@ def index(request):
     return HttpResponse("Hello, world. You're at the images index.")
 
 
-class SimpleApiView(APIView):
+class HealthApiView(APIView):
     def get(self, request):
-        return Response("heelo")
+        return Response("OK")
 
 
 class ImageModelViewset(ModelViewSet):

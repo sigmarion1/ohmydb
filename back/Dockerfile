@@ -1,10 +1,16 @@
 # ./Dockerfile 
-FROM python:3.10-alpine
+FROM python:3.11-alpine
+
 WORKDIR /usr/src/app
+
+RUN apk update
+RUN apk add pkgconfig
+RUN apk add --no-cache gcc musl-dev mariadb-connector-c-dev 
 
 ## Install packages
 COPY requirements.txt ./
-RUN pip install -r requirements.txt
+
+RUN pip install --no-cache-dir -r requirements.txt
 
 ## Copy all src files
 COPY . .

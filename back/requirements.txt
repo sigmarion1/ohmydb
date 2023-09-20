@@ -3,7 +3,7 @@ Django==4.2.5
 django-filter==23.3
 djangorestframework==3.14.0
 gunicorn==21.2.0
-mysqlclient==2.2.0
+mysqlclient==2.1.1
 packaging==23.1
 python-dotenv==1.0.0
 pytz==2023.3.post1
