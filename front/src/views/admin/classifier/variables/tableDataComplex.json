@@ -1,26 +1,30 @@
 [
   {
+    "id":1,
     "name":"Marketplace",
-    "status": "Approved",
+    "status": "Created",
     "date": "24.Jan.2021",
-    "progress": 75.5  
+    "best_answer_rate": 75.5  
   },
   {
+    "id":1,
     "name":"Marketplace",
-    "status": "Disable",
+    "status": "Queue",
     "date": "30.Dec.2021",
-    "progress": 25.5  
+    "best_answer_rate": 25.5  
   },
   {
+    "id":1,
     "name":"Marketplace",
     "status": "Error",
     "date": "20.May.2021",
-    "progress": 90  
+    "best_answer_rate": 90  
   },
   {
+    "id":1,
     "name":"Marketplace",
-    "status": "Approved",
+    "status": "Training",
     "date": "12.Jul.2021",
-    "progress": 50.5  
+    "best_answer_rate": 50.5  
   }
 ]

@@ -23,6 +23,7 @@
 // Chakra imports
 import {
   Box,
+  Button,
   Flex,
   Grid,
   Link,
@@ -44,7 +45,7 @@ import Nft2 from "assets/img/nfts/Nft2.png";
 import Nft3 from "assets/img/nfts/Nft3.png";
 import AnoCard from "components/card/AnoCard";
 
-export default function Marketplace() {
+export default function Annotation() {
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textColorBrand = useColorModeValue("brand.500", "white");
@@ -71,8 +72,12 @@ export default function Marketplace() {
               align={{ base: "start", md: "center" }}
             >
               <Text color={textColor} fontSize="2xl" ms="24px" fontWeight="700">
-                Selected Pictures [0/100]
+                Selected Photos [0/100]
+                <Link>
+                  <Button margin="10px">Filter : Yooa</Button>
+                </Link>
               </Text>
+
               <Flex
                 align="center"
                 me="20px"

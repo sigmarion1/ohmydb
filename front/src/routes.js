@@ -2,10 +2,10 @@ import { Icon } from "@chakra-ui/react";
 import { MdBarChart, MdHome, MdHowToReg, MdLocalOffer } from "react-icons/md";
 
 // Admin Imports
-import DataTables from "views/admin/dataTables";
+import Annotation from "views/admin/annotation";
+import DataTables from "views/admin/classifier";
 import MainDashboard from "views/admin/default";
-import NFTMarketplace from "views/admin/marketplace";
-import Profile from "views/admin/profile";
+import Profile from "views/admin/evaluation";
 
 const routes = [
   {
@@ -20,7 +20,7 @@ const routes = [
     layout: "/admin",
     path: "/annotation",
     icon: <Icon as={MdLocalOffer} width="20px" height="20px" color="inherit" />,
-    component: NFTMarketplace,
+    component: Annotation,
     secondary: true,
   },
   {

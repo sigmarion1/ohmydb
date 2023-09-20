@@ -10,6 +10,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 // Custom components
+import SampleImage from "assets/img/yubin.webp";
 import Card from "components/card/Card.js";
 // Assets
 import { useState } from "react";
@@ -25,7 +26,7 @@ export default function AnoCard(props) {
       <Flex direction={{ base: "column" }} justify="center">
         <Box mb={{ base: "20px", "2xl": "20px" }} position="relative">
           <Image
-            src={image}
+            src={SampleImage}
             w={{ base: "100%", "3xl": "100%" }}
             h={{ base: "100%", "3xl": "100%" }}
             borderRadius="20px"

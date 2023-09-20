@@ -69,7 +69,11 @@ export const columnsDataComplex = [
     accessor: "date",
   },
   {
-    Header: "PROGRESS",
-    accessor: "progress",
+    Header: "TRAINING PHOTOS",
+    accessor: "id",
+  },
+  {
+    Header: "USE THIS CLASSIFIER",
+    accessor: "best_answer_rate",
   },
 ];
