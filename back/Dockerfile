@@ -1,11 +1,14 @@
 # ./Dockerfile 
 FROM python:3.11-alpine
 
+HEALTHCHECK CMD curl --fail http://localhost/health
+
 WORKDIR /usr/src/app
 
 RUN apk update
 RUN apk add pkgconfig
 RUN apk add --no-cache gcc musl-dev mariadb-connector-c-dev 
+RUN apk add curl
 
 ## Install packages
 COPY requirements.txt ./
