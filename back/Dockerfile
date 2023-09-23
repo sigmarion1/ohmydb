@@ -10,9 +10,9 @@ RUN apt-get update && \
     pip install --upgrade pip
 
 ## Install packages
-COPY requirements_docker.txt ./
+COPY requirements.txt ./
 
-RUN pip install --no-cache-dir -r requirements_docker.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 ## Copy all src files
 COPY . .
