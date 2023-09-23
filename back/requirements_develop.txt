@@ -1,5 +1,5 @@
 # To develop in local python enviroment(like venv or pyenv), you have to install dlib, face-recognition, face-recognition-models additionally.
-# This packages are include in animcogn/face_recognition docker image.
+# These packages are include in animcogn/face_recognition docker image.
 asgiref==3.7.2
 click==8.1.7
 Django==4.2.5
@@ -19,3 +19,4 @@ pytz==2023.3.post1
 sqlparse==0.4.4
 typing_extensions==4.8.0
 requests==2.31.0
+boto3==1.28.53

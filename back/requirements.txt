@@ -14,3 +14,4 @@ pytz==2023.3.post1
 sqlparse==0.4.4
 typing_extensions==4.8.0
 requests==2.31.0
+boto3==1.28.53
