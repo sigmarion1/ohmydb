@@ -4,18 +4,20 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .filters import MultiIdFilter
 
-from .serializer import ClassifierSerializer, ImageSerializer, TestSetSerializer
+from .serializer import (
+    ClassifierSerializer,
+    ImageSerializer,
+    TestImageResultSerializer,
+    TestRecordSerializer,
+    TestSetSerializer,
+)
 
-from .models import Classifier, Image, TestSet
+from .models import Classifier, Image, TestImageResult, TestRecord, TestSet
 
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.response import Response
 from rest_framework.filters import OrderingFilter
-
-
-def index(request):
-    return HttpResponse("Hello, world. You're at the images index.")
 
 
 class HealthApiView(APIView):
@@ -43,6 +45,22 @@ class ClassifierModelViewset(ModelViewSet):
 class TestSetModelViewset(ModelViewSet):
     queryset = TestSet.objects.all()
     serializer_class = TestSetSerializer
+    filter_backends = [OrderingFilter]
+    ordering_fields = ["id"]
+    ordering = ["-id"]
+
+
+class TestRecordModelViewset(ModelViewSet):
+    queryset = TestRecord.objects.all()
+    serializer_class = TestRecordSerializer
+    filter_backends = [OrderingFilter]
+    ordering_fields = ["id"]
+    ordering = ["-id"]
+
+
+class TestImageResultModelViewset(ModelViewSet):
+    queryset = TestImageResult.objects.all()
+    serializer_class = TestImageResultSerializer
     filter_backends = [OrderingFilter]
     ordering_fields = ["id"]
     ordering = ["-id"]

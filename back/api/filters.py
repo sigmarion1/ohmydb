@@ -4,8 +4,9 @@ from rest_framework import filters
 class MultiIdFilter(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         """
-        Return a filtered queryset.
+        If ids in query parameter, Return a id filtered queryset.
         """
-
-        ids = [int(x) for x in request.GET.get("ids", "").split(",")]
-        return queryset.filter(pk__in=ids)
+        if ids_string := request.GET.get("ids", ""):
+            ids = [int(x) for x in ids_string.split(",")]
+            return queryset.filter(pk__in=ids)
+        return queryset

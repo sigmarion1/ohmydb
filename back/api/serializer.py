@@ -1,8 +1,6 @@
 from rest_framework import serializers
 
-from .models import Classifier, Image, TestSet
-
-CLASSIFIER_PREVIEW_IMAGE_COUNT = 5
+from .models import Classifier, Image, TestImageResult, TestRecord, TestSet
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -20,4 +18,18 @@ class ClassifierSerializer(serializers.ModelSerializer):
 class TestSetSerializer(serializers.ModelSerializer):
     class Meta:
         model = TestSet
-        fields = ["id", "name", "test_status"]
+        fields = ["id", "name", "test_images"]
+
+
+class TestRecordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TestRecord
+        fields = ["id", "tested_at", "test_set", "classifier", "test_status"]
+
+
+class TestImageResultSerializer(serializers.ModelSerializer):
+    image = ImageSerializer(read_only=True)
+
+    class Meta:
+        model = TestImageResult
+        fields = ["id", "image", "expected_member", "result_member"]

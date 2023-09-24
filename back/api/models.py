@@ -1,7 +1,15 @@
 from django.db import models
 
 
-class Image(models.Model):
+class CommonModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class Image(CommonModel):
     class Member(models.TextChoices):
         ARIN = "arin"
         MIMI = "mimi"
@@ -11,8 +19,6 @@ class Image(models.Model):
         SEUNGHEE = "seunghee"
         UNKNOWN = "unknown"
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     url = models.CharField(max_length=255)
     thumbnail_url = models.CharField(max_length=255)
     annotation = models.CharField(
@@ -23,37 +29,31 @@ class Image(models.Model):
         indexes = [models.Index(fields=["annotation"])]
 
 
-class Classifier(models.Model):
+class Classifier(CommonModel):
     class TRAINING_STATUS(models.TextChoices):
         CREATED = "created"
         QUEUE = "queue"
         ERROR = "error"
         TRAINING = "training"
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
     training_images = models.ManyToManyField(Image)
     trainging_status = models.CharField(max_length=50, default=TRAINING_STATUS.QUEUE)
 
 
-class TestSet(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+class TestSet(CommonModel):
     name = models.CharField(max_length=255)
     test_images = models.ManyToManyField(Image)
 
 
-class TestRecord(models.Model):
+class TestRecord(CommonModel):
     class TEST_STATUS(models.TextChoices):
         QUEUE = "queue"
         ERROR = "error"
         TESTING = "testing"
         FINISH = "finish"
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     tested_at = models.DateTimeField(null=True)
     test_set = models.ForeignKey(TestSet, on_delete=models.CASCADE)
     classifier = models.ForeignKey(Classifier, on_delete=models.CASCADE)
@@ -62,17 +62,8 @@ class TestRecord(models.Model):
     )
 
 
-class TestImageResult(models.Model):
-    class RESULT(models.TextChoices):
-        WAIT = "wait"
-        SUCCESS = "success"
-        FAIL = "fail"
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    test_record = models.ForeignKey(TestSet, on_delete=models.CASCADE)
+class TestImageResult(CommonModel):
+    test_record = models.ForeignKey(TestRecord, on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE)
     expected_member = models.CharField(max_length=50, choices=Image.Member.choices)
     result_member = models.CharField(max_length=50, choices=Image.Member.choices)
-    test_result = models.CharField(
-        max_length=50, choices=RESULT.choices, default=RESULT.WAIT
-    )
