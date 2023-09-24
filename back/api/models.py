@@ -27,31 +27,38 @@ class Image(CommonModel):
 
     class Meta:
         indexes = [models.Index(fields=["annotation"])]
+        db_table = "image"
 
 
 class Classifier(CommonModel):
     class TRAINING_STATUS(models.TextChoices):
-        CREATED = "created"
         QUEUE = "queue"
-        ERROR = "error"
         TRAINING = "training"
+        ERROR = "error"
+        CREATED = "created"
 
     name = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
     training_images = models.ManyToManyField(Image)
     trainging_status = models.CharField(max_length=50, default=TRAINING_STATUS.QUEUE)
 
+    class Meta:
+        db_table = "classifier"
+
 
 class TestSet(CommonModel):
     name = models.CharField(max_length=255)
     test_images = models.ManyToManyField(Image)
 
+    class Meta:
+        db_table = "test_set"
+
 
 class TestRecord(CommonModel):
     class TEST_STATUS(models.TextChoices):
         QUEUE = "queue"
-        ERROR = "error"
         TESTING = "testing"
+        ERROR = "error"
         FINISH = "finish"
 
     tested_at = models.DateTimeField(null=True)
@@ -61,9 +68,16 @@ class TestRecord(CommonModel):
         max_length=50, choices=TEST_STATUS.choices, default=TEST_STATUS.QUEUE
     )
 
+    class Meta:
+        db_table = "test_record"
 
-class TestImageResult(CommonModel):
+
+class TestRecordImageResult(CommonModel):
     test_record = models.ForeignKey(TestRecord, on_delete=models.CASCADE)
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
     expected_member = models.CharField(max_length=50, choices=Image.Member.choices)
     result_member = models.CharField(max_length=50, choices=Image.Member.choices)
+
+    class Meta:
+        indexes = [models.Index(fields=["test_record"])]
+        db_table = "test_record_image_result"

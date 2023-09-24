@@ -7,15 +7,15 @@ from .filters import MultiIdFilter
 from .serializer import (
     ClassifierSerializer,
     ImageSerializer,
-    TestImageResultSerializer,
+    TestRecordImageResultSerializer,
     TestRecordSerializer,
     TestSetSerializer,
 )
 
-from .models import Classifier, Image, TestImageResult, TestRecord, TestSet
+from .models import Classifier, Image, TestRecordImageResult, TestRecord, TestSet
 
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.filters import OrderingFilter
 
@@ -58,9 +58,10 @@ class TestRecordModelViewset(ModelViewSet):
     ordering = ["-id"]
 
 
-class TestImageResultModelViewset(ModelViewSet):
-    queryset = TestImageResult.objects.all()
-    serializer_class = TestImageResultSerializer
-    filter_backends = [OrderingFilter]
+class TestRecordImageResultModelViewset(ModelViewSet):
+    queryset = TestRecordImageResult.objects.select_related("image")
+    serializer_class = TestRecordImageResultSerializer
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_fields = ["test_record"]
     ordering_fields = ["id"]
     ordering = ["-id"]

@@ -5,6 +5,7 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     ClassifierModelViewset,
     ImageModelViewset,
+    TestRecordImageResultModelViewset,
     TestRecordModelViewset,
     TestSetModelViewset,
 )
@@ -15,5 +16,7 @@ router.register(r"images", ImageModelViewset)
 router.register(r"classifiers", ClassifierModelViewset)
 router.register(r"test-sets", TestSetModelViewset)
 router.register(r"test-records", TestRecordModelViewset)
+router.register(r"test-image-results", TestRecordImageResultModelViewset)
+
 
 urlpatterns = router.urls
