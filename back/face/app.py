@@ -1,12 +1,12 @@
 import os
 import django
 
-
-from api.models import Image
-
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ohmydb.settings")
 django.setup()
 
+from api.models import Image
+
 a = Image.objects.all()
 print(a)
+
+# /ohmydb/back python -m face.app
