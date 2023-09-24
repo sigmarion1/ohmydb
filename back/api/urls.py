@@ -16,7 +16,10 @@ router.register(r"images", ImageModelViewset)
 router.register(r"classifiers", ClassifierModelViewset)
 router.register(r"test-sets", TestSetModelViewset)
 router.register(r"test-records", TestRecordModelViewset)
-router.register(r"test-image-results", TestRecordImageResultModelViewset)
+router.register(
+    r"test-records/(?P<test_record_id>[^/.]+)/image-results",
+    TestRecordImageResultModelViewset,
+)
 
 
 urlpatterns = router.urls

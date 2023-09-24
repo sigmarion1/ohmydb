@@ -30,13 +30,23 @@ class TestSetSerializer(serializers.ModelSerializer):
 
 
 class TestRecordSerializer(serializers.ModelSerializer):
+    test_set_id = serializers.PrimaryKeyRelatedField(
+        queryset=TestSet.objects.all(), source="test_set"
+    )
+    classifier_id = serializers.PrimaryKeyRelatedField(
+        queryset=Classifier.objects.all(), source="classifier"
+    )
+
     class Meta:
         model = TestRecord
-        fields = ["id", "tested_at", "test_set", "classifier", "test_status"]
+        fields = ["id", "tested_at", "test_set_id", "classifier_id", "test_status"]
 
 
 class TestRecordImageResultSerializer(serializers.ModelSerializer):
     image_url = serializers.CharField(source="image.thumbnail_url", read_only=True)
+    test_record_id = serializers.PrimaryKeyRelatedField(
+        queryset=TestRecord.objects.all(), source="test_record"
+    )
 
     class Meta:
         model = TestRecordImageResult
@@ -44,7 +54,7 @@ class TestRecordImageResultSerializer(serializers.ModelSerializer):
             "id",
             "image",
             "image_url",
-            "test_record",
+            "test_record_id",
             "expected_member",
             "result_member",
         ]

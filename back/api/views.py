@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 
+from rest_framework.decorators import action
+
 from .filters import MultiIdFilter
 
 from .serializer import (
@@ -59,9 +61,13 @@ class TestRecordModelViewset(ModelViewSet):
 
 
 class TestRecordImageResultModelViewset(ModelViewSet):
-    queryset = TestRecordImageResult.objects.select_related("image")
+    queryset = TestRecordImageResult.objects.all()
     serializer_class = TestRecordImageResultSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ["test_record"]
     ordering_fields = ["id"]
     ordering = ["-id"]
+
+    def get_queryset(self):
+        queryset = TestRecordImageResult.objects.select_related("image")
+        return queryset.filter(test_record=self.kwargs["test_record_id"])
