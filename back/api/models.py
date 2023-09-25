@@ -36,11 +36,18 @@ class Classifier(CommonModel):
         TRAINING = "training"
         ERROR = "error"
         CREATED = "created"
+    
+    class ALGORITHM_TYPE(models.TextChoices):
+        BALL_TREE = "ball_tree",
+        KD_TREE = "kd_tree",
+        BRUTE = "brute"
 
     name = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
     training_images = models.ManyToManyField(Image)
-    trainging_status = models.CharField(max_length=50, default=TRAINING_STATUS.QUEUE)
+    trainging_status = models.CharField(max_length=50, choices=TRAINING_STATUS.choices default=TRAINING_STATUS.QUEUE)
+    algorithm = models.CharField(max_length=50, choices=ALGORITHM_TYPE.choices, default=ALGORITHM_TYPE.BALL_TREE)
+
 
     class Meta:
         db_table = "classifier"
