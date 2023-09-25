@@ -36,18 +36,21 @@ class Classifier(CommonModel):
         TRAINING = "training"
         ERROR = "error"
         CREATED = "created"
-    
+
     class ALGORITHM_TYPE(models.TextChoices):
-        BALL_TREE = "ball_tree",
-        KD_TREE = "kd_tree",
+        BALL_TREE = ("ball_tree",)
+        KD_TREE = ("kd_tree",)
         BRUTE = "brute"
 
     name = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
     training_images = models.ManyToManyField(Image)
-    trainging_status = models.CharField(max_length=50, choices=TRAINING_STATUS.choices default=TRAINING_STATUS.QUEUE)
-    algorithm = models.CharField(max_length=50, choices=ALGORITHM_TYPE.choices, default=ALGORITHM_TYPE.BALL_TREE)
-
+    trainging_status = models.CharField(
+        max_length=50, choices=TRAINING_STATUS.choices, default=TRAINING_STATUS.QUEUE
+    )
+    algorithm = models.CharField(
+        max_length=50, choices=ALGORITHM_TYPE.choices, default=ALGORITHM_TYPE.BALL_TREE
+    )
 
     class Meta:
         db_table = "classifier"
@@ -74,12 +77,13 @@ class TestRecord(CommonModel):
     test_status = models.CharField(
         max_length=50, choices=TEST_STATUS.choices, default=TEST_STATUS.QUEUE
     )
+    answer_rate = models.FloatField(null=True)
 
     class Meta:
         db_table = "test_record"
 
 
-class TestRecordImageResult(CommonModel):
+class ImageResult(CommonModel):
     test_record = models.ForeignKey(TestRecord, on_delete=models.CASCADE)
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
     expected_member = models.CharField(max_length=50, choices=Image.Member.choices)
@@ -87,4 +91,4 @@ class TestRecordImageResult(CommonModel):
 
     class Meta:
         indexes = [models.Index(fields=["test_record"])]
-        db_table = "test_record_image_result"
+        db_table = "image_result"

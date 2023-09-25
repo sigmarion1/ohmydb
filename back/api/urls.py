@@ -5,7 +5,7 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     ClassifierModelViewset,
     ImageModelViewset,
-    TestRecordImageResultModelViewset,
+    ImageResultModelViewSet,
     TestRecordModelViewset,
     TestSetModelViewset,
 )
@@ -16,10 +16,7 @@ router.register(r"images", ImageModelViewset)
 router.register(r"classifiers", ClassifierModelViewset)
 router.register(r"test-sets", TestSetModelViewset)
 router.register(r"test-records", TestRecordModelViewset)
-router.register(
-    r"test-records/(?P<test_record_id>[^/.]+)/image-results",
-    TestRecordImageResultModelViewset,
-)
+router.register(r"image-results", ImageResultModelViewSet)
 
 
 urlpatterns = router.urls

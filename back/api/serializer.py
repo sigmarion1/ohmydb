@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Classifier, Image, TestRecordImageResult, TestRecord, TestSet
+from .models import Classifier, Image, ImageResult, TestRecord, TestSet
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -39,21 +39,27 @@ class TestRecordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TestRecord
-        fields = ["id", "tested_at", "test_set_id", "classifier_id", "test_status"]
+        fields = [
+            "id",
+            "tested_at",
+            "test_set_id",
+            "classifier_id",
+            "test_status",
+            "answer_rate",
+        ]
 
 
-class TestRecordImageResultSerializer(serializers.ModelSerializer):
-    image_url = serializers.CharField(source="image.thumbnail_url", read_only=True)
+class ImageResultSerializer(serializers.ModelSerializer):
+    image = ImageSerializer()
     test_record_id = serializers.PrimaryKeyRelatedField(
         queryset=TestRecord.objects.all(), source="test_record"
     )
 
     class Meta:
-        model = TestRecordImageResult
+        model = ImageResult
         fields = [
             "id",
             "image",
-            "image_url",
             "test_record_id",
             "expected_member",
             "result_member",

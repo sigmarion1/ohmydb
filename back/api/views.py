@@ -1,5 +1,3 @@
-from django.http import HttpResponse
-from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework.decorators import action
@@ -9,12 +7,12 @@ from .filters import MultiIdFilter
 from .serializer import (
     ClassifierSerializer,
     ImageSerializer,
-    TestRecordImageResultSerializer,
+    ImageResultSerializer,
     TestRecordSerializer,
     TestSetSerializer,
 )
 
-from .models import Classifier, Image, TestRecordImageResult, TestRecord, TestSet
+from .models import Classifier, Image, ImageResult, TestRecord, TestSet
 
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -23,7 +21,7 @@ from rest_framework.filters import OrderingFilter
 
 
 class HealthApiView(APIView):
-    def get(self, request):
+    def get(self):
         return Response("OK")
 
 
@@ -60,14 +58,10 @@ class TestRecordModelViewset(ModelViewSet):
     ordering = ["-id"]
 
 
-class TestRecordImageResultModelViewset(ModelViewSet):
-    queryset = TestRecordImageResult.objects.all()
-    serializer_class = TestRecordImageResultSerializer
-    filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_fields = ["test_record"]
+class ImageResultModelViewSet(ModelViewSet):
+    queryset = ImageResult.objects.select_related("image")
+    serializer_class = ImageResultSerializer
+    filter_backends = [OrderingFilter, DjangoFilterBackend]
+    filterset_fields = ["test_record_id"]
     ordering_fields = ["id"]
     ordering = ["-id"]
-
-    def get_queryset(self):
-        queryset = TestRecordImageResult.objects.select_related("image")
-        return queryset.filter(test_record=self.kwargs["test_record_id"])
