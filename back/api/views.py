@@ -21,7 +21,7 @@ from rest_framework.filters import OrderingFilter
 
 
 class HealthApiView(APIView):
-    def get(self):
+    def get(self, request):
         return Response("OK")
 
 
