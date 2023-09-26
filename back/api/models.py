@@ -43,14 +43,15 @@ class Classifier(CommonModel):
         BRUTE = "brute"
 
     name = models.CharField(max_length=255)
-    url = models.CharField(max_length=255)
-    training_images = models.ManyToManyField(Image)
+    url = models.CharField(max_length=255, null=True, blank=True)
+    training_images = models.ManyToManyField(Image, blank=True)
     training_status = models.CharField(
         max_length=50, choices=TRAINING_STATUS.choices, default=TRAINING_STATUS.QUEUE
     )
     algorithm = models.CharField(
         max_length=50, choices=ALGORITHM_TYPE.choices, default=ALGORITHM_TYPE.BALL_TREE
     )
+    n_neighbors = models.IntegerField(null=True, blank=True)
 
     class Meta:
         db_table = "classifier"

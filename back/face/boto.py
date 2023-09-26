@@ -1,6 +1,9 @@
 import os
 import boto3
 from dotenv import load_dotenv
+from botocore.exceptions import ClientError
+
+BUCKET_NAME = "ohmydb-bucket-1"
 
 
 load_dotenv()
@@ -13,11 +16,11 @@ s3_client = boto3.client(
     region_name="ap-northeast-2",
 )
 
-# session = boto3.Session(
-#     aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-#     aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
-# )
 
-# s3 = session.resource("s3")
-
-# ohmydb_bucket = s3.Bucket(BUCKET_NAME)
+def s3_upload(source, destination):
+    try:
+        s3_client.upload_file(source, BUCKET_NAME, destination)
+    except ClientError as e:
+        print(e)
+        return False
+    return True

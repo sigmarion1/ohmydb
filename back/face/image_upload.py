@@ -1,5 +1,5 @@
 import os
-from face.boto import s3_client
+from face.boto import s3_client, s3_upload
 from botocore.exceptions import ClientError
 import re
 import uuid
@@ -85,13 +85,8 @@ def upload_images_to_s3(image_files: Tuple[str, str]) -> List:
         source = f"{UPLOAD_PATH}/{image}"
         destination = f"{S3_IMAGE_UPLOAD_PATH}/{date}/{image}"
 
-        try:
-            s3_client.upload_file(source, BUCKET_NAME, destination)
-        except ClientError as e:
-            print(e)
-            return []
-
-        upload_files.append(destination)
+        if s3_upload(source, destination):
+            upload_files.append(destination)
 
     return upload_files
 

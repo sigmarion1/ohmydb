@@ -40,7 +40,7 @@ class DjangoHandler:
             training_status=Classifier.TRAINING_STATUS.QUEUE
         ).first()
 
-        return classifier.pk if classifier else None
+        return classifier
 
 
 if __name__ == "__main__":
