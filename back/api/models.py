@@ -31,25 +31,25 @@ class Image(CommonModel):
 
 
 class Classifier(CommonModel):
-    class TRAINING_STATUS(models.TextChoices):
+    class TrainingStatus(models.TextChoices):
         QUEUE = "queue"
         TRAINING = "training"
         ERROR = "error"
         CREATED = "created"
 
-    class ALGORITHM_TYPE(models.TextChoices):
-        BALL_TREE = ("ball_tree",)
-        KD_TREE = ("kd_tree",)
+    class AlgorithmType(models.TextChoices):
+        BALL_TREE = "ball_tree"
+        KD_TREE = "kd_tree"
         BRUTE = "brute"
 
     name = models.CharField(max_length=255)
     url = models.CharField(max_length=255, null=True, blank=True)
     training_images = models.ManyToManyField(Image, blank=True)
     training_status = models.CharField(
-        max_length=50, choices=TRAINING_STATUS.choices, default=TRAINING_STATUS.QUEUE
+        max_length=50, choices=TrainingStatus.choices, default=TrainingStatus.QUEUE
     )
     algorithm = models.CharField(
-        max_length=50, choices=ALGORITHM_TYPE.choices, default=ALGORITHM_TYPE.BALL_TREE
+        max_length=50, choices=AlgorithmType.choices, default=AlgorithmType.BALL_TREE
     )
     n_neighbors = models.IntegerField(null=True, blank=True)
 
@@ -66,19 +66,19 @@ class TestSet(CommonModel):
 
 
 class TestRecord(CommonModel):
-    class TEST_STATUS(models.TextChoices):
+    class TestStatus(models.TextChoices):
         QUEUE = "queue"
         TESTING = "testing"
         ERROR = "error"
         FINISH = "finish"
 
-    tested_at = models.DateTimeField(null=True)
+    tested_at = models.DateTimeField(null=True, blank=True)
     test_set = models.ForeignKey(TestSet, on_delete=models.CASCADE)
     classifier = models.ForeignKey(Classifier, on_delete=models.CASCADE)
     test_status = models.CharField(
-        max_length=50, choices=TEST_STATUS.choices, default=TEST_STATUS.QUEUE
+        max_length=50, choices=TestStatus.choices, default=TestStatus.QUEUE
     )
-    answer_rate = models.FloatField(null=True)
+    answer_rate = models.FloatField(null=True, blank=True)
 
     class Meta:
         db_table = "test_record"

@@ -1,9 +1,8 @@
 import os
-from face.boto import s3_client, s3_upload
-from botocore.exceptions import ClientError
+from face.boto import s3_client, s3_delete, s3_upload, s3_download
 import re
 import uuid
-from typing import List, Optional, Tuple
+from typing import List, Tuple
 
 from datetime import datetime
 
@@ -15,7 +14,7 @@ BUCKET_NAME = "ohmydb-bucket-1"
 S3_IMAGE_TEMP_PATH = "temp"
 S3_IMAGE_UPLOAD_PATH = "image"
 CURRENT_PATH = os.getcwd()
-DOWNLOAD_PATH = f"{CURRENT_PATH}/face/temp"
+DOWNLOAD_PATH = f"{CURRENT_PATH}/face/download"
 UPLOAD_PATH = f"{CURRENT_PATH}/face/upload"
 MAXIMUM_SIZE = (2000, 2000)
 THUMBNAIL_SIZE = (200, 200)
@@ -24,6 +23,8 @@ DH = DjangoHandler()
 
 
 def download_temp_image():
+    download_count = 0
+
     response = s3_client.list_objects_v2(
         Bucket=BUCKET_NAME, Prefix=f"{S3_IMAGE_TEMP_PATH}/"
     )
@@ -38,9 +39,11 @@ def download_temp_image():
 
         file_name = key.split("/")[-1]
 
-        s3_client.download_file(
-            Bucket=BUCKET_NAME, Key=key, Filename=f"{DOWNLOAD_PATH}/{file_name}"
-        )
+        if s3_download(key, f"{DOWNLOAD_PATH}/{file_name}"):
+            download_count += 1
+            s3_delete(key)
+
+    return download_count
 
 
 def add_thumbnail_image(original_image: str) -> Tuple[str, str] | None:
@@ -63,6 +66,13 @@ def add_thumbnail_image(original_image: str) -> Tuple[str, str] | None:
 
 
 def upload_process():
+    download_count = download_temp_image()
+    upload_count = 0
+
+    if download_count == 0:
+        print("no image in temp folder")
+        return
+
     for original_image in image_files_in_folder(DOWNLOAD_PATH):
         image_files = add_thumbnail_image(original_image)
 
@@ -75,6 +85,10 @@ def upload_process():
             continue
 
         DH.insert_image_to_database(upload_files)
+        upload_count += 1
+
+    print(f"{upload_count} image uploaded")
+    return
 
 
 def upload_images_to_s3(image_files: Tuple[str, str]) -> List:
@@ -100,5 +114,4 @@ def image_files_in_folder(folder):
 
 
 if __name__ == "__main__":
-    download_temp_image()
     upload_process()

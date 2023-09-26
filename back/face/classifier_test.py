@@ -1,12 +1,10 @@
-from face.boto import s3_upload
+from face.boto import s3_download
 from face.django_handler import DjangoHandler
 
-import math
-from sklearn import neighbors
+from datetime import datetime
 import os
 import os.path
 import pickle
-from PIL import Image, ImageDraw
 import face_recognition
 from face_recognition.face_recognition_cli import image_files_in_folder
 import requests
@@ -14,76 +12,67 @@ import requests
 
 HOST_URL = "https://img.ohmydb.com"
 CURRENT_PATH = os.getcwd()
-TEMP_PATH = f"{CURRENT_PATH}/face/temp"
+DOWNLOAD_PATH = f"{CURRENT_PATH}/face/download"
 S3_CLASSIFIER_UPLOAD_PATH = "classifier"
 DH = DjangoHandler()
 
-X = []
-y = []
+DISTANCE_THRESHOLD = 0.6
 
 
-def train_queued_classifier():
-    classifier = DH.get_queued_classifier()
+def test_classifier_by_record():
+    test_record = DH.get_queued_test_record()
 
-    if not classifier:
+    if not test_record:
+        print("not queued test record")
         return None
 
-    training_image_dict = DH.get_training_image_dict(classifier.pk)
+    classifier = test_record.classifier
+    test_set = test_record.test_set
 
-    for memeber, image_path_list in training_image_dict.items():
-        for image_path in image_path_list:
-            url = f"{HOST_URL}/{image_path}"
+    classifier_path = f"{DOWNLOAD_PATH}/{classifier.pk}.clf"
 
-            image = face_recognition.load_image_file(requests.get(url, stream=True).raw)
-            face_bounding_boxes = face_recognition.face_locations(image)
+    s3_download(classifier.url, classifier_path)
 
-            if len(face_bounding_boxes) != 1:
-                # If there are no people (or too many people) in a training image, skip the image.
-                print(
-                    "Image {} not suitable for training: {}".format(
-                        image_path,
-                        "Didn't find a face"
-                        if len(face_bounding_boxes) < 1
-                        else "Found more than one face",
-                    )
-                )
-            else:
-                # Add face encoding for current image to the training set
-                X.append(
-                    face_recognition.face_encodings(
-                        image, known_face_locations=face_bounding_boxes
-                    )[0]
-                )
-                y.append(memeber)
+    with open(classifier_path, "rb") as f:
+        knn_clf = pickle.load(f)
 
-    if classifier.n_neighbors is None:
-        classifier.n_neighbors = int(round(math.sqrt(len(X))))
-        print("Chose n_neighbors automatically:", classifier.n_neighbors)
+    success_count = 0
+    fail_count = 0
 
-    knn_clf = neighbors.KNeighborsClassifier(
-        n_neighbors=classifier.n_neighbors,
-        algorithm=classifier.algorithm,
-        weights="distance",
-    )
-    knn_clf.fit(X, y)
+    for test_image in test_set.test_images.all():
+        url = f"{HOST_URL}/{test_image.url}"
+        image = face_recognition.load_image_file(requests.get(url, stream=True).raw)
+        face_locations = face_recognition.face_locations(image)
+        result_member = test_image.Member.UNKNOWN
 
-    save_path = f"{TEMP_PATH}/{classifier.pk}.clf"
+        if len(face_locations) == 1:
+            face_encodings = face_recognition.face_encodings(
+                image, known_face_locations=face_locations
+            )
 
-    # Save the trained KNN classifier
-    with open(save_path, "wb") as f:
-        pickle.dump(knn_clf, f)
+            result_member = knn_clf.predict(face_encodings)[0]
 
-    s3_destination = f"{S3_CLASSIFIER_UPLOAD_PATH}/{classifier.pk}.clf"
-    if s3_upload(save_path, s3_destination):
-        classifier.training_status = classifier.TRAINING_STATUS.CREATED
-        classifier.name = (
-            f"{classifier.name}_{classifier.n_neighbors}_{classifier.algorithm}"
+        if (
+            result_member != test_image.Member.UNKNOWN
+            and result_member == test_image.annotation
+        ):
+            success_count += 1
+        else:
+            fail_count += 1
+
+        DH.create_image_result(
+            test_image.annotation, result_member, test_image, test_record
         )
-        classifier.url = s3_destination
-        classifier.save()
 
-    return
+    test_record.test_status = test_record.TestStatus.FINISH
+    test_record.tested_at = datetime.now()
+    test_record.answer_rate = 100 * success_count / (success_count + fail_count)
+    test_record.save()
+
+    print(
+        f"Test Complete. Image : {success_count + fail_count}, Success : {success_count}"
+    )
 
 
 if __name__ == "__main__":
-    train_queued_classifier()
+    test_classifier_by_record()

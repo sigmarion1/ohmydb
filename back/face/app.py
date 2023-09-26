@@ -1,12 +1,8 @@
-import os
-import django
+from face.image_upload import upload_process
+from face.train import train_queued_classifier
+from face.classifier_test import test_classifier_by_record
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ohmydb.settings")
-django.setup()
-
-from api.models import Image
-
-a = Image.objects.all()
-print(a)
-
-# /ohmydb/back python -m face.app
+if __name__ == "__main__":
+    upload_process()
+    train_queued_classifier()
+    test_classifier_by_record()

@@ -14,7 +14,7 @@ import requests
 
 HOST_URL = "https://img.ohmydb.com"
 CURRENT_PATH = os.getcwd()
-TEMP_PATH = f"{CURRENT_PATH}/face/temp"
+DOWNLOAD_PATH = f"{CURRENT_PATH}/face/temp"
 S3_CLASSIFIER_UPLOAD_PATH = "classifier"
 DH = DjangoHandler()
 
@@ -26,6 +26,7 @@ def train_queued_classifier():
     classifier = DH.get_queued_classifier()
 
     if not classifier:
+        print("not queued classifier")
         return None
 
     training_image_dict = DH.get_training_image_dict(classifier.pk)
@@ -67,7 +68,7 @@ def train_queued_classifier():
     )
     knn_clf.fit(X, y)
 
-    save_path = f"{TEMP_PATH}/{classifier.pk}.clf"
+    save_path = f"{DOWNLOAD_PATH}/{classifier.pk}.clf"
 
     # Save the trained KNN classifier
     with open(save_path, "wb") as f:
@@ -75,7 +76,7 @@ def train_queued_classifier():
 
     s3_destination = f"{S3_CLASSIFIER_UPLOAD_PATH}/{classifier.pk}.clf"
     if s3_upload(save_path, s3_destination):
-        classifier.training_status = classifier.TRAINING_STATUS.CREATED
+        classifier.training_status = classifier.TrainingStatus.CREATED
         classifier.name = (
             f"{classifier.name}_{classifier.n_neighbors}_{classifier.algorithm}"
         )

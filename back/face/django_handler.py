@@ -5,7 +5,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ohmydb.settings")
 django.setup()
 
 from typing import List
-from api.models import Image, Classifier
+from api.models import Image, Classifier, ImageResult, TestRecord
 
 
 class DjangoHandler:
@@ -37,13 +37,23 @@ class DjangoHandler:
 
     def get_queued_classifier(self):
         classifier = Classifier.objects.filter(
-            training_status=Classifier.TRAINING_STATUS.QUEUE
+            training_status=Classifier.TrainingStatus.QUEUE
         ).first()
 
         return classifier
 
+    def get_queued_test_record(self):
+        test_record = TestRecord.objects.filter(
+            test_status=TestRecord.TestStatus.QUEUE,
+            classifier__training_status=Classifier.TrainingStatus.CREATED,
+        ).first()
 
-if __name__ == "__main__":
-    DH = DjangoHandler()
+        return test_record
 
-    print(DH.get_training_image_dict(1))
+    def create_image_result(self, expected_member, result_member, image, test_record):
+        ImageResult.objects.create(
+            expected_member=expected_member,
+            result_member=result_member,
+            image=image,
+            test_record=test_record,
+        )
