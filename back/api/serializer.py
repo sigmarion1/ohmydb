@@ -16,7 +16,7 @@ class ClassifierSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Classifier
-        fields = ["id", "name", "url", "training_image_ids", "trainging_status"]
+        fields = ["id", "name", "url", "training_image_ids", "training_status"]
 
 
 class TestSetSerializer(serializers.ModelSerializer):

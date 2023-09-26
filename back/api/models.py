@@ -45,7 +45,7 @@ class Classifier(CommonModel):
     name = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
     training_images = models.ManyToManyField(Image)
-    trainging_status = models.CharField(
+    training_status = models.CharField(
         max_length=50, choices=TRAINING_STATUS.choices, default=TRAINING_STATUS.QUEUE
     )
     algorithm = models.CharField(
