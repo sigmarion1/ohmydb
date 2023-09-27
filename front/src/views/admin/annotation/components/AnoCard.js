@@ -15,18 +15,29 @@ import Card from "components/card/Card.js";
 // Assets
 import { useState } from "react";
 import { IoCheckmark } from "react-icons/io5";
+import { s3HostUrl } from "variables";
 
-export default function AnoCard(props) {
-  const { image, name, author, bidders, download, currentbid } = props;
+import { memberInfo } from "variables";
+import { annotate } from "utils/api";
+
+import axios from "axios";
+
+export default function AnoCard({ image_data, selected, setSelected }) {
+  const { id, url, thumbnail_url, annotation } = image_data;
   const [like, setLike] = useState(false);
   const textColor = useColorModeValue("navy.700", "white");
   const textColorBid = useColorModeValue("brand.500", "white");
+
+  const onAnotationChange = (e) => {
+    console.log(e.target.value);
+    annotate(id, e.target.value);
+  };
   return (
     <Card p="20px">
       <Flex direction={{ base: "column" }} justify="center">
         <Box mb={{ base: "20px", "2xl": "20px" }} position="relative">
           <Image
-            src={SampleImage}
+            src={s3HostUrl + "/" + url}
             w={{ base: "100%", "3xl": "100%" }}
             h={{ base: "100%", "3xl": "100%" }}
             borderRadius="20px"
@@ -68,32 +79,17 @@ export default function AnoCard(props) {
               "2xl": "row",
             }}
           >
-            <RadioGroup defaultValue="unknown">
-              <Radio value="arin" m="5px">
-                Arin
-              </Radio>
-              <Radio value="mimi" m="5px">
-                Mimi
-              </Radio>
-
-              <Radio value="yooa" m="5px">
-                Yooa
-              </Radio>
-
-              <Radio value="yubin" m="5px">
-                Yubin
-              </Radio>
-
-              <Radio value="hyojung" m="5px">
-                Hyojung
-              </Radio>
-
-              <Radio value="seunghee" m="5px">
-                Seunghee
-              </Radio>
-              <Radio value="unknown" m="5px">
-                Unknown
-              </Radio>
+            <RadioGroup defaultValue={annotation}>
+              {memberInfo.map((member) => (
+                <Radio
+                  value={member.value}
+                  checked={annotation === member.value}
+                  m="5px"
+                  onChange={onAnotationChange}
+                >
+                  {member.name}
+                </Radio>
+              ))}
             </RadioGroup>
           </Flex>
         </Flex>
