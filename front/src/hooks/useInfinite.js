@@ -20,7 +20,10 @@ const useInfinite = () => {
   };
   const { data, error, mutate, size, setSize } = useSWRInfinite(
     getKey,
-    fetcher
+    fetcher,
+    {
+      revalidateAll: true,
+    }
   );
 
   const onIntersect = ([entry]) => {

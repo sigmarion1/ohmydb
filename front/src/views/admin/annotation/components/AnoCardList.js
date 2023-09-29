@@ -8,7 +8,7 @@ import AnoCard from "views/admin/annotation/components/AnoCard";
 import useImages from "hooks/useImages";
 
 import { ThreeCircles } from "react-loader-spinner";
-export default function AnoCardList({ data, selected, setSelected }) {
+export default function AnoCardList({ data, selected, setSelected, mutate }) {
   const textColor = useColorModeValue("navy.700", "white");
   const images = data?.results;
 
@@ -36,6 +36,7 @@ export default function AnoCardList({ data, selected, setSelected }) {
             image_data={image}
             selected={selected}
             setSelected={setSelected}
+            mutate={mutate}
             key={i}
           />
         ))}

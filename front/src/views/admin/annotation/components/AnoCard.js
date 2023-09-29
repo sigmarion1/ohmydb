@@ -29,7 +29,8 @@ export default function AnoCard({ image_data, selected, setSelected }) {
   const textColorBid = useColorModeValue("brand.500", "white");
 
   const onAnotationChange = (e) => {
-    console.log(e.target.value);
+    e.preventDefault();
+
     annotate(id, e.target.value);
   };
   return (

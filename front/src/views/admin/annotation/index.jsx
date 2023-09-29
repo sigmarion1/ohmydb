@@ -124,8 +124,11 @@ export default function Annotation() {
               <Text color={textColor} fontSize="2xl" ms="24px" fontWeight="700">
                 Selected [0]
                 <Link>
-                  {!filterValue && (
-                    <Button margin="10px" onClick={onOpen}>
+                  <Button margin="10px" onClick={() => console.log("unselect")}>
+                    Unselect All
+                  </Button>
+                  {/* {!filterValue && (
+                    <Button margin="10px" onClick={() => console.log("unselect")}>
                       Filter : None
                     </Button>
                   )}
@@ -133,7 +136,8 @@ export default function Annotation() {
                     <Button colorScheme="pink" margin="10px" onClick={onOpen}>
                       Filter : {filterValue}
                     </Button>
-                  )}
+                  )} */}
+                  {/* <Button onClick={() => mutate()}>Refresh</Button> */}
                 </Link>
               </Text>
 
@@ -168,6 +172,7 @@ export default function Annotation() {
                     data={data}
                     selected={selected}
                     setSelected={setSelected}
+                    muate={mutate}
                   />
                 ))}
             </SimpleGrid>

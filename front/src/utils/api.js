@@ -9,7 +9,7 @@ export default fetcher;
 
 export const annotate = (image_id, annotation) =>
   axios
-    .put(hostUrl + "/api/images/" + image_id, { annotation })
+    .patch(hostUrl + "/api/images/" + image_id, { annotation })
     .then((res) => res.data);
 
 export const fetcherWithParams = ({ url, params }) =>
