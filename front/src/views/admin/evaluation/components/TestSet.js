@@ -17,8 +17,14 @@ import { useState } from "react";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
 import TestSetDetail from "views/admin/evaluation/components/TestSetDetail";
 
-export default function TestSet(props) {
+import useTestRecords from "hooks/useTestRecords";
+
+export default function TestSet({ testSet }) {
+  const { id, name } = testSet;
   const [isOpen, setIsOpen] = useState(false);
+
+  const { testRecords } = useTestRecords(id);
+  console.log(name);
 
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");

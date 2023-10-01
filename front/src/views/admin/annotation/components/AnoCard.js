@@ -20,23 +20,40 @@ import { s3HostUrl } from "variables";
 import { memberInfo } from "variables";
 import { annotate } from "utils/api";
 
-import axios from "axios";
-
 export default function AnoCard({ image_data, selected, setSelected }) {
   const { id, url, thumbnail_url, annotation } = image_data;
-  const [like, setLike] = useState(false);
   const textColor = useColorModeValue("navy.700", "white");
   const textColorBid = useColorModeValue("brand.500", "white");
 
   const onAnotationChange = (e) => {
     e.preventDefault();
-
     annotate(id, e.target.value);
   };
+
+  const isClicked = () => {
+    return selected.includes(id);
+  };
+
+  const onSelect = () => {
+    if (isClicked()) {
+      setSelected(selected.filter((e) => e !== id));
+    } else {
+      setSelected([...selected, id]);
+    }
+  };
+
   return (
-    <Card p="20px">
+    <Card
+      p="20px"
+      backgroundColor={isClicked() ? "navy.100" : "whiteAplha.100"}
+    >
       <Flex direction={{ base: "column" }} justify="center">
-        <Box mb={{ base: "20px", "2xl": "20px" }} position="relative">
+        <Box
+          mb={{ base: "20px", "2xl": "20px" }}
+          position="relative"
+          role="group"
+          onClick={onSelect}
+        >
           <Image
             src={s3HostUrl + "/" + url}
             w={{ base: "100%", "3xl": "100%" }}
@@ -45,8 +62,9 @@ export default function AnoCard({ image_data, selected, setSelected }) {
           />
           <Button
             position="absolute"
-            bg="white"
-            _hover={{ bg: "whiteAlpha.900" }}
+            bg={isClicked() ? "navy" : "white"}
+            // _hover={{ bg: "whiteAlpha.900" }}
+            _groupHover={{ bg: "navy.100" }}
             _active={{ bg: "white" }}
             _focus={{ bg: "white" }}
             p="0px !important"
@@ -55,16 +73,14 @@ export default function AnoCard({ image_data, selected, setSelected }) {
             borderRadius="50%"
             minW="36px"
             h="36px"
-            onClick={() => {
-              setLike(!like);
-            }}
           >
             <Icon
               transition="0.2s linear"
               w="20px"
               h="20px"
               as={IoCheckmark}
-              color="brand.500"
+              // color={"brand.500"}
+              color={isClicked() ? "white" : "navy"}
             />
           </Button>
         </Box>

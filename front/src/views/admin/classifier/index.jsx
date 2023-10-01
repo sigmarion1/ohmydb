@@ -26,7 +26,11 @@ import ComplexTable from "views/admin/classifier/components/ComplexTable";
 import { columnsDataComplex } from "views/admin/classifier/variables/columnsData";
 import tableDataComplex from "views/admin/classifier/variables/tableDataComplex.json";
 
+import useClassifier from "hooks/useClassifier";
+
 export default function Classifier() {
+  const { classifiers } = useClassifier();
+
   // Chakra Color Mode
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -35,10 +39,12 @@ export default function Classifier() {
         columns={{ sm: 1, md: 1 }}
         spacing={{ base: "20px", xl: "20px" }}
       >
-        <ComplexTable
-          columnsData={columnsDataComplex}
-          tableData={tableDataComplex}
-        />
+        {classifiers && (
+          <ComplexTable
+            columnsData={columnsDataComplex}
+            tableData={classifiers}
+          />
+        )}
       </SimpleGrid>
     </Box>
   );

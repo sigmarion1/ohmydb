@@ -18,13 +18,10 @@ const useInfinite = () => {
 
     return url + `&offset=${index * 10}`;
   };
-  const { data, error, mutate, size, setSize } = useSWRInfinite(
-    getKey,
-    fetcher,
-    {
-      revalidateAll: true,
-    }
-  );
+  const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher);
+
+  const isInitialLoading = !error && !data;
+  const isAdditionalLoading = data && data[0].count > size * 10;
 
   const onIntersect = ([entry]) => {
     if (entry.isIntersecting) {
@@ -43,7 +40,6 @@ const useInfinite = () => {
   return {
     list: data,
     isError: error,
-    mutate,
     setTarget,
     setUrl,
   };

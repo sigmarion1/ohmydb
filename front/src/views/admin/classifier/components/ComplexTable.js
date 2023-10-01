@@ -23,7 +23,7 @@ import {
 
 // Custom components
 import Card from "components/card/Card";
-
+import ClassifierImageViewer from "views/admin/classifier/components/ClassifierImageViewer";
 // Assets
 import {
   MdCheckCircle,
@@ -55,7 +55,7 @@ export default function ColumnsTable(props) {
     prepareRow,
     initialState,
   } = tableInstance;
-  initialState.pageSize = 5;
+  initialState.pageSize = 100;
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -111,24 +111,24 @@ export default function ColumnsTable(props) {
                           h="24px"
                           me="5px"
                           color={
-                            cell.value === "Created"
+                            cell.value === "created"
                               ? "green.500"
-                              : cell.value === "Queue"
+                              : cell.value === "queue"
                               ? "gray.500"
-                              : cell.value === "Error"
+                              : cell.value === "error"
                               ? "orange.500"
-                              : cell.value === "Training"
+                              : cell.value === "training"
                               ? "blue.500"
                               : null
                           }
                           as={
-                            cell.value === "Created"
+                            cell.value === "created"
                               ? MdCheckCircle
-                              : cell.value === "Queue"
+                              : cell.value === "queue"
                               ? MdHourglassEmpty
-                              : cell.value === "Error"
+                              : cell.value === "error"
                               ? MdOutlineError
-                              : cell.value === "Training"
+                              : cell.value === "training"
                               ? MdModelTraining
                               : null
                           }
@@ -138,37 +138,23 @@ export default function ColumnsTable(props) {
                         </Text>
                       </Flex>
                     );
-                  } else if (cell.column.Header === "DATE") {
+                  } else if (cell.column.Header === "ALGORITHM") {
                     data = (
                       <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === "TRAINING PHOTOS") {
+                  } else if (cell.column.Header === "N-NEIGHBORS") {
                     data = (
-                      <Link>
-                        <Button>
-                          <Text
-                            color={textColor}
-                            fontSize="sm"
-                            fontWeight="700"
-                          >
-                            View Photos
-                          </Text>
-                        </Button>
-                      </Link>
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
                     );
-                  } else if (cell.column.Header === "USE THIS CLASSIFIER") {
+                  } else if (cell.column.Header === "TRAINING IMAGES") {
                     data = (
-                      <Flex align="center">
-                        <Progress
-                          variant="table"
-                          colorScheme="brandScheme"
-                          h="8px"
-                          w="108px"
-                          value={cell.value}
-                        />
-                      </Flex>
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value.length}
+                      </Text>
                     );
                   }
                   return (

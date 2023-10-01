@@ -62,6 +62,8 @@ import { useState, useEffect } from "react";
 
 import { useDisclosure } from "@chakra-ui/react";
 import AnoCardList from "views/admin/annotation/components/AnoCardList";
+import TrainClassifierModal from "views/admin/annotation/components/TrainClassifierModal";
+import CreateTestSetModal from "views/admin/annotation/components/CreateTestSetModal";
 import useIntersection from "hooks/useIntersection";
 import useFetchInfite from "hooks/useFetchInfiite";
 import { ThreeCircles } from "react-loader-spinner";
@@ -75,27 +77,20 @@ export default function Annotation() {
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textColorBrand = useColorModeValue("brand.500", "white");
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [filterValue, setFilterValue] = useState(null);
+  const {
+    isOpen: isTCMOpen,
+    onOpen: onTCMOpen,
+    onClose: onTCMClose,
+  } = useDisclosure();
+  const {
+    isOpen: isCTSMOpen,
+    onOpen: onCTSMOpen,
+    onClose: onCTSMClose,
+  } = useDisclosure();
+
   const [selected, setSelected] = useState([]);
 
-  const { list, setTarget, setUrl, mutate } = useInfinite();
-
-  const onFilterChange = (e) => {
-    setFilterValue(e.target.value);
-  };
-
-  const applyFilfter = (apply) => {
-    onClose();
-
-    if (apply) {
-      setUrl(`/api/images?annotation=${filterValue}`);
-    } else {
-      setFilterValue(null);
-      setUrl("/api/images?");
-    }
-    mutate();
-  };
+  const { list, setTarget, setUrl } = useInfinite();
 
   useEffect(() => {
     setUrl("/api/images?");
@@ -122,22 +117,11 @@ export default function Annotation() {
               align={{ base: "start", md: "center" }}
             >
               <Text color={textColor} fontSize="2xl" ms="24px" fontWeight="700">
-                Selected [0]
+                Selected : {selected.length}
                 <Link>
-                  <Button margin="10px" onClick={() => console.log("unselect")}>
+                  <Button margin="10px" onClick={() => setSelected([])}>
                     Unselect All
                   </Button>
-                  {/* {!filterValue && (
-                    <Button margin="10px" onClick={() => console.log("unselect")}>
-                      Filter : None
-                    </Button>
-                  )}
-                  {filterValue && (
-                    <Button colorScheme="pink" margin="10px" onClick={onOpen}>
-                      Filter : {filterValue}
-                    </Button>
-                  )} */}
-                  {/* <Button onClick={() => mutate()}>Refresh</Button> */}
                 </Link>
               </Text>
 
@@ -147,75 +131,49 @@ export default function Annotation() {
                 ms={{ base: "24px", md: "0px" }}
                 mt={{ base: "20px", md: "0px" }}
               >
-                <Link
-                  color={textColorBrand}
-                  fontWeight="500"
-                  me={{ base: "34px", md: "44px" }}
-                  to="#art"
-                >
+                <Button margin="10px" onClick={onTCMOpen}>
                   Train Classifier
-                </Link>
-                <Link
-                  color={textColorBrand}
-                  fontWeight="500"
-                  me={{ base: "34px", md: "44px" }}
-                  to="#music"
-                >
+                </Button>
+                <Button margin="10px" onClick={onCTSMOpen}>
                   Create Test Set
-                </Link>
+                </Button>
               </Flex>
             </Flex>
-            <SimpleGrid columns={{ base: 1, md: 4 }} gap="20px">
+            <SimpleGrid columns={{ base: 1, md: 5 }} gap="20px">
               {list &&
                 list.map((data) => (
                   <AnoCardList
                     data={data}
                     selected={selected}
                     setSelected={setSelected}
-                    muate={mutate}
                   />
                 ))}
             </SimpleGrid>
+
             <Box h="100px" ref={setTarget} />
+            <ThreeCircles
+              height="100"
+              width="100"
+              color={textColor}
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+              ariaLabel="three-circles-rotating"
+            />
           </Flex>
         </Flex>
       </Grid>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Apply filter</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl>
-              <RadioGroup>
-                <Stack>
-                  {memberInfo.map((member) => (
-                    <Radio
-                      value={member.value}
-                      checked={filterValue === member.value}
-                      onChange={onFilterChange}
-                    >
-                      {member.name}
-                    </Radio>
-                  ))}
-                </Stack>
-              </RadioGroup>
-            </FormControl>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button
-              onClick={() => applyFilfter(true)}
-              colorScheme="blue"
-              mr={3}
-            >
-              Apply
-            </Button>
-            <Button onClick={() => applyFilfter(false)}>Reset</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <TrainClassifierModal
+        selected={selected}
+        isTCMOpen={isTCMOpen}
+        onTCMClose={onTCMClose}
+      />
+      <CreateTestSetModal
+        selected={selected}
+        isCTSMOpen={isCTSMOpen}
+        onCTSMClose={onCTSMClose}
+      />
     </Box>
   );
 }

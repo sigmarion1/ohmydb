@@ -16,17 +16,29 @@ class ClassifierSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Classifier
-        fields = ["id", "name", "url", "training_image_ids", "training_status"]
+        fields = [
+            "id",
+            "name",
+            "url",
+            "n_neighbors",
+            "training_image_ids",
+            "training_status",
+            "algorithm",
+        ]
 
 
 class TestSetSerializer(serializers.ModelSerializer):
     test_image_ids = serializers.PrimaryKeyRelatedField(
         queryset=Image.objects.all(), many=True, source="test_images"
     )
+    preview_image_urls = serializers.SerializerMethodField()
 
     class Meta:
         model = TestSet
-        fields = ["id", "name", "test_image_ids"]
+        fields = ["id", "name", "test_image_ids", "preview_image_urls"]
+
+    def get_preview_image_urls(self, test_set):
+        return test_set.test_images.all()[:5].values_list("thumbnail_url", flat=True)
 
 
 class TestRecordSerializer(serializers.ModelSerializer):

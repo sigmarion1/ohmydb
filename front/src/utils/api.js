@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { Axios } from "axios";
 
 // const hostUrl = "https://api.ohmydb.com";
 const hostUrl = "http://127.0.0.1:8000";
@@ -14,3 +14,29 @@ export const annotate = (image_id, annotation) =>
 
 export const fetcherWithParams = ({ url, params }) =>
   axios.get(hostUrl + url, { params }).then((res) => res.data);
+
+export const postClassifier = async (data) => {
+  try {
+    let res = await axios({
+      url: hostUrl + "/api/classifiers",
+      method: "post",
+      data,
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
+export const postTestSet = async (data) => {
+  try {
+    let res = await axios({
+      url: hostUrl + "/api/test-sets",
+      method: "post",
+      data,
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response;
+  }
+};

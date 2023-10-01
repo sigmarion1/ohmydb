@@ -1,0 +1,26 @@
+import fetcher from "../utils/api";
+import { fetcherWithParams } from "../utils/api";
+import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
+
+const useClassifier = () => {
+  const params = {
+    ordering: "-id",
+    limit: "100",
+  };
+
+  const { data, error } = useSWR(
+    { url: "/api/classifiers", params },
+    fetcherWithParams
+  );
+
+  return {
+    classifiers: data?.results,
+    next: data?.next,
+    total: data?.count,
+    isLoading: !error && !data,
+    isError: error,
+  };
+};
+
+export default useClassifier;

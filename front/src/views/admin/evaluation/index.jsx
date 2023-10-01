@@ -22,24 +22,25 @@
 
 // Chakra imports
 import { Box, SimpleGrid } from "@chakra-ui/react";
+import React from "react";
 import TestSet from "views/admin/evaluation/components/TestSet";
 
 // Custom components
 
+import useTestSet from "hooks/useTestSet";
 // Assets
 
 export default function Overview() {
+  const { testSets } = useTestSet();
+
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
         columns={{ sm: 1, md: 1 }}
         spacing={{ base: "10px", xl: "10px" }}
       >
-        <TestSet />
-        <TestSet />
-        <TestSet />
-
-        <TestSet />
+        {testSets &&
+          testSets.map((testSet, i) => <TestSet testSet={testSet} key={i} />)}
       </SimpleGrid>
     </Box>
     // <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>

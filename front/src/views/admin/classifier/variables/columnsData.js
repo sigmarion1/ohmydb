@@ -62,18 +62,18 @@ export const columnsDataComplex = [
   },
   {
     Header: "STATUS",
-    accessor: "status",
+    accessor: "training_status",
   },
   {
-    Header: "DATE",
-    accessor: "date",
+    Header: "ALGORITHM",
+    accessor: "algorithm",
   },
   {
-    Header: "TRAINING PHOTOS",
-    accessor: "id",
+    Header: "N-NEIGHBORS",
+    accessor: "n_neighbors",
   },
   {
-    Header: "USE THIS CLASSIFIER",
-    accessor: "best_answer_rate",
+    Header: "TRAINING IMAGES",
+    accessor: "training_image_ids",
   },
 ];
