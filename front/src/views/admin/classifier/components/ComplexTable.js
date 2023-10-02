@@ -97,7 +97,13 @@ export default function ColumnsTable(props) {
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
                   let data = "";
-                  if (cell.column.Header === "NAME") {
+                  if (cell.column.Header === "ID") {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === "NAME") {
                     data = (
                       <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}

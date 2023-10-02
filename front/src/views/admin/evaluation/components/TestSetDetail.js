@@ -19,9 +19,11 @@ import {
 import Card from "components/card/Card.js";
 
 import TestSetClassifier from "views/admin/evaluation/components/TestSetClassifier";
+import useTestRecords from "hooks/useTestRecords";
 
-export default function TestSetDetail(props) {
+export default function TestSetDetail({ testSetId }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { testRecords } = useTestRecords(testSetId);
 
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
@@ -44,9 +46,10 @@ export default function TestSetDetail(props) {
   return (
     <Card>
       <SimpleGrid column={1} spacing="5px">
-        <TestSetClassifier />
-        <TestSetClassifier />
-        <TestSetClassifier />
+        {testRecords &&
+          testRecords.map((testRecord) => (
+            <TestSetClassifier testRecord={testRecord} />
+          ))}
 
         <Button mt="10px" onClick={onOpen}>
           Test Other Classifier

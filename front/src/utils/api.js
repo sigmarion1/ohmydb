@@ -40,3 +40,16 @@ export const postTestSet = async (data) => {
     throw err.response;
   }
 };
+
+export const postTestRecord = async (data) => {
+  try {
+    let res = await axios({
+      url: hostUrl + "/api/test-records",
+      method: "post",
+      data,
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response;
+  }
+};

@@ -21,7 +21,8 @@ import {
 
 import SampleImage from "assets/img/yubin.webp";
 
-export default function TestSetClassifier(props) {
+export default function TestSetClassifier({ testRecord }) {
+  const { classifier_id, test_status, answer_rate } = testRecord;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // Chakra Color Mode
@@ -45,19 +46,19 @@ export default function TestSetClassifier(props) {
   return (
     <Flex align="center" onClick={onOpen}>
       <Text color={textColorPrimary} fontSize="sm" fontWeight="700">
-        Test Model 12941294 (Click to View)
+        Classifier ID: {classifier_id} / status : {test_status} [Click to View]
       </Text>
       <Spacer />
 
       <Text color={textColorSecondary} fontSize="sm" fontWeight="700" mr="10px">
-        result : 90%
+        result : {answer_rate ? answer_rate.toFixed(2) : "None"}%
       </Text>
 
       <Modal isOpen={isOpen} onClose={onClose} size="full">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            Evaluation Result - Classifier : ewijqfoiewj
+            Classifier ID: {classifier_id} / status : {test_status}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody style={{ display: "grid" }}>

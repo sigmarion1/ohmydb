@@ -19,11 +19,12 @@ import TestSetDetail from "views/admin/evaluation/components/TestSetDetail";
 
 import useTestRecords from "hooks/useTestRecords";
 
+import { getFullImageUrl } from "variables";
+
 export default function TestSet({ testSet }) {
-  const { id, name } = testSet;
+  const { id, name, preview_image_urls } = testSet;
   const [isOpen, setIsOpen] = useState(false);
 
-  const { testRecords } = useTestRecords(id);
   console.log(name);
 
   // Chakra Color Mode
@@ -47,23 +48,11 @@ export default function TestSet({ testSet }) {
   return (
     <Card mb={{ base: "0px", "2xl": "10px" }}>
       <Flex align="center" direction={{ base: "column", md: "row" }}>
-        <AvatarGroup max={4}>
-          <Avatar src={SampleImage} />
-          <Avatar src={SampleImage} />
-
-          <Avatar src={SampleImage} />
-
-          <Avatar src={SampleImage} />
-
-          <Avatar src={SampleImage} />
-
-          <Avatar src={SampleImage} />
-
-          <Avatar src={SampleImage} />
-
-          <Avatar src={SampleImage} />
-
-          <Avatar src={SampleImage} />
+        <AvatarGroup>
+          {preview_image_urls &&
+            preview_image_urls.map((url) => (
+              <Avatar src={getFullImageUrl(url)} />
+            ))}
         </AvatarGroup>
         <Box mt={{ base: "10px", md: "0" }} ml="10px">
           <Text
@@ -73,14 +62,6 @@ export default function TestSet({ testSet }) {
             mb="4px"
           >
             Test Set 2023-09-20 0001
-          </Text>
-          <Text
-            fontWeight="500"
-            color={textColorSecondary}
-            fontSize="sm"
-            me="4px"
-          >
-            Tested Classifier : 3
           </Text>
         </Box>
         <Spacer />
@@ -98,7 +79,7 @@ export default function TestSet({ testSet }) {
           />
         </Flex>
       </Flex>
-      {isOpen && <TestSetDetail>dd</TestSetDetail>}
+      {isOpen && <TestSetDetail testSetId={id}>dd</TestSetDetail>}
     </Card>
   );
 }

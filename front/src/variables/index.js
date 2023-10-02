@@ -1,5 +1,7 @@
 export const s3HostUrl = "https://img.ohmydb.com";
 
+export const getFullImageUrl = (url) => s3HostUrl + "/" + url;
+
 export const memberInfo = [
   {
     name: "Arin",
