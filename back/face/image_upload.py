@@ -46,7 +46,7 @@ def download_temp_image():
     return download_count
 
 
-def add_thumbnail_image(original_image: str) -> Tuple[str, str] | None:
+def add_thumbnail_image(original_image: str):
     try:
         image_uuid = uuid.uuid4()
         image_file, thumbnail_file = f"{image_uuid}.jpg", f"{image_uuid}_thumbnail.jpg"
@@ -91,7 +91,7 @@ def upload_process():
     return
 
 
-def upload_images_to_s3(image_files: Tuple[str, str]) -> List:
+def upload_images_to_s3(image_files):
     upload_files = []
 
     for image in image_files:

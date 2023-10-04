@@ -14,7 +14,7 @@ import requests
 
 HOST_URL = "https://img.ohmydb.com"
 CURRENT_PATH = os.getcwd()
-DOWNLOAD_PATH = f"{CURRENT_PATH}/face/temp"
+DOWNLOAD_PATH = f"{CURRENT_PATH}/face/download"
 S3_CLASSIFIER_UPLOAD_PATH = "classifier"
 DH = DjangoHandler()
 
@@ -58,7 +58,7 @@ def train_queued_classifier():
                 y.append(memeber)
 
     if classifier.n_neighbors is None:
-        classifier.n_neighbors = int(round(math.sqrt(len(X))))
+        classifier.n_neighbors = int(round(math.sqrt(len(X)))) + 1
         print("Chose n_neighbors automatically:", classifier.n_neighbors)
 
     knn_clf = neighbors.KNeighborsClassifier(
