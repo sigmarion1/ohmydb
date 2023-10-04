@@ -20,9 +20,15 @@ import {
 // Custom components
 
 import SampleImage from "assets/img/yubin.webp";
+import ImageResultModal from "views/admin/evaluation/components/ImageResultModal";
 
 export default function TestSetClassifier({ testRecord }) {
-  const { classifier_id, test_status, answer_rate } = testRecord;
+  const {
+    id = 0,
+    classifier_id = 0,
+    test_status = "",
+    answer_rate,
+  } = testRecord;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // Chakra Color Mode
@@ -51,86 +57,10 @@ export default function TestSetClassifier({ testRecord }) {
       <Spacer />
 
       <Text color={textColorSecondary} fontSize="sm" fontWeight="700" mr="10px">
-        result : {answer_rate ? answer_rate.toFixed(2) : "None"}%
+        {answer_rate ? " result : " + answer_rate.toFixed(2) + "%" : ""}
       </Text>
 
-      <Modal isOpen={isOpen} onClose={onClose} size="full">
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            Classifier ID: {classifier_id} / status : {test_status}
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody style={{ display: "grid" }}>
-            <SimpleGrid columns={{ base: 1, md: 5 }}>
-              <Image
-                style={{
-                  borderStyle: "solid",
-                  borderWidth: "10px",
-                  borderColor: "red",
-                }}
-                maxH={"100%"}
-                maxW={"100%"}
-                src={SampleImage}
-              />
-              <Image
-                style={{
-                  borderStyle: "solid",
-                  borderWidth: "10px",
-                  borderColor: "red",
-                }}
-                src={SampleImage}
-              />
-              <Image
-                style={{
-                  borderStyle: "solid",
-                  borderWidth: "10px",
-                  borderColor: "red",
-                }}
-                src={SampleImage}
-              />
-              <Image
-                style={{
-                  borderStyle: "solid",
-                  borderWidth: "10px",
-                  borderColor: "red",
-                }}
-                src={SampleImage}
-              />
-              <Image
-                style={{
-                  borderStyle: "solid",
-                  borderWidth: "10px",
-                  borderColor: "red",
-                }}
-                src={SampleImage}
-              />
-              <Image
-                style={{
-                  borderStyle: "solid",
-                  borderWidth: "10px",
-                  borderColor: "red",
-                }}
-                src={SampleImage}
-              />
-              <Image
-                style={{
-                  borderStyle: "solid",
-                  borderWidth: "10px",
-                  borderColor: "red",
-                }}
-                src={SampleImage}
-              />
-            </SimpleGrid>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <ImageResultModal isOpen={isOpen} onClose={onClose} testRecordId={id} />
     </Flex>
   );
 }

@@ -1,7 +1,7 @@
 import axios, { Axios } from "axios";
 
-// const hostUrl = "https://api.ohmydb.com";
-const hostUrl = "http://127.0.0.1:8000";
+const hostUrl = "https://api.ohmydb.com";
+// const hostUrl = "http://127.0.0.1:8000";
 
 const fetcher = (url) => axios.get(hostUrl + url).then((res) => res.data);
 

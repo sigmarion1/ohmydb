@@ -39,7 +39,6 @@ export default function Classifier() {
         columns={{ sm: 1, md: 1 }}
         spacing={{ base: "20px", xl: "20px" }}
       >
-        {classifiers && classifiers.map((c) => <h1>c1</h1>)}
         {classifiers && (
           <ComplexTable
             columnsData={columnsDataComplex}

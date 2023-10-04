@@ -21,11 +21,19 @@ import Card from "components/card/Card.js";
 import TestSetClassifier from "views/admin/evaluation/components/TestSetClassifier";
 import useTestRecords from "hooks/useTestRecords";
 import useClassifier from "hooks/useClassifier";
-
+import { postTestRecord } from "utils/api";
+import { useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 export default function TestSetDetail({ testSetId }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { testRecords } = useTestRecords(testSetId);
   const { classifiers } = useClassifier();
+  const [selected, setSelected] = useState("");
+  const history = useHistory();
+
+  const handleSelect = (e) => {
+    setSelected(e.target.value);
+  };
 
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
@@ -55,12 +63,29 @@ export default function TestSetDetail({ testSetId }) {
     );
   }
 
+  const onCreate = async () => {
+    if (selected === "") {
+      alert("Must select classifier");
+    } else {
+      try {
+        await postTestRecord({
+          test_set_id: testSetId,
+          classifier_id: selected,
+        });
+        alert("Success to request new test");
+        location.reload();
+      } catch (err) {
+        alert("Fail to request new test");
+      }
+    }
+  };
+
   return (
     <Card>
       <SimpleGrid column={1} spacing="5px">
         {testRecords &&
-          testRecords.map((testRecord) => (
-            <TestSetClassifier testRecord={testRecord} />
+          testRecords.map((testRecord, i) => (
+            <TestSetClassifier testRecord={testRecord} key={i} />
           ))}
 
         <Button mt="10px" onClick={onOpen}>
@@ -75,11 +100,11 @@ export default function TestSetDetail({ testSetId }) {
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
-              <Select placeholder="Select classifier">
+              <Select onChange={handleSelect} value={selected}>
                 {notTestedClassifiers &&
                   notTestedClassifiers.map((classifier, i) => (
                     <option value={classifier.id} key={i}>
-                      {classifier.name}
+                      {classifier.id} - {classifier.name}
                     </option>
                   ))}
               </Select>
@@ -87,7 +112,7 @@ export default function TestSetDetail({ testSetId }) {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
+            <Button onClick={onCreate} colorScheme="blue" mr={3}>
               Evaluate
             </Button>
             <Button onClick={onClose}>Cancel</Button>

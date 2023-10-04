@@ -25,8 +25,6 @@ export default function TestSet({ testSet }) {
   const { id, name, preview_image_urls } = testSet;
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log(name);
-
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
   const textColorSecondary = "gray.400";
@@ -45,13 +43,15 @@ export default function TestSet({ testSet }) {
     { bg: "whiteAlpha.100" }
   );
 
+  const handleOpen = () => setIsOpen(!isOpen);
+
   return (
     <Card mb={{ base: "0px", "2xl": "10px" }}>
       <Flex align="center" direction={{ base: "column", md: "row" }}>
         <AvatarGroup>
           {preview_image_urls &&
-            preview_image_urls.map((url) => (
-              <Avatar src={getFullImageUrl(url)} />
+            preview_image_urls.map((url, i) => (
+              <Avatar src={getFullImageUrl(url)} key={i} />
             ))}
         </AvatarGroup>
         <Box mt={{ base: "10px", md: "0" }} ml="10px">
@@ -61,7 +61,7 @@ export default function TestSet({ testSet }) {
             fontSize="md"
             mb="4px"
           >
-            Test Set 2023-09-20 0001
+            {id} - {name}
           </Text>
         </Box>
         <Spacer />
@@ -75,7 +75,7 @@ export default function TestSet({ testSet }) {
             _focus={bgFocus}
             _active={bgFocus}
             borderRadius="8px"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={handleOpen}
           />
         </Flex>
       </Flex>
