@@ -15,6 +15,9 @@ export const annotate = (image_id, annotation) =>
 export const fetcherWithParams = ({ url, params }) =>
   axios.get(hostUrl + url, { params }).then((res) => res.data);
 
+export const axiosFetcher = (url, params) =>
+  axios.get(hostUrl + url, { params }).then((res) => res.data);
+
 export const postClassifier = async (data) => {
   try {
     let res = await axios({

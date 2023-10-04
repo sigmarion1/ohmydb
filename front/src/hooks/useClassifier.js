@@ -3,6 +3,7 @@ import { fetcherWithParams } from "../utils/api";
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
 
+import { axiosFetcher } from "../utils/api";
 const useClassifier = () => {
   const params = {
     ordering: "-id",
@@ -10,8 +11,8 @@ const useClassifier = () => {
   };
 
   const { data, error } = useSWR(
-    { url: "/api/classifiers", params },
-    fetcherWithParams
+    ["/api/classifiers", params],
+    ([url, params]) => axiosFetcher(url, params)
   );
 
   return {
@@ -20,6 +21,7 @@ const useClassifier = () => {
     total: data?.count,
     isLoading: !error && !data,
     isError: error,
+    data,
   };
 };
 

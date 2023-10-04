@@ -1,5 +1,5 @@
 import fetcher from "../utils/api";
-import { fetcherWithParams } from "../utils/api";
+import { fetcherWithParams, axiosFetcher } from "../utils/api";
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
 
@@ -11,8 +11,8 @@ const useTestRecords = (testSetId) => {
   };
 
   const { data, error } = useSWR(
-    { url: "/api/test-records", params },
-    fetcherWithParams
+    ["/api/test-records", params],
+    ([url, params]) => axiosFetcher(url, params)
   );
 
   return {

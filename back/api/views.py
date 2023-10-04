@@ -45,7 +45,7 @@ class ClassifierModelViewset(ModelViewSet):
 class TestSetModelViewset(ModelViewSet):
     queryset = TestSet.objects.all()
     serializer_class = TestSetSerializer
-    filter_backends = [OrderingFilter]
+    filter_backends = [OrderingFilter, DjangoFilterBackend]
     ordering_fields = ["id"]
     ordering = ["-id"]
 
@@ -53,7 +53,8 @@ class TestSetModelViewset(ModelViewSet):
 class TestRecordModelViewset(ModelViewSet):
     queryset = TestRecord.objects.all()
     serializer_class = TestRecordSerializer
-    filter_backends = [OrderingFilter]
+    filter_backends = [OrderingFilter, DjangoFilterBackend]
+    filterset_fields = ["test_set_id"]
     ordering_fields = ["id"]
     ordering = ["-id"]
 

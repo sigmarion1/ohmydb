@@ -29,9 +29,9 @@ import tableDataComplex from "views/admin/classifier/variables/tableDataComplex.
 import useClassifier from "hooks/useClassifier";
 
 export default function Classifier() {
-  const { classifiers } = useClassifier();
+  const { classifiers, data } = useClassifier();
+  console.log(classifiers);
 
-  // Chakra Color Mode
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
@@ -39,6 +39,7 @@ export default function Classifier() {
         columns={{ sm: 1, md: 1 }}
         spacing={{ base: "20px", xl: "20px" }}
       >
+        {classifiers && classifiers.map((c) => <h1>c1</h1>)}
         {classifiers && (
           <ComplexTable
             columnsData={columnsDataComplex}

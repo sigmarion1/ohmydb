@@ -20,10 +20,12 @@ import Card from "components/card/Card.js";
 
 import TestSetClassifier from "views/admin/evaluation/components/TestSetClassifier";
 import useTestRecords from "hooks/useTestRecords";
+import useClassifier from "hooks/useClassifier";
 
 export default function TestSetDetail({ testSetId }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { testRecords } = useTestRecords(testSetId);
+  const { classifiers } = useClassifier();
 
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
@@ -42,6 +44,16 @@ export default function TestSetDetail({ testSetId }) {
     { bg: "secondaryGray.300" },
     { bg: "whiteAlpha.100" }
   );
+  let notTestedClassifiers = [];
+
+  if (testRecords !== undefined && classifiers !== undefined) {
+    let testedClassifierIds = testRecords?.map(
+      (record) => record.classifier_id
+    );
+    notTestedClassifiers = classifiers.filter(
+      (classifier) => !testedClassifierIds.includes(classifier.id)
+    );
+  }
 
   return (
     <Card>
@@ -64,8 +76,12 @@ export default function TestSetDetail({ testSetId }) {
           <ModalBody pb={6}>
             <FormControl>
               <Select placeholder="Select classifier">
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
+                {notTestedClassifiers &&
+                  notTestedClassifiers.map((classifier, i) => (
+                    <option value={classifier.id} key={i}>
+                      {classifier.name}
+                    </option>
+                  ))}
               </Select>
             </FormControl>
           </ModalBody>
