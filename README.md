@@ -7,7 +7,6 @@ The training tool for face-recognition classifier in web.
 
 OhMyDB is the prototype for continousely train and improve the face recognition classifier in web based enviorment.
 Thise frontend page helps users easily train and evaluate classifiers. Users can simply train or evaluate their custom models with just a few clicks.
-The prototype is currently live on the https://ohmydb.com 
 
 
 ## ERD
